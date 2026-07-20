@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veille — Pédopsychiatrie &amp; TCD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F3F6F6;
+    --card: #FFFFFF;
+    --ink: #17282E;
+    --muted: #5A6B70;
+    --line: #DCE4E4;
+    --teal: #0F766E;
+    --teal-soft: #E2F0EE;
+    --amber: #B07D2B;
+    --amber-soft: #F6EDDA;
+    --red: #A8534B;
+    --red-soft: #F5E4E2;
+    --grey: #64748B;
+    --grey-soft: #E8ECF1;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { background: var(--paper); }
+  body {
+    font-family: "Source Sans 3", -apple-system, "Segoe UI", sans-serif;
+    color: var(--ink);
+    line-height: 1.55;
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+  }
+  a { color: var(--teal); }
+  a:focus-visible, button:focus-visible, input:focus-visible {
+    outline: 2px solid var(--teal);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Header ---------- */
+  .eyebrow {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--teal);
+  }
+  h1 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(28px, 5vw, 42px);
+    line-height: 1.15;
+    margin: 6px 0 4px;
+  }
+  h1 .amp { color: var(--teal); font-style: italic; }
+  .stats {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 28px;
+  }
+
+  /* ---------- Filtres ---------- */
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+    padding: 14px 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 24px;
+  }
+  .filters .group-label {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    margin-right: 2px;
+  }
+  .chip {
+    font: 600 13px "Source Sans 3", sans-serif;
+    border: 1px solid var(--line);
+    background: var(--card);
+    color: var(--ink);
+    border-radius: 999px;
+    padding: 4px 12px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .chip[aria-pressed="true"] {
+    background: var(--teal);
+    border-color: var(--teal);
+    color: #fff;
+  }
+  .sep { width: 1px; height: 20px; background: var(--line); margin: 0 6px; }
+  .search {
+    flex: 1 1 180px;
+    min-width: 160px;
+    font: 400 14px "Source Sans 3", sans-serif;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: var(--card);
+    color: var(--ink);
+  }
+
+  /* ---------- Légende niveau de preuve ---------- */
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend i {
+    display: inline-block;
+    width: 10px; height: 10px;
+    border-radius: 2px;
+  }
+
+  /* ---------- Cartes ---------- */
+  .card {
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 16px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 14px;
+  }
+  /* Signature : la colonne de preuve — 4 segments remplis selon le niveau */
+  .spine { display: flex; flex-direction: column; gap: 3px; padding-top: 4px; }
+  .spine i {
+    flex: 1;
+    border-radius: 2px;
+    background: var(--grey-soft);
+    min-height: 14px;
+  }
+  .card h2 {
+    font-family: "Spectral", Georgia, serif;
+    font-weight: 600;
+    font-size: 19px;
+    line-height: 1.3;
+    margin-bottom: 4px;
+  }
+  .card h2 a { color: var(--ink); text-decoration: none; }
+  .card h2 a:hover { color: var(--teal); text-decoration: underline; }
+  .meta {
+    font-family: "IBM Plex Mono", monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+  }
+  .synthese { font-size: 15px; margin-bottom: 10px; }
+  .pertinence {
+    font-size: 14px;
+    background: var(--teal-soft);
+    border-left: 3px solid var(--teal);
+    border-radius: 0 6px 6px 0;
+    padding: 8px 12px;
+    margin-bottom: 12px;
+  }
+  .pertinence strong { color: var(--teal); }
+  .tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font: 600 11.5px "Source Sans 3", sans-serif;
+    border-radius: 999px;
+    padding: 2px 10px;
+    background: var(--grey-soft);
+    color: var(--ink);
+  }
+  .tag.theme { background: var(--ink); color: #fff; }
+  .tag.consensus-etabli { background: var(--teal-soft); color: var(--teal); }
+  .tag.consensus-emergent { background: var(--amber-soft); color: var(--amber); }
+  .tag.consensus-controverse { background: var(--red-soft); color: var(--red); }
+
+  .empty {
+    text-align: center;
+    color: var(--muted);
+    padding: 48px 0;
+    font-size: 15px;
+  }
+  .demo-banner {
+    background: var(--amber-soft);
+    border: 1px solid var(--amber);
+    color: var(--amber);
+    border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 13.5px;
+    margin-bottom: 24px;
+  }
+
+  @media (max-width: 520px) {
+    body { padding: 24px 14px 60px; }
+    .card { grid-template-columns: 10px 1fr; padding: 14px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <p class="eyebrow">Veille clinique</p>
+  <h1>Pédopsychiatrie <span class="amp">&amp;</span> TCD</h1>
+  <p class="stats" id="stats"></p>
+</header>
+
+<div class="demo-banner" id="demoBanner">
+  ⚠️ Données de démonstration — entrées fictives à remplacer par la première exécution de la routine.
+</div>
+
+<div class="filters" role="toolbar" aria-label="Filtres">
+  <span class="group-label">Thème</span>
+  <button class="chip" data-filter="theme" data-value="Pédopsychiatrie" aria-pressed="false">Pédopsychiatrie</button>
+  <button class="chip" data-filter="theme" data-value="TCD" aria-pressed="false">TCD</button>
+  <button class="chip" data-filter="theme" data-value="TCD-Adolescents (DBT-A)" aria-pressed="false">DBT-A</button>
+  <span class="sep" aria-hidden="true"></span>
+  <span class="group-label">Preuve</span>
+  <button class="chip" data-filter="niveau" data-value="Élevé" aria-pressed="false">Élevé</button>
+  <button class="chip" data-filter="niveau" data-value="Modéré" aria-pressed="false">Modéré</button>
+  <span class="sep" aria-hidden="true"></span>
+  <input class="search" id="search" type="search" placeholder="Rechercher…" aria-label="Rechercher dans la veille">
+</div>
+
+<div class="legend" aria-hidden="true">
+  <span><i style="background:var(--teal)"></i> Élevé (4/4)</span>
+  <span><i style="background:var(--amber)"></i> Modéré (3/4)</span>
+  <span><i style="background:var(--red)"></i> Faible (2/4)</span>
+  <span><i style="background:var(--grey)"></i> Avis d'expert (1/4)</span>
+</div>
+
+<main id="list"></main>
+<p class="empty" id="empty" hidden>Aucune entrée ne correspond aux filtres. Élargis la recherche ou désactive un filtre.</p>
+
+<script>
+/* ============================================================
+   DONNÉES DE VEILLE
+   La routine Cowork remplace UNIQUEMENT le tableau entre les
+   marqueurs VEILLE_DATA_START / VEILLE_DATA_END.
+   Champs requis pour chaque entrée : voir README de la routine.
+   ============================================================ */
+/* VEILLE_DATA_START */
+const VEILLE_DATA = [
+  {
+    "titre": "[EXEMPLE FICTIF] Méta-analyse : efficacité de la DBT-A sur l'auto-mutilation chez l'adolescent",
+    "url": "https://pubmed.ncbi.nlm.nih.gov/",
+    "datePublication": "2026-05-01",
+    "dateAjout": "2026-07-06",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": ["Auto-mutilation", "Régulation émotionnelle"],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Consensus établi",
+    "source": "PubMed",
+    "synthese": "Entrée de démonstration. La routine remplacera ce contenu par une vraie synthèse sourcée de 3 à 5 phrases.",
+    "pertinence": "Illustre le format attendu de la propriété « pertinence clinique »."
+  },
+  {
+    "titre": "[EXEMPLE FICTIF] Recommandation HAS : parcours de soins du TDAH chez l'enfant",
+    "url": "https://www.has-sante.fr/",
+    "datePublication": "2026-03-15",
+    "dateAjout": "2026-07-06",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": ["TDAH", "Politique de santé"],
+    "typeSource": "Recommandation officielle",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "HAS",
+    "synthese": "Seconde entrée de démonstration pour vérifier le rendu des filtres, tags et niveaux de preuve.",
+    "pertinence": "À supprimer lors de la première exécution réelle de la routine."
+  }
+];
+/* VEILLE_DATA_END */
+
+/* ============================================================
+   RENDU + FILTRES (aucune donnée modifiée ici)
+   ============================================================ */
+const LEVELS = { "Élevé": 4, "Modéré": 3, "Faible": 2, "Avis d'expert": 1 };
+const LEVEL_COLORS = {
+  "Élevé": "var(--teal)", "Modéré": "var(--amber)",
+  "Faible": "var(--red)", "Avis d'expert": "var(--grey)"
+};
+const CONSENSUS_CLASS = {
+  "Consensus établi": "consensus-etabli",
+  "Émergent": "consensus-emergent",
+  "Controversé": "consensus-controverse"
+};
+
+const state = { theme: null, niveau: null, q: "" };
+const listEl = document.getElementById("list");
+const emptyEl = document.getElementById("empty");
+const statsEl = document.getElementById("stats");
+const demoBanner = document.getElementById("demoBanner");
+
+function esc(s) {
+  return String(s ?? "").replace(/[&<>"']/g, c =>
+    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+function fmtDate(iso) {
+  try {
+    return new Date(iso + "T00:00:00").toLocaleDateString("fr-FR",
+      { day: "numeric", month: "short", year: "numeric" });
+  } catch { return iso; }
+}
+
+function spine(niveau) {
+  const filled = LEVELS[niveau] ?? 1;
+  const color = LEVEL_COLORS[niveau] ?? "var(--grey)";
+  let html = "";
+  for (let i = 4; i >= 1; i--) {
+    html += `<i style="${i <= filled ? `background:${color}` : ""}"></i>`;
+  }
+  return `<div class="spine" title="Niveau de preuve : ${esc(niveau)}" aria-label="Niveau de preuve : ${esc(niveau)}">${html}</div>`;
+}
+
+function card(e) {
+  const tags = [
+    `<span class="tag theme">${esc(e.theme)}</span>`,
+    `<span class="tag ${CONSENSUS_CLASS[e.consensus] ?? ""}">${esc(e.consensus)}</span>`,
+    ...(e.sousThemes ?? []).map(t => `<span class="tag">${esc(t)}</span>`)
+  ].join("");
+  return `<article class="card">
+    ${spine(e.niveauPreuve)}
+    <div>
+      <h2><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.titre)}</a></h2>
+      <p class="meta">${esc(e.source)} · ${esc(e.typeSource)} · publié le ${fmtDate(e.datePublication)} · ajouté le ${fmtDate(e.dateAjout)}</p>
+      <p class="synthese">${esc(e.synthese)}</p>
+      <p class="pertinence"><strong>En pratique —</strong> ${esc(e.pertinence)}</p>
+      <div class="tags">${tags}</div>
+    </div>
+  </article>`;
+}
+
+function matches(e) {
+  if (state.theme && e.theme !== state.theme) return false;
+  if (state.niveau && e.niveauPreuve !== state.niveau) return false;
+  if (state.q) {
+    const hay = [e.titre, e.synthese, e.pertinence, e.source,
+      ...(e.sousThemes ?? [])].join(" ").toLowerCase();
+    if (!hay.includes(state.q)) return false;
+  }
+  return true;
+}
+
+function render() {
+  const sorted = [...VEILLE_DATA].sort((a, b) =>
+    (b.dateAjout + b.datePublication).localeCompare(a.dateAjout + a.datePublication));
+  const visible = sorted.filter(matches);
+
+  listEl.innerHTML = visible.map(card).join("");
+  emptyEl.hidden = visible.length > 0;
+
+  const lastUpdate = sorted.length ? fmtDate(sorted[0].dateAjout) : "—";
+  statsEl.textContent =
+    `${VEILLE_DATA.length} entrée${VEILLE_DATA.length > 1 ? "s" : ""} · ` +
+    `${visible.length} affichée${visible.length > 1 ? "s" : ""} · ` +
+    `dernière mise à jour : ${lastUpdate}`;
+
+  const hasDemo = VEILLE_DATA.some(e => e.titre.includes("[EXEMPLE FICTIF]"));
+  demoBanner.hidden = !hasDemo;
+}
+
+document.querySelectorAll(".chip").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const { filter, value } = btn.dataset;
+    const active = state[filter] === value;
+    state[filter] = active ? null : value;
+    document.querySelectorAll(`.chip[data-filter="${filter}"]`)
+      .forEach(b => b.setAttribute("aria-pressed", String(b === btn && !active)));
+    render();
+  });
+});
+
+document.getElementById("search").addEventListener("input", ev => {
+  state.q = ev.target.value.trim().toLowerCase();
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
