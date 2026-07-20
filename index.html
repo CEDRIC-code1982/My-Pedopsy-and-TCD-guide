@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Veille — Pédopsychiatrie &amp; TCD</title>
+<title>Veille &amp; Formation — Pédopsychiatrie &amp; TCD</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --paper: #F3F6F6;
@@ -21,6 +21,9 @@
     --red-soft: #F5E4E2;
     --grey: #64748B;
     --grey-soft: #E8ECF1;
+    --done: #0F766E;
+    --doing: #B07D2B;
+    --todo: #C3CDCD;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { background: var(--paper); }
@@ -41,239 +44,416 @@
   /* ---------- Header ---------- */
   .eyebrow {
     font-family: "IBM Plex Mono", monospace;
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--teal);
+    font-size: 12px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--teal);
   }
   h1 {
-    font-family: "Spectral", Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(28px, 5vw, 42px);
-    line-height: 1.15;
-    margin: 6px 0 4px;
+    font-family: "Spectral", Georgia, serif; font-weight: 700;
+    font-size: clamp(28px, 5vw, 42px); line-height: 1.15; margin: 6px 0 20px;
   }
   h1 .amp { color: var(--teal); font-style: italic; }
-  .stats {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 13px;
-    color: var(--muted);
-    margin-bottom: 28px;
+
+  /* ---------- Onglets ---------- */
+  .tabs {
+    display: flex; gap: 4px; border-bottom: 2px solid var(--line); margin-bottom: 28px;
+  }
+  .tab {
+    font: 700 15px "Source Sans 3", sans-serif;
+    background: none; border: none; color: var(--muted);
+    padding: 10px 18px; cursor: pointer; position: relative; top: 2px;
+    border-bottom: 2px solid transparent;
+  }
+  .tab[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--teal); }
+  .panel[hidden] { display: none; }
+  .panel-stats {
+    font-family: "IBM Plex Mono", monospace; font-size: 13px;
+    color: var(--muted); margin-bottom: 24px;
   }
 
-  /* ---------- Filtres ---------- */
+  /* ---------- Filtres (Veille) ---------- */
   .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    padding: 14px 0;
-    border-top: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
-    margin-bottom: 24px;
+    display: flex; flex-wrap: wrap; gap: 8px; align-items: center;
+    padding: 14px 0; border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line); margin-bottom: 24px;
   }
   .filters .group-label {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--muted);
-    margin-right: 2px;
+    font-family: "IBM Plex Mono", monospace; font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: 2px;
   }
   .chip {
     font: 600 13px "Source Sans 3", sans-serif;
-    border: 1px solid var(--line);
-    background: var(--card);
-    color: var(--ink);
-    border-radius: 999px;
-    padding: 4px 12px;
-    cursor: pointer;
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: 999px; padding: 4px 12px; cursor: pointer;
     transition: background 0.15s, border-color 0.15s;
   }
-  .chip[aria-pressed="true"] {
-    background: var(--teal);
-    border-color: var(--teal);
-    color: #fff;
-  }
+  .chip[aria-pressed="true"] { background: var(--teal); border-color: var(--teal); color: #fff; }
   .sep { width: 1px; height: 20px; background: var(--line); margin: 0 6px; }
   .search {
-    flex: 1 1 180px;
-    min-width: 160px;
+    flex: 1 1 180px; min-width: 160px;
     font: 400 14px "Source Sans 3", sans-serif;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 6px 10px;
-    background: var(--card);
-    color: var(--ink);
+    border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px;
+    background: var(--card); color: var(--ink);
   }
-
-  /* ---------- Légende niveau de preuve ---------- */
-  .legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 20px;
-  }
+  .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--muted); margin-bottom: 20px; }
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
-  .legend i {
-    display: inline-block;
-    width: 10px; height: 10px;
-    border-radius: 2px;
-  }
+  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
 
-  /* ---------- Cartes ---------- */
+  /* ---------- Cartes veille ---------- */
   .card {
-    display: grid;
-    grid-template-columns: 14px 1fr;
-    gap: 16px;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 10px;
-    padding: 18px 20px;
-    margin-bottom: 14px;
+    display: grid; grid-template-columns: 14px 1fr; gap: 16px;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 10px; padding: 18px 20px; margin-bottom: 14px;
   }
-  /* Signature : la colonne de preuve — 4 segments remplis selon le niveau */
   .spine { display: flex; flex-direction: column; gap: 3px; padding-top: 4px; }
-  .spine i {
-    flex: 1;
-    border-radius: 2px;
-    background: var(--grey-soft);
-    min-height: 14px;
-  }
+  .spine i { flex: 1; border-radius: 2px; background: var(--grey-soft); min-height: 14px; }
   .card h2 {
-    font-family: "Spectral", Georgia, serif;
-    font-weight: 600;
-    font-size: 19px;
-    line-height: 1.3;
-    margin-bottom: 4px;
+    font-family: "Spectral", Georgia, serif; font-weight: 600;
+    font-size: 19px; line-height: 1.3; margin-bottom: 4px;
   }
   .card h2 a { color: var(--ink); text-decoration: none; }
   .card h2 a:hover { color: var(--teal); text-decoration: underline; }
-  .meta {
-    font-family: "IBM Plex Mono", monospace;
-    font-size: 12px;
-    color: var(--muted);
-    margin-bottom: 10px;
-  }
+  .meta { font-family: "IBM Plex Mono", monospace; font-size: 12px; color: var(--muted); margin-bottom: 10px; }
   .synthese { font-size: 15px; margin-bottom: 10px; }
   .pertinence {
-    font-size: 14px;
-    background: var(--teal-soft);
-    border-left: 3px solid var(--teal);
-    border-radius: 0 6px 6px 0;
-    padding: 8px 12px;
-    margin-bottom: 12px;
+    font-size: 14px; background: var(--teal-soft); border-left: 3px solid var(--teal);
+    border-radius: 0 6px 6px 0; padding: 8px 12px; margin-bottom: 12px;
   }
   .pertinence strong { color: var(--teal); }
   .tags { display: flex; flex-wrap: wrap; gap: 6px; }
-  .tag {
-    font: 600 11.5px "Source Sans 3", sans-serif;
-    border-radius: 999px;
-    padding: 2px 10px;
-    background: var(--grey-soft);
-    color: var(--ink);
-  }
+  .tag { font: 600 11.5px "Source Sans 3", sans-serif; border-radius: 999px; padding: 2px 10px; background: var(--grey-soft); color: var(--ink); }
   .tag.theme { background: var(--ink); color: #fff; }
   .tag.consensus-etabli { background: var(--teal-soft); color: var(--teal); }
   .tag.consensus-emergent { background: var(--amber-soft); color: var(--amber); }
   .tag.consensus-controverse { background: var(--red-soft); color: var(--red); }
-
-  .empty {
-    text-align: center;
-    color: var(--muted);
-    padding: 48px 0;
-    font-size: 15px;
-  }
+  .empty { text-align: center; color: var(--muted); padding: 48px 0; font-size: 15px; }
   .demo-banner {
-    background: var(--amber-soft);
-    border: 1px solid var(--amber);
-    color: var(--amber);
-    border-radius: 8px;
-    padding: 10px 14px;
-    font-size: 13.5px;
-    margin-bottom: 24px;
+    background: var(--amber-soft); border: 1px solid var(--amber); color: var(--amber);
+    border-radius: 8px; padding: 10px 14px; font-size: 13.5px; margin-bottom: 24px;
   }
 
-  @media (max-width: 520px) {
+  /* ---------- Formation : progression globale ---------- */
+  .progress-head {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 20px; margin-bottom: 28px;
+  }
+  .progress-head .overall {
+    display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px;
+  }
+  .progress-head .pct { font-family: "Spectral", serif; font-weight: 700; font-size: 34px; color: var(--teal); }
+  .progress-head .pct-label { font-size: 14px; color: var(--muted); }
+  .mini-bars { display: grid; gap: 10px; margin-top: 14px; }
+  .mini-row { display: grid; grid-template-columns: 130px 1fr 46px; gap: 10px; align-items: center; font-size: 13px; }
+  .mini-row .name { color: var(--muted); }
+  .bar { height: 8px; background: var(--grey-soft); border-radius: 999px; overflow: hidden; }
+  .bar > span { display: block; height: 100%; background: var(--teal); border-radius: 999px; transition: width 0.3s; }
+  .mini-row .val { font-family: "IBM Plex Mono", monospace; color: var(--muted); text-align: right; }
+
+  /* ---------- Formation : parcours conseillé ---------- */
+  .parcours { margin-bottom: 40px; }
+  .parcours h3 { font-family: "Spectral", serif; font-weight: 700; font-size: 22px; margin-bottom: 4px; }
+  .parcours .intro { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+  .steps { margin: 0 0 22px; }
+  .step { display: grid; grid-template-columns: 38px 1fr; gap: 14px; padding-bottom: 18px; position: relative; }
+  .step:not(:last-child)::before {
+    content: ""; position: absolute; left: 18px; top: 40px; bottom: -2px;
+    width: 2px; background: var(--line);
+  }
+  .step .dot {
+    width: 38px; height: 38px; border-radius: 50%; background: var(--teal-soft); color: var(--teal);
+    font-family: "IBM Plex Mono", monospace; font-weight: 500; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; z-index: 1;
+  }
+  .step h4 { font-family: "Spectral", serif; font-weight: 600; font-size: 17px; }
+  .step p { font-size: 14px; color: var(--muted); margin-top: 2px; }
+  .goals-label {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px;
+  }
+  .goals { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .goal { background: var(--card); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; }
+  .goal .g-title { font: 700 13px "Source Sans 3", sans-serif; color: var(--teal); margin-bottom: 3px; }
+  .goal p { font-size: 13px; color: var(--ink); line-height: 1.45; }
+  @media (max-width: 560px) { .goals { grid-template-columns: 1fr; } }
+
+  /* ---------- Formation : cadre théorique ---------- */
+  .theory { margin-bottom: 40px; }
+  .theory h3 { font-family: "Spectral", serif; font-weight: 700; font-size: 22px; margin-bottom: 4px; }
+  .theory .intro { color: var(--muted); font-size: 14px; margin-bottom: 18px; }
+  .theory-block {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 18px 20px; margin-bottom: 12px;
+  }
+  .t-label {
+    font-family: "IBM Plex Mono", monospace; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--teal); margin-bottom: 8px;
+  }
+  .theory-block > p { font-size: 14.5px; }
+  .t-foot { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+  .biosocial-eq {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+    background: var(--paper); border-radius: 8px; padding: 14px; margin: 12px 0 4px;
+    font-size: 13px; text-align: center;
+  }
+  .biosocial-eq > span { flex: 1 1 auto; }
+  .biosocial-eq em { color: var(--muted); font-size: 11.5px; }
+  .biosocial-eq .plus, .biosocial-eq .arrow {
+    flex: 0 0 auto; font-family: "IBM Plex Mono", monospace; color: var(--muted); font-size: 18px;
+  }
+  .biosocial-eq .result { font-weight: 700; color: var(--teal); }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 10px; }
+  .two-col h5 { font: 700 13px "Source Sans 3", sans-serif; margin-bottom: 6px; }
+  .two-col ul { margin: 0 0 0 16px; font-size: 13.5px; }
+  .two-col li { margin-bottom: 4px; }
+  .vs-card { background: var(--paper); border-radius: 8px; padding: 12px 14px; }
+  .vs-card h5 { color: var(--teal); font-size: 14px; }
+  .vs-card p { font-size: 13.5px; }
+  @media (max-width: 560px) { .two-col { grid-template-columns: 1fr; } }
+
+  /* ---------- Formation : modules ---------- */
+  .module { margin-bottom: 32px; }
+  .module-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 4px; }
+  .module-num { font-family: "IBM Plex Mono", monospace; font-size: 13px; color: var(--teal); }
+  .module-head h3 { font-family: "Spectral", serif; font-weight: 700; font-size: 22px; }
+  .module-central { font: 600 11px "Source Sans 3"; text-transform: uppercase; letter-spacing: 0.08em; color: var(--amber); background: var(--amber-soft); border-radius: 999px; padding: 2px 8px; }
+  .module-desc { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+
+  .skill {
+    background: var(--card); border: 1px solid var(--line); border-left: 3px solid var(--todo);
+    border-radius: 8px; padding: 14px 16px; margin-bottom: 10px;
+  }
+  .skill[data-status="done"] { border-left-color: var(--done); }
+  .skill[data-status="doing"] { border-left-color: var(--doing); }
+  .skill-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; }
+  .skill h4 { font-family: "Spectral", serif; font-weight: 600; font-size: 17px; }
+  .skill .en { font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--muted); font-weight: 400; }
+  .skill .but { font-size: 14.5px; margin: 6px 0 8px; }
+  .skill ul { margin: 0 0 4px 18px; font-size: 13.5px; color: var(--ink); }
+  .skill li { margin-bottom: 2px; }
+  .status-btns { display: flex; gap: 4px; flex-shrink: 0; }
+  .status-btns button {
+    font: 600 11.5px "Source Sans 3"; border: 1px solid var(--line);
+    background: var(--card); color: var(--muted); border-radius: 999px;
+    padding: 3px 10px; cursor: pointer;
+  }
+  .status-btns button[aria-pressed="true"][data-s="todo"] { background: var(--grey-soft); color: var(--ink); border-color: var(--grey); }
+  .status-btns button[aria-pressed="true"][data-s="doing"] { background: var(--amber-soft); color: var(--amber); border-color: var(--amber); }
+  .status-btns button[aria-pressed="true"][data-s="done"] { background: var(--teal-soft); color: var(--teal); border-color: var(--teal); }
+
+  /* ---------- Formation : ressources ---------- */
+  .res-head { font-family: "Spectral", serif; font-weight: 700; font-size: 22px; margin: 40px 0 6px; }
+  .res-sub { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+  .res {
+    display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
+    background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+    padding: 14px 16px; margin-bottom: 10px;
+  }
+  .res h4 { font-family: "Spectral", serif; font-weight: 600; font-size: 16px; }
+  .res h4 a { color: var(--ink); text-decoration: none; }
+  .res h4 a:hover { color: var(--teal); text-decoration: underline; }
+  .res .note { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+  .res .badges { display: flex; gap: 6px; flex-shrink: 0; align-items: flex-start; flex-wrap: wrap; }
+  .badge { font: 600 11px "Source Sans 3"; border-radius: 999px; padding: 2px 9px; white-space: nowrap; }
+  .badge.gratuit { background: var(--teal-soft); color: var(--teal); }
+  .badge.payant { background: var(--grey-soft); color: var(--grey); }
+  .badge.lang { background: var(--ink); color: #fff; }
+  .badge.type { background: var(--amber-soft); color: var(--amber); }
+
+  .foot-note {
+    font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line);
+    margin-top: 40px; padding-top: 16px;
+  }
+
+  @media (max-width: 560px) {
     body { padding: 24px 14px 60px; }
     .card { grid-template-columns: 10px 1fr; padding: 14px; }
+    .mini-row { grid-template-columns: 92px 1fr 40px; }
+    .tab { padding: 10px 12px; font-size: 14px; }
   }
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
-  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 </style>
 </head>
 <body>
 
 <header>
-  <p class="eyebrow">Veille clinique</p>
+  <p class="eyebrow">Espace clinique personnel</p>
   <h1>Pédopsychiatrie <span class="amp">&amp;</span> TCD</h1>
-  <p class="stats" id="stats"></p>
 </header>
 
-<div class="demo-banner" id="demoBanner">
-  ⚠️ Données de démonstration — entrées fictives à remplacer par la première exécution de la routine.
+<div class="tabs" role="tablist">
+  <button class="tab" role="tab" id="tab-veille" aria-controls="panel-veille" aria-selected="true">Veille</button>
+  <button class="tab" role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false">Formation</button>
 </div>
 
-<div class="filters" role="toolbar" aria-label="Filtres">
-  <span class="group-label">Thème</span>
-  <button class="chip" data-filter="theme" data-value="Pédopsychiatrie" aria-pressed="false">Pédopsychiatrie</button>
-  <button class="chip" data-filter="theme" data-value="TCD" aria-pressed="false">TCD</button>
-  <button class="chip" data-filter="theme" data-value="TCD-Adolescents (DBT-A)" aria-pressed="false">DBT-A</button>
-  <span class="sep" aria-hidden="true"></span>
-  <span class="group-label">Preuve</span>
-  <button class="chip" data-filter="niveau" data-value="Élevé" aria-pressed="false">Élevé</button>
-  <button class="chip" data-filter="niveau" data-value="Modéré" aria-pressed="false">Modéré</button>
-  <span class="sep" aria-hidden="true"></span>
-  <input class="search" id="search" type="search" placeholder="Rechercher…" aria-label="Rechercher dans la veille">
-</div>
+<!-- ==================== PANEL VEILLE ==================== -->
+<section class="panel" id="panel-veille" role="tabpanel" aria-labelledby="tab-veille">
+  <p class="panel-stats" id="veille-stats"></p>
 
-<div class="legend" aria-hidden="true">
-  <span><i style="background:var(--teal)"></i> Élevé (4/4)</span>
-  <span><i style="background:var(--amber)"></i> Modéré (3/4)</span>
-  <span><i style="background:var(--red)"></i> Faible (2/4)</span>
-  <span><i style="background:var(--grey)"></i> Avis d'expert (1/4)</span>
-</div>
+  <div class="demo-banner" id="demoBanner">
+    ⚠️ Données de démonstration — entrées fictives à remplacer par la première exécution de la routine.
+  </div>
 
-<main id="list"></main>
-<p class="empty" id="empty" hidden>Aucune entrée ne correspond aux filtres. Élargis la recherche ou désactive un filtre.</p>
+  <div class="filters" role="toolbar" aria-label="Filtres de veille">
+    <span class="group-label">Thème</span>
+    <button class="chip" data-filter="theme" data-value="Pédopsychiatrie" aria-pressed="false">Pédopsychiatrie</button>
+    <button class="chip" data-filter="theme" data-value="TCD" aria-pressed="false">TCD</button>
+    <button class="chip" data-filter="theme" data-value="TCD-Adolescents (DBT-A)" aria-pressed="false">DBT-A</button>
+    <span class="sep" aria-hidden="true"></span>
+    <span class="group-label">Preuve</span>
+    <button class="chip" data-filter="niveau" data-value="Élevé" aria-pressed="false">Élevé</button>
+    <button class="chip" data-filter="niveau" data-value="Modéré" aria-pressed="false">Modéré</button>
+    <span class="sep" aria-hidden="true"></span>
+    <input class="search" id="search" type="search" placeholder="Rechercher…" aria-label="Rechercher dans la veille">
+  </div>
+
+  <div class="legend" aria-hidden="true">
+    <span><i style="background:var(--teal)"></i> Élevé (4/4)</span>
+    <span><i style="background:var(--amber)"></i> Modéré (3/4)</span>
+    <span><i style="background:var(--red)"></i> Faible (2/4)</span>
+    <span><i style="background:var(--grey)"></i> Avis d'expert (1/4)</span>
+  </div>
+
+  <div id="veille-list"></div>
+  <p class="empty" id="veille-empty" hidden>Aucune entrée ne correspond aux filtres.</p>
+</section>
+
+<!-- ==================== PANEL FORMATION ==================== -->
+<section class="panel" id="panel-formation" role="tabpanel" aria-labelledby="tab-formation" hidden>
+  <div class="progress-head">
+    <div class="overall">
+      <span class="pct" id="overall-pct">0 %</span>
+      <span class="pct-label" id="overall-label">des compétences acquises</span>
+    </div>
+    <div class="mini-bars" id="mini-bars"></div>
+  </div>
+
+  <section class="parcours">
+    <h3>Parcours conseillé</h3>
+    <p class="intro">La TCD n'est pas une liste de techniques à piocher au hasard : les modules s'appuient les uns sur les autres. La pleine conscience est le socle — on la revisite avant chaque nouveau module. Voici l'ordre clinique de référence.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="dot">01</span>
+        <div><h4>Pleine conscience</h4>
+        <p>Toujours en premier, puis à re-parcourir avant chaque module. Sans capacité d'observer sans juger, les autres compétences ne « prennent » pas.</p></div>
+      </div>
+      <div class="step">
+        <span class="dot">02</span>
+        <div><h4>Tolérance à la détresse</h4>
+        <p>Les outils de survie de crise (TIPP, acceptation radicale). À placer tôt si l'enjeu touche à la gestion de crise, l'auto-mutilation ou la suicidalité : on stabilise avant de travailler le fond.</p></div>
+      </div>
+      <div class="step">
+        <span class="dot">03</span>
+        <div><h4>Régulation émotionnelle</h4>
+        <p>Le travail de fond, une fois les crises gérables : comprendre ses émotions, réduire sa vulnérabilité, agir à l'inverse de l'impulsion.</p></div>
+      </div>
+      <div class="step">
+        <span class="dot">04</span>
+        <div><h4>Efficacité interpersonnelle</h4>
+        <p>Appliquer les acquis aux relations : demander, refuser, gérer un conflit sans sacrifier l'objectif, la relation ou le respect de soi.</p></div>
+      </div>
+    </div>
+
+    <p class="goals-label">Adaptation selon ton objectif</p>
+    <div class="goals">
+      <div class="goal">
+        <p class="g-title">Usage perso / bien-être</p>
+        <p>Suis l'ordre complet. Insiste sur les modules 01 et 02 au début : ce sont eux qui donnent un effet concret le plus vite.</p>
+      </div>
+      <div class="goal">
+        <p class="g-title">Comprendre / culture pro</p>
+        <p>Commence par la logique d'ensemble des 4 modules et le cadre théorique (le « pourquoi » du modèle) avant d'entrer dans le détail des compétences.</p>
+      </div>
+      <div class="goal">
+        <p class="g-title">Objectif clinique / praticien</p>
+        <p>Les fiches ne suffisent pas : ce parcours est une carte mentale, pas un substitut. Vise une formation accréditée (Behavioral Tech) + supervision.</p>
+      </div>
+      <div class="goal">
+        <p class="g-title">Accompagner un proche</p>
+        <p>Priorise la validation (GIVE) et la régulation émotionnelle pour comprendre et soutenir — sans endosser le rôle de thérapeute.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="theory">
+    <h3>Cadre théorique</h3>
+    <p class="intro">Comprendre le « pourquoi » avant les compétences : d'où vient la TCD, à qui elle s'adresse, et en quoi elle diffère de la TCC.</p>
+
+    <div class="theory-block">
+      <p class="t-label">Le modèle biosocial</p>
+      <p>La TCD part de l'hypothèse que la dysrégulation émotionnelle chronique naît d'une <strong>transaction</strong>, répétée dans le temps, entre une vulnérabilité émotionnelle d'origine biologique (réactivité forte, seuil bas, retour au calme lent) et un environnement <strong>invalidant</strong> qui minimise, punit ou ignore le vécu émotionnel de la personne. Ni l'un ni l'autre seul ne suffit : c'est la boucle entre les deux.</p>
+      <div class="biosocial-eq">
+        <span>Vulnérabilité émotionnelle<br><em>(facteurs biologiques)</em></span>
+        <span class="plus">+</span>
+        <span>Environnement invalidant<br><em>(répété, durable)</em></span>
+        <span class="arrow">→</span>
+        <span class="result">Dysrégulation<br>émotionnelle</span>
+      </div>
+      <p class="t-foot">D'où le double mouvement de la thérapie : <strong>accepter</strong> le vécu (validation) <em>et</em> le <strong>changer</strong> (compétences). C'est tout le sens du mot « dialectique ».</p>
+    </div>
+
+    <div class="theory-block">
+      <p class="t-label">Indications &amp; limites</p>
+      <div class="two-col">
+        <div><h5>Indications</h5><ul>
+          <li>Trouble de la personnalité borderline (indication historique, la mieux étayée)</li>
+          <li>Suicidalité chronique, conduites d'auto-mutilation</li>
+          <li>Dysrégulation émotionnelle sévère</li>
+          <li>Adaptations : adolescents (DBT-A), TCA, addictions, dépression résistante</li>
+        </ul></div>
+        <div><h5>Limites &amp; précautions</h5><ul>
+          <li>Le programme complet ≠ groupe de compétences seul</li>
+          <li>Requiert une équipe formée et une supervision</li>
+          <li>Engagement long (souvent 6–12 mois et plus)</li>
+          <li>Pas une réponse d'urgence ponctuelle ; l'auto-apprentissage aide mais ne remplace pas une prise en charge pour les situations à risque</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="theory-block">
+      <p class="t-label">TCD vs TCC — la différence</p>
+      <div class="two-col">
+        <div class="vs-card"><h5>TCC (la famille)</h5>
+          <p>Ensemble de thérapies visant à identifier et modifier les pensées et comportements dysfonctionnels. Orientation « changement », large éventail de troubles (anxiété, dépression, phobies, TOC…).</p></div>
+        <div class="vs-card"><h5>TCD (une spécialisation)</h5>
+          <p>Développée par M. Linehan pour les cas très dysrégulés où la seule logique de changement échouait (vécue comme invalidante). Ajoute la dialectique (acceptation ↔ changement), la pleine conscience, et une structure en 4 modes.</p></div>
+      </div>
+      <p class="t-foot">En clair : la TCD est une forme <strong>spécialisée et structurée</strong> de TCC, pas une école opposée.</p>
+    </div>
+  </section>
+
+  <div id="modules"></div>
+
+  <h3 class="res-head">Bibliothèque de ressources</h3>
+  <p class="res-sub">Sources francophones en priorité ; les sources étrangères renvoient toujours à l'article d'origine. Vérifie les éditions et disponibilités exactes — c'est aussi le rôle de ta routine de veille.</p>
+  <div id="resources"></div>
+
+  <p class="foot-note">
+    Les fiches de compétences sont des résumés originaux à visée pédagogique, et non les supports de Marsha Linehan (protégés par le droit d'auteur). Pour les exercices et fiches officiels, réfère-toi aux ouvrages listés ci-dessus. Rappel : apprendre les compétences pour soi est accessible en autodidacte, mais exercer la TCD en clinique requiert une formation accréditée.
+  </p>
+</section>
 
 <script>
 /* ============================================================
-   DONNÉES DE VEILLE
-   La routine Cowork remplace UNIQUEMENT le tableau entre les
-   marqueurs VEILLE_DATA_START / VEILLE_DATA_END.
-   Champs requis pour chaque entrée : voir README de la routine.
+   1) DONNÉES DE VEILLE
+   La routine remplace UNIQUEMENT le tableau entre les marqueurs.
    ============================================================ */
 /* VEILLE_DATA_START */
 const VEILLE_DATA = [
   {
     "titre": "[EXEMPLE FICTIF] Méta-analyse : efficacité de la DBT-A sur l'auto-mutilation chez l'adolescent",
     "url": "https://pubmed.ncbi.nlm.nih.gov/",
-    "datePublication": "2026-05-01",
-    "dateAjout": "2026-07-06",
-    "theme": "TCD-Adolescents (DBT-A)",
-    "sousThemes": ["Auto-mutilation", "Régulation émotionnelle"],
-    "typeSource": "Méta-analyse",
-    "niveauPreuve": "Élevé",
-    "consensus": "Consensus établi",
-    "source": "PubMed",
+    "datePublication": "2026-05-01", "dateAjout": "2026-07-06",
+    "theme": "TCD-Adolescents (DBT-A)", "sousThemes": ["Auto-mutilation", "Régulation émotionnelle"],
+    "typeSource": "Méta-analyse", "niveauPreuve": "Élevé", "consensus": "Consensus établi", "source": "PubMed",
     "synthese": "Entrée de démonstration. La routine remplacera ce contenu par une vraie synthèse sourcée de 3 à 5 phrases.",
     "pertinence": "Illustre le format attendu de la propriété « pertinence clinique »."
   },
   {
     "titre": "[EXEMPLE FICTIF] Recommandation HAS : parcours de soins du TDAH chez l'enfant",
     "url": "https://www.has-sante.fr/",
-    "datePublication": "2026-03-15",
-    "dateAjout": "2026-07-06",
-    "theme": "Pédopsychiatrie",
-    "sousThemes": ["TDAH", "Politique de santé"],
-    "typeSource": "Recommandation officielle",
-    "niveauPreuve": "Modéré",
-    "consensus": "Émergent",
-    "source": "HAS",
+    "datePublication": "2026-03-15", "dateAjout": "2026-07-06",
+    "theme": "Pédopsychiatrie", "sousThemes": ["TDAH", "Politique de santé"],
+    "typeSource": "Recommandation officielle", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "HAS",
     "synthese": "Seconde entrée de démonstration pour vérifier le rendu des filtres, tags et niveaux de preuve.",
     "pertinence": "À supprimer lors de la première exécution réelle de la routine."
   }
@@ -281,111 +461,289 @@ const VEILLE_DATA = [
 /* VEILLE_DATA_END */
 
 /* ============================================================
-   RENDU + FILTRES (aucune donnée modifiée ici)
+   2) BIBLIOTHÈQUE DE RESSOURCES (Formation)
+   La routine peut enrichir ce tableau (mêmes règles de dédup).
+   cout: "Gratuit" | "Payant"  ·  langue: "FR" | "EN" | "FR/EN"
+   type: "Livre" | "Site" | "Vidéo" | "Formation" | "Article"
+   ============================================================ */
+/* FORMATION_RESSOURCES_START */
+const RESSOURCES = [
+  {
+    "titre": "Linehan — DBT Skills Training Manual (2e éd., Guilford, 2014)",
+    "url": "https://www.guilford.com/books/DBT-Skills-Training-Manual/Marsha-Linehan/9781462516995",
+    "type": "Livre", "langue": "EN", "cout": "Payant",
+    "note": "La référence clinique. Indisponible en français à ce jour ; accès possible sans achat via le prêt entre bibliothèques (PEB) d'une bibliothèque universitaire."
+  },
+  {
+    "titre": "Linehan — DBT Skills Training Handouts and Worksheets (2e éd., 2014)",
+    "url": "https://www.guilford.com/books/DBT-Skills-Training-Handouts-and-Worksheets/Marsha-Linehan/9781572307810",
+    "type": "Livre", "langue": "EN", "cout": "Payant",
+    "note": "Le volume compagnon : fiches et exercices officiels (photocopiables dans un cadre clinique). À vérifier : disponibilité d'une édition française."
+  },
+  {
+    "titre": "McKay, Wood & Brantley — The DBT Skills Workbook",
+    "url": "https://www.newharbinger.com/",
+    "type": "Livre", "langue": "EN", "cout": "Payant",
+    "note": "Entrée self-help accessible, proche du matériel Linehan. Une traduction française existerait — vérifier le titre et l'éditeur exacts."
+  },
+  {
+    "titre": "Behavioral Tech / Linehan Institute",
+    "url": "https://behavioraltech.org/",
+    "type": "Formation", "langue": "EN", "cout": "Payant",
+    "note": "Organisme officiel fondé par Linehan : formations et certification des praticiens TCD. Voie de référence pour un objectif clinique."
+  },
+  {
+    "titre": "AFTCC — Association Française de Thérapie Comportementale et Cognitive",
+    "url": "https://www.aftcc.org/",
+    "type": "Formation", "langue": "FR", "cout": "Payant",
+    "note": "Formations TCC/TCD en France. Vérifier l'offre spécifiquement dédiée à la TCD et la DBT-A."
+  },
+  {
+    "titre": "DBT Self Help",
+    "url": "https://dbtselfhelp.com/",
+    "type": "Site", "langue": "EN", "cout": "Gratuit",
+    "note": "Ressource communautaire résumant les compétences des 4 modules. Utile pour réviser, à compléter par une source clinique."
+  }
+];
+/* FORMATION_RESSOURCES_END */
+
+/* ============================================================
+   3) CURRICULUM — 4 modules de compétences TCD (contenu fixe)
+   Résumés originaux ; acronymes anglais + glose française.
+   ============================================================ */
+const MODULES = [
+  {
+    id: "mindfulness", num: "01", nom: "Pleine conscience", central: true,
+    desc: "Module central, tissé dans tous les autres : ramener l'attention au présent, sans jugement.",
+    skills: [
+      { id: "wisemind", nom: "Esprit sage", en: "Wise Mind",
+        but: "Décider depuis un état qui intègre la raison et l'émotion, plutôt que l'une des deux seule.",
+        comment: ["Repérer l'esprit raisonnable (froid, logique) et l'esprit émotionnel (chaud, réactif).", "Chercher le point d'équilibre entre les deux avant d'agir."] },
+      { id: "what", nom: "Compétences « Quoi »", en: "What skills: Observe / Describe / Participate",
+        but: "S'entraîner à porter attention : observer, décrire, participer.",
+        comment: ["Observer sans mots ce qui se passe.", "Décrire avec des faits, pas des interprétations.", "Participer pleinement à l'instant."] },
+      { id: "how", nom: "Compétences « Comment »", en: "How skills: Non-judgmentally / One-mindfully / Effectively",
+        but: "La manière d'être attentif : sans juger, une chose à la fois, efficacement.",
+        comment: ["Remplacer le jugement par la description.", "Faire une seule chose à la fois.", "Viser ce qui marche, pas ce qui « devrait »."] }
+    ]
+  },
+  {
+    id: "distress", num: "02", nom: "Tolérance à la détresse", central: false,
+    desc: "Traverser une crise aiguë sans l'aggraver, quand on ne peut pas (encore) résoudre le problème.",
+    skills: [
+      { id: "tipp", nom: "TIPP", en: "Temperature / Intense exercise / Paced breathing / Progressive relaxation",
+        but: "Faire redescendre vite l'activation physiologique en pic de crise.",
+        comment: ["Eau froide sur le visage (réflexe de plongée).", "Exercice intense bref, respiration lente, relâchement musculaire progressif."] },
+      { id: "accepts", nom: "ACCEPTS", en: "Distraction (Activities, Contributing, Comparisons…)",
+        but: "Se distraire sainement d'une détresse qu'on ne peut pas traiter dans l'instant.",
+        comment: ["Occuper l'esprit autrement pendant que l'intensité retombe.", "Outil temporaire, pas d'évitement durable."] },
+      { id: "selfsoothe", nom: "Auto-apaisement par les 5 sens", en: "Self-Soothe",
+        but: "Se réconforter concrètement via la vue, l'ouïe, l'odorat, le goût, le toucher.",
+        comment: ["Constituer à l'avance une « boîte à outils » sensorielle."] },
+      { id: "radaccept", nom: "Acceptation radicale", en: "Radical Acceptance",
+        but: "Cesser de lutter contre une réalité qu'on ne peut pas changer, pour réduire la souffrance ajoutée.",
+        comment: ["Accepter les faits ≠ approuver ni renoncer à agir.", "La lutte contre le réel amplifie la douleur."] }
+    ]
+  },
+  {
+    id: "emotion", num: "03", nom: "Régulation émotionnelle", central: false,
+    desc: "Comprendre ses émotions, réduire sa vulnérabilité et changer les émotions non désirées.",
+    skills: [
+      { id: "name", nom: "Nommer et comprendre l'émotion", en: "Understanding & naming emotions",
+        but: "Identifier l'émotion, son déclencheur et sa fonction.",
+        comment: ["Une émotion nommée est plus régulable.", "Distinguer l'émotion, la pensée et l'impulsion d'action."] },
+      { id: "please", nom: "PLEASE", en: "treat PhysicaL illness, Eating, Avoid substances, Sleep, Exercise",
+        but: "Réduire la vulnérabilité émotionnelle par l'hygiène de vie.",
+        comment: ["Soigner le corps stabilise l'humeur.", "Sommeil, alimentation, activité, éviter les substances."] },
+      { id: "opposite", nom: "Action opposée", en: "Opposite Action",
+        but: "Agir à l'inverse de l'impulsion quand l'émotion ne colle pas aux faits ou n'est pas utile.",
+        comment: ["Ex. : peur non justifiée → s'approcher au lieu de fuir.", "À combiner avec la vérification des faits."] },
+      { id: "checkfacts", nom: "Vérifier les faits", en: "Check the Facts",
+        but: "Confronter l'interprétation qui a déclenché l'émotion à la réalité observable.",
+        comment: ["L'émotion suit souvent la pensée, pas le fait.", "Corriger l'interprétation recalibre l'émotion."] }
+    ]
+  },
+  {
+    id: "interpersonal", num: "04", nom: "Efficacité interpersonnelle", central: false,
+    desc: "Demander, refuser et gérer les conflits en préservant l'objectif, la relation et le respect de soi.",
+    skills: [
+      { id: "dearman", nom: "DEAR MAN", en: "Describe, Express, Assert, Reinforce, Mindful, Appear confident, Negotiate",
+        but: "Obtenir un objectif ou poser une limite de façon efficace.",
+        comment: ["Décrire les faits, exprimer le ressenti, demander clairement.", "Rester centré, assuré, ouvert à la négociation."] },
+      { id: "give", nom: "GIVE", en: "Gentle, Interested, Validate, Easy manner",
+        but: "Préserver la qualité de la relation pendant l'échange.",
+        comment: ["Douceur, écoute, validation du point de vue de l'autre."] },
+      { id: "fast", nom: "FAST", en: "Fair, no Apologies, Stick to values, Truthful",
+        but: "Préserver son respect de soi et ses valeurs dans l'interaction.",
+        comment: ["Être juste, ne pas s'excuser à l'excès, tenir ses valeurs, rester honnête."] }
+    ]
+  }
+];
+
+/* ============================================================
+   RENDU VEILLE
    ============================================================ */
 const LEVELS = { "Élevé": 4, "Modéré": 3, "Faible": 2, "Avis d'expert": 1 };
-const LEVEL_COLORS = {
-  "Élevé": "var(--teal)", "Modéré": "var(--amber)",
-  "Faible": "var(--red)", "Avis d'expert": "var(--grey)"
-};
-const CONSENSUS_CLASS = {
-  "Consensus établi": "consensus-etabli",
-  "Émergent": "consensus-emergent",
-  "Controversé": "consensus-controverse"
-};
-
+const LEVEL_COLORS = { "Élevé": "var(--teal)", "Modéré": "var(--amber)", "Faible": "var(--red)", "Avis d'expert": "var(--grey)" };
+const CONSENSUS_CLASS = { "Consensus établi": "consensus-etabli", "Émergent": "consensus-emergent", "Controversé": "consensus-controverse" };
 const state = { theme: null, niveau: null, q: "" };
-const listEl = document.getElementById("list");
-const emptyEl = document.getElementById("empty");
-const statsEl = document.getElementById("stats");
-const demoBanner = document.getElementById("demoBanner");
 
 function esc(s) {
-  return String(s ?? "").replace(/[&<>"']/g, c =>
-    ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 }
-
 function fmtDate(iso) {
-  try {
-    return new Date(iso + "T00:00:00").toLocaleDateString("fr-FR",
-      { day: "numeric", month: "short", year: "numeric" });
-  } catch { return iso; }
+  try { return new Date(iso + "T00:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "short", year: "numeric" }); }
+  catch { return iso; }
 }
-
 function spine(niveau) {
-  const filled = LEVELS[niveau] ?? 1;
-  const color = LEVEL_COLORS[niveau] ?? "var(--grey)";
+  const filled = LEVELS[niveau] ?? 1, color = LEVEL_COLORS[niveau] ?? "var(--grey)";
   let html = "";
-  for (let i = 4; i >= 1; i--) {
-    html += `<i style="${i <= filled ? `background:${color}` : ""}"></i>`;
-  }
+  for (let i = 4; i >= 1; i--) html += `<i style="${i <= filled ? `background:${color}` : ""}"></i>`;
   return `<div class="spine" title="Niveau de preuve : ${esc(niveau)}" aria-label="Niveau de preuve : ${esc(niveau)}">${html}</div>`;
 }
-
-function card(e) {
+function veilleCard(e) {
   const tags = [
     `<span class="tag theme">${esc(e.theme)}</span>`,
     `<span class="tag ${CONSENSUS_CLASS[e.consensus] ?? ""}">${esc(e.consensus)}</span>`,
     ...(e.sousThemes ?? []).map(t => `<span class="tag">${esc(t)}</span>`)
   ].join("");
-  return `<article class="card">
-    ${spine(e.niveauPreuve)}
-    <div>
-      <h2><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.titre)}</a></h2>
-      <p class="meta">${esc(e.source)} · ${esc(e.typeSource)} · publié le ${fmtDate(e.datePublication)} · ajouté le ${fmtDate(e.dateAjout)}</p>
-      <p class="synthese">${esc(e.synthese)}</p>
-      <p class="pertinence"><strong>En pratique —</strong> ${esc(e.pertinence)}</p>
-      <div class="tags">${tags}</div>
-    </div>
-  </article>`;
+  return `<article class="card">${spine(e.niveauPreuve)}<div>
+    <h2><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.titre)}</a></h2>
+    <p class="meta">${esc(e.source)} · ${esc(e.typeSource)} · publié le ${fmtDate(e.datePublication)} · ajouté le ${fmtDate(e.dateAjout)}</p>
+    <p class="synthese">${esc(e.synthese)}</p>
+    <p class="pertinence"><strong>En pratique —</strong> ${esc(e.pertinence)}</p>
+    <div class="tags">${tags}</div></div></article>`;
 }
-
-function matches(e) {
+function veilleMatches(e) {
   if (state.theme && e.theme !== state.theme) return false;
   if (state.niveau && e.niveauPreuve !== state.niveau) return false;
   if (state.q) {
-    const hay = [e.titre, e.synthese, e.pertinence, e.source,
-      ...(e.sousThemes ?? [])].join(" ").toLowerCase();
+    const hay = [e.titre, e.synthese, e.pertinence, e.source, ...(e.sousThemes ?? [])].join(" ").toLowerCase();
     if (!hay.includes(state.q)) return false;
   }
   return true;
 }
-
-function render() {
-  const sorted = [...VEILLE_DATA].sort((a, b) =>
-    (b.dateAjout + b.datePublication).localeCompare(a.dateAjout + a.datePublication));
-  const visible = sorted.filter(matches);
-
-  listEl.innerHTML = visible.map(card).join("");
-  emptyEl.hidden = visible.length > 0;
-
-  const lastUpdate = sorted.length ? fmtDate(sorted[0].dateAjout) : "—";
-  statsEl.textContent =
-    `${VEILLE_DATA.length} entrée${VEILLE_DATA.length > 1 ? "s" : ""} · ` +
-    `${visible.length} affichée${visible.length > 1 ? "s" : ""} · ` +
-    `dernière mise à jour : ${lastUpdate}`;
-
-  const hasDemo = VEILLE_DATA.some(e => e.titre.includes("[EXEMPLE FICTIF]"));
-  demoBanner.hidden = !hasDemo;
+function renderVeille() {
+  const sorted = [...VEILLE_DATA].sort((a, b) => (b.dateAjout + b.datePublication).localeCompare(a.dateAjout + a.datePublication));
+  const visible = sorted.filter(veilleMatches);
+  document.getElementById("veille-list").innerHTML = visible.map(veilleCard).join("");
+  document.getElementById("veille-empty").hidden = visible.length > 0;
+  const last = sorted.length ? fmtDate(sorted[0].dateAjout) : "—";
+  document.getElementById("veille-stats").textContent =
+    `${VEILLE_DATA.length} entrée${VEILLE_DATA.length > 1 ? "s" : ""} · ${visible.length} affichée${visible.length > 1 ? "s" : ""} · dernière mise à jour : ${last}`;
+  document.getElementById("demoBanner").hidden = !VEILLE_DATA.some(e => e.titre.includes("[EXEMPLE FICTIF]"));
 }
-
 document.querySelectorAll(".chip").forEach(btn => {
   btn.addEventListener("click", () => {
-    const { filter, value } = btn.dataset;
-    const active = state[filter] === value;
+    const { filter, value } = btn.dataset, active = state[filter] === value;
     state[filter] = active ? null : value;
-    document.querySelectorAll(`.chip[data-filter="${filter}"]`)
-      .forEach(b => b.setAttribute("aria-pressed", String(b === btn && !active)));
-    render();
+    document.querySelectorAll(`.chip[data-filter="${filter}"]`).forEach(b => b.setAttribute("aria-pressed", String(b === btn && !active)));
+    renderVeille();
+  });
+});
+document.getElementById("search").addEventListener("input", ev => { state.q = ev.target.value.trim().toLowerCase(); renderVeille(); });
+
+/* ============================================================
+   RENDU FORMATION + PROGRESSION
+   Persistance : localStorage si dispo (navigateur réel / site hébergé),
+   sinon mémoire de session (aperçu Claude) — dégradation gracieuse.
+   ============================================================ */
+const STORAGE_KEY = "tcd-formation-progress-v1";
+let progress = {};
+let storageOK = false;
+try {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  progress = raw ? JSON.parse(raw) : {};
+  storageOK = true;
+} catch { progress = {}; storageOK = false; }
+
+function saveProgress() {
+  if (!storageOK) return;
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(progress)); } catch {}
+}
+function statusOf(id) { return progress[id] || "todo"; }
+
+function resBadges(r) {
+  return `<div class="badges">
+    <span class="badge type">${esc(r.type)}</span>
+    <span class="badge lang">${esc(r.langue)}</span>
+    <span class="badge ${r.cout === "Gratuit" ? "gratuit" : "payant"}">${esc(r.cout)}</span>
+  </div>`;
+}
+function renderResources() {
+  document.getElementById("resources").innerHTML = RESSOURCES.map(r => `<div class="res"><div>
+    <h4><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.titre)}</a></h4>
+    <p class="note">${esc(r.note)}</p></div>${resBadges(r)}</div>`).join("");
+}
+
+function skillCard(s) {
+  const st = statusOf(s.id);
+  const btn = (val, label) => `<button data-s="${val}" data-skill="${s.id}" aria-pressed="${st === val}">${label}</button>`;
+  return `<div class="skill" data-status="${st}" id="skill-${s.id}">
+    <div class="skill-top">
+      <div><h4>${esc(s.nom)}</h4><span class="en">${esc(s.en)}</span></div>
+      <div class="status-btns">${btn("todo", "À voir")}${btn("doing", "En cours")}${btn("done", "Acquis")}</div>
+    </div>
+    <p class="but">${esc(s.but)}</p>
+    <ul>${s.comment.map(c => `<li>${esc(c)}</li>`).join("")}</ul>
+  </div>`;
+}
+function renderModules() {
+  document.getElementById("modules").innerHTML = MODULES.map(m => `<section class="module">
+    <div class="module-head"><span class="module-num">${m.num}</span><h3>${esc(m.nom)}</h3>
+    ${m.central ? '<span class="module-central">Module central</span>' : ""}</div>
+    <p class="module-desc">${esc(m.desc)}</p>
+    ${m.skills.map(skillCard).join("")}
+  </section>`).join("");
+}
+function renderProgress() {
+  const all = MODULES.flatMap(m => m.skills);
+  const doneAll = all.filter(s => statusOf(s.id) === "done").length;
+  const pct = all.length ? Math.round((doneAll / all.length) * 100) : 0;
+  document.getElementById("overall-pct").textContent = pct + " %";
+  document.getElementById("overall-label").textContent =
+    `des compétences acquises (${doneAll}/${all.length})` + (storageOK ? "" : " · progression non sauvegardée dans cet aperçu");
+  document.getElementById("mini-bars").innerHTML = MODULES.map(m => {
+    const done = m.skills.filter(s => statusOf(s.id) === "done").length;
+    const p = m.skills.length ? Math.round((done / m.skills.length) * 100) : 0;
+    return `<div class="mini-row"><span class="name">${esc(m.nom)}</span>
+      <div class="bar"><span style="width:${p}%"></span></div>
+      <span class="val">${done}/${m.skills.length}</span></div>`;
+  }).join("");
+}
+function renderFormation() { renderModules(); renderResources(); renderProgress(); }
+
+document.getElementById("modules").addEventListener("click", ev => {
+  const b = ev.target.closest("button[data-skill]");
+  if (!b) return;
+  progress[b.dataset.skill] = b.dataset.s;
+  saveProgress();
+  const card = document.getElementById("skill-" + b.dataset.skill);
+  card.dataset.status = b.dataset.s;
+  card.querySelectorAll("button[data-skill]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.s === b.dataset.s)));
+  renderProgress();
+});
+
+/* ============================================================
+   ONGLETS
+   ============================================================ */
+const tabs = [
+  { tab: "tab-veille", panel: "panel-veille" },
+  { tab: "tab-formation", panel: "panel-formation" }
+];
+let formationRendered = false;
+tabs.forEach(({ tab, panel }) => {
+  document.getElementById(tab).addEventListener("click", () => {
+    tabs.forEach(t => {
+      const sel = t.tab === tab;
+      document.getElementById(t.tab).setAttribute("aria-selected", String(sel));
+      document.getElementById(t.panel).hidden = !sel;
+    });
+    if (panel === "panel-formation" && !formationRendered) { renderFormation(); formationRendered = true; }
   });
 });
 
-document.getElementById("search").addEventListener("input", ev => {
-  state.q = ev.target.value.trim().toLowerCase();
-  render();
-});
-
-render();
+renderVeille();
 </script>
 </body>
 </html>
