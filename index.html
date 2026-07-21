@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Veille &amp; Formation — Pédopsychiatrie &amp; TCD</title>
+<title>Veille &amp; Formation — Pédopsychiatrie, TCD &amp; TCC</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Spectral:wght@500;600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -276,12 +276,13 @@
 
 <header>
   <p class="eyebrow">Espace clinique personnel</p>
-  <h1>Pédopsychiatrie <span class="amp">&amp;</span> TCD</h1>
+  <h1>Pédopsychiatrie, TCD <span class="amp">&amp;</span> TCC</h1>
 </header>
 
 <div class="tabs" role="tablist">
   <button class="tab" role="tab" id="tab-veille" aria-controls="panel-veille" aria-selected="true">Veille</button>
-  <button class="tab" role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false">Formation</button>
+  <button class="tab" role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false">Formation TCD</button>
+  <button class="tab" role="tab" id="tab-formation-tcc" aria-controls="panel-formation-tcc" aria-selected="false">Formation TCC</button>
 </div>
 
 <!-- ==================== PANEL VEILLE ==================== -->
@@ -297,6 +298,7 @@
     <button class="chip" data-filter="theme" data-value="Pédopsychiatrie" aria-pressed="false">Pédopsychiatrie</button>
     <button class="chip" data-filter="theme" data-value="TCD" aria-pressed="false">TCD</button>
     <button class="chip" data-filter="theme" data-value="TCD-Adolescents (DBT-A)" aria-pressed="false">DBT-A</button>
+    <button class="chip" data-filter="theme" data-value="TCC" aria-pressed="false">TCC</button>
     <span class="sep" aria-hidden="true"></span>
     <span class="group-label">Preuve</span>
     <button class="chip" data-filter="niveau" data-value="Élevé" aria-pressed="false">Élevé</button>
@@ -432,6 +434,128 @@
   </p>
 </section>
 
+<!-- ==================== PANEL FORMATION TCC ==================== -->
+<section class="panel" id="panel-formation-tcc" role="tabpanel" aria-labelledby="tab-formation-tcc" hidden>
+  <div class="progress-head">
+    <div class="overall">
+      <span class="pct" id="overall-pct-tcc">0 %</span>
+      <span class="pct-label" id="overall-label-tcc">des compétences acquises</span>
+    </div>
+    <div class="mini-bars" id="mini-bars-tcc"></div>
+  </div>
+
+  <section class="parcours">
+    <h3>Parcours conseillé</h3>
+    <p class="intro">La TCC (thérapie cognitivo-comportementale) n'est pas une collection de recettes : c'est une démarche structurée qui part de la compréhension du problème avant d'agir. On évalue, on partage un modèle, on outille — sur le plan comportemental puis cognitif —, puis on consolide. Voici l'ordre de référence d'une prise en charge.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="dot">01</span>
+        <div><h4>Évaluation &amp; conceptualisation</h4>
+        <p>Comprendre avant d'agir : analyse fonctionnelle (ABC) et conceptualisation de cas selon le modèle cognitif. Sans cette carte, les techniques s'appliquent à l'aveugle.</p></div>
+      </div>
+      <div class="step">
+        <span class="dot">02</span>
+        <div><h4>Alliance &amp; psychoéducation</h4>
+        <p>Poser un cadre collaboratif (empirisme collaboratif), partager le modèle TCC avec le patient et fixer des objectifs concrets et mesurables.</p></div>
+      </div>
+      <div class="step">
+        <span class="dot">03</span>
+        <div><h4>Techniques, selon le trouble</h4>
+        <p>Le cœur du travail : techniques comportementales (exposition pour l'anxiété/les phobies, activation comportementale pour la dépression) et restructuration cognitive. L'accent varie selon le trouble.</p></div>
+      </div>
+      <div class="step">
+        <span class="dot">04</span>
+        <div><h4>Consolidation &amp; prévention de la rechute</h4>
+        <p>Ancrer les acquis via les tâches entre les séances, repérer les situations à risque et préparer un plan pour rester « son propre thérapeute » après la fin du suivi.</p></div>
+      </div>
+    </div>
+
+    <p class="goals-label">Adaptation à l'enfant et à l'adolescent</p>
+    <div class="goals">
+      <div class="goal">
+        <p class="g-title">Impliquer les parents</p>
+        <p>Plus l'enfant est jeune, plus les parents sont co-thérapeutes : guidance parentale, renforcement à la maison, cohérence du cadre. La méta-analyse de Zhou &amp; Reardon (2025) confirme leur rôle modérateur.</p>
+      </div>
+      <div class="goal">
+        <p class="g-title">Adapter au développement</p>
+        <p>Supports concrets, visuels et ludiques ; vocabulaire simple ; durées courtes. Le raisonnement abstrait de la restructuration cognitive se travaille davantage à l'adolescence.</p>
+      </div>
+      <div class="goal">
+        <p class="g-title">Cibler par trouble</p>
+        <p>Anxiété/phobies → exposition graduée ; TOC → exposition avec prévention de la réponse ; dépression → activation comportementale + cognitif. Un protocole par indication.</p>
+      </div>
+      <div class="goal">
+        <p class="g-title">Articuler avec l'école</p>
+        <p>Aménagements, retour progressif (phobie scolaire), lien avec les enseignants. Les programmes scolaires universels ont un effet réel mais modeste (Zhang, 2025).</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="theory">
+    <h3>Cadre théorique</h3>
+    <p class="intro">Comprendre le « pourquoi » : le modèle cognitif, les trois vagues des TCC, les indications et les principes qui les distinguent.</p>
+
+    <div class="theory-block">
+      <p class="t-label">Le modèle cognitif</p>
+      <p>Le postulat central de la TCC est que ce ne sont pas les situations elles-mêmes qui déterminent nos émotions, mais l'<strong>interprétation</strong> que nous en faisons. Face à une situation, des <strong>pensées automatiques</strong> surgissent et déclenchent des émotions, des réactions physiques et des comportements — qui, en retour, renforcent ces pensées. Agir sur ce cercle, côté cognitif <em>ou</em> comportemental, permet de le modifier.</p>
+      <div class="biosocial-eq">
+        <span>Situation</span>
+        <span class="arrow">→</span>
+        <span>Pensées automatiques<br><em>(interprétation)</em></span>
+        <span class="arrow">→</span>
+        <span class="result">Émotion · Corps<br>Comportement</span>
+      </div>
+      <p class="t-foot">Cercle entretenu : le comportement (ex. évitement) et les émotions <strong>renforcent</strong> en retour les pensées. La TCC casse la boucle par l'exposition, l'activation et la restructuration.</p>
+    </div>
+
+    <div class="theory-block">
+      <p class="t-label">Les trois « vagues » des TCC</p>
+      <div class="two-col">
+        <div><h5>1<sup>re</sup> &amp; 2<sup>e</sup> vagues</h5><ul>
+          <li><strong>1<sup>re</sup> (comportementale)</strong> : conditionnements (Pavlov, Skinner) → exposition, renforcement.</li>
+          <li><strong>2<sup>e</sup> (cognitive)</strong> : Beck &amp; Ellis → repérer et modifier pensées et croyances dysfonctionnelles.</li>
+          <li>Cœur historique de la TCC : changer le contenu des cognitions et des comportements.</li>
+        </ul></div>
+        <div><h5>3<sup>e</sup> vague (contextuelle)</h5><ul>
+          <li>ACT, thérapie des schémas, pleine conscience (MBCT), <strong>et la TCD</strong>.</li>
+          <li>On travaille moins le <em>contenu</em> des pensées que la <strong>relation</strong> qu'on entretient avec elles (acceptation, défusion, valeurs).</li>
+          <li>La TCD (voir onglet dédié) en est la forme spécialisée pour la dysrégulation émotionnelle sévère.</li>
+        </ul></div>
+      </div>
+    </div>
+
+    <div class="theory-block">
+      <p class="t-label">Indications &amp; principes</p>
+      <div class="two-col">
+        <div><h5>Indications</h5><ul>
+          <li>Troubles anxieux, phobies, trouble panique, anxiété sociale</li>
+          <li>Dépression, TOC, état de stress post-traumatique</li>
+          <li>Troubles du comportement alimentaire, insomnie, addictions</li>
+          <li>Chez l'enfant/ado : anxiété de séparation, phobie scolaire, TOC, dépression, TDAH (volet comportemental)</li>
+        </ul></div>
+        <div><h5>Principes de la méthode</h5><ul>
+          <li>Structurée, centrée sur le présent et sur un problème défini</li>
+          <li>Collaborative et fondée sur des objectifs mesurables</li>
+          <li>Limitée dans le temps, avec des tâches entre les séances</li>
+          <li>Fondée sur les preuves (première intention dans de nombreuses recommandations)</li>
+        </ul></div>
+      </div>
+      <p class="t-foot">La série de méta-analyses de Cuijpers et al. (JAMA Psychiatry, 2025) confirme des effets élevés dans le TSPT et les phobies, modérés à élevés dans l'anxiété, la dépression et le TOC.</p>
+    </div>
+  </section>
+
+  <div id="modules-tcc"></div>
+
+  <h3 class="res-head">Bibliothèque de ressources</h3>
+  <p class="res-sub">Ressources francophones en priorité pour la TCC (générale et pédiatrique). Les formations cliniques supposent un cursus reconnu ; vérifie les éditions et calendriers exacts.</p>
+  <div id="resources-tcc"></div>
+
+  <p class="foot-note">
+    Les fiches de compétences sont des résumés originaux à visée pédagogique. La TCC couvre une famille de méthodes : les protocoles précis (exposition, restructuration, activation) se travaillent avec les ouvrages de référence listés ci-dessus. Apprendre les principes pour soi est accessible, mais conduire une TCC en clinique requiert une formation reconnue (ex. AFTCC, DU universitaires) et de la supervision.
+  </p>
+</section>
+
 <script>
 /* ============================================================
    1) DONNÉES DE VEILLE
@@ -510,6 +634,42 @@ const VEILLE_DATA = [
     "typeSource": "RCT", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
     "synthese": "Essai contrôlé randomisé en clusters publié dans BMC Public Health (Li et al., décembre 2025), mené auprès de 220 collégiens de 7e année (2 écoles, 4 classes) à Shantou (Chine), comparant un programme de prévention fondé sur les compétences TCD à une intervention éducative classique. Après 6 mois, l'occurrence de l'automutilation non suicidaire dans le groupe TCD est passée de 23,60% à 10,91% (p<0,05), avec une réduction de la fréquence des gestes (p<0,001) et une amélioration des scores de dépression et de santé sub-optimale (p<0,05) ; le groupe contrôle n'a montré aucune amélioration significative sur ces mesures.",
     "pertinence": "Étude de petite taille et monocentrique (population scolaire chinoise), mais elle suggère qu'un format bref et collectif des compétences TCD, hors cadre clinique individuel, peut réduire l'automutilation — piste à surveiller pour des programmes de prévention primaire en milieu scolaire français."
+  },
+  {
+    "titre": "TCC des troubles mentaux de l'adulte : série unifiée de méta-analyses (375 essais)",
+    "url": "https://doi.org/10.1001/jamapsychiatry.2025.0482",
+    "datePublication": "2025-04-16", "dateAjout": "2026-07-21",
+    "theme": "TCC", "sousThemes": ["Dépression", "Troubles anxieux", "TOC", "TSPT", "Efficacité comparée"],
+    "typeSource": "Méta-analyse", "niveauPreuve": "Élevé", "consensus": "Consensus établi", "source": "PubMed",
+    "synthese": "Vaste série de méta-analyses harmonisées (Cuijpers et al., JAMA Psychiatry, 16 avril 2025) intégrant 375 essais randomisés et 32 968 patients adultes, comparant la TCC à des conditions contrôles inactives pour la dépression majeure, quatre troubles anxieux, le TOC, le TSPT, deux troubles du comportement alimentaire, ainsi que les troubles psychotiques et bipolaires. Les tailles d'effet (g de Hedges) vont de 0,31 (trouble bipolaire) à 1,27 (TSPT) : > 1,0 pour le TSPT et les phobies spécifiques ; entre 0,5 et 1,0 pour les troubles paniques, l'anxiété sociale, l'anxiété généralisée, la boulimie, l'hyperphagie, la dépression et le TOC ; < 0,5 pour les troubles bipolaires et psychotiques. L'ampleur dépend fortement du type de contrôle (effets plus grands vs liste d'attente que vs soins habituels).",
+    "pertinence": "Référence de synthèse la plus complète à ce jour : conforte la TCC comme traitement de première intention pour la plupart des troubles internalisés, tout en rappelant que l'effet réel dépend du comparateur et reste modeste dans les troubles psychotiques/bipolaires."
+  },
+  {
+    "titre": "Modérateurs de l'efficacité des TCC pour l'anxiété de l'enfant et de l'adolescent : revue systématique et méta-analyse",
+    "url": "https://doi.org/10.1016/j.cpr.2025.102548",
+    "datePublication": "2025-01-09", "dateAjout": "2026-07-21",
+    "theme": "TCC", "sousThemes": ["Anxiété", "Enfant/Adolescent", "Prévention", "Implication parentale"],
+    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "synthese": "Méta-analyse (Zhou, Creswell, Reardon ; Clinical Psychology Review, janvier 2025) de 86 essais randomisés évaluant 98 interventions TCC contre contrôles non actifs pour la prévention universelle, la prévention ciblée et le traitement des troubles anxieux chez l'enfant et l'adolescent. L'analyse cherche « ce qui marche pour qui » : l'âge de l'enfant, le profil de l'animateur et l'implication parentale modèrent l'efficacité en prévention universelle ; l'âge et la durée en prévention ciblée ; l'âge, le temps de contact et le format de délivrance en traitement. Le niveau d'anxiété initial ne ressort pas comme modérateur. Les auteurs appellent à la prudence vu l'hétérogénéité et les divergences entre auto-évaluations enfant et parent.",
+    "pertinence": "Invite à personnaliser le format des TCC selon l'âge et le contexte (implication des parents surtout chez les plus jeunes), plutôt qu'à appliquer un protocole unique ; utile pour calibrer les programmes de prévention en milieu scolaire ou clinique."
+  },
+  {
+    "titre": "Effets à long terme des TCC scolaires universelles chez des enfants et adolescents à bas risque : méta-analyse bayésienne",
+    "url": "https://doi.org/10.1002/jclp.70069",
+    "datePublication": "2025-11-24", "dateAjout": "2026-07-21",
+    "theme": "TCC", "sousThemes": ["Prévention scolaire", "Dépression", "Anxiété", "Santé publique"],
+    "typeSource": "Méta-analyse", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "PubMed",
+    "synthese": "Méta-analyse bayésienne (Zhang, Liang, Kang ; Journal of Clinical Psychology, 24 novembre 2025) de 31 essais randomisés totalisant 19 865 enfants et adolescents « à bas risque », évaluant la TCC scolaire universelle en prévention. Comparée aux contrôles, elle produit une amélioration statistiquement significative mais très faible des symptômes dépressifs (DMS -0,06) et une réduction faible de l'anxiété (DMS -0,19), effets maintenus jusqu'à un an. Les auteurs soulignent eux-mêmes la très faible qualité des preuves sous-jacentes : signal prometteur mais insuffisant pour recommander un déploiement généralisé sans essais de grande ampleur.",
+    "pertinence": "Nuance l'engouement pour les programmes TCC universels à l'école : bénéfice préventif réel mais très modeste chez les jeunes tout-venant ; à réserver/évaluer plutôt qu'à généraliser en l'état."
+  },
+  {
+    "titre": "Prédicteurs et modérateurs des thérapies délivrées par internet pour la dépression de l'adolescent : essai de non-infériorité",
+    "url": "https://doi.org/10.1080/10503307.2026.2686693",
+    "datePublication": "2026-06-23", "dateAjout": "2026-07-21",
+    "theme": "TCC", "sousThemes": ["Dépression", "iCBT", "Adolescents", "Choix du traitement"],
+    "typeSource": "RCT", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "synthese": "Analyse secondaire (Mechler et al., Psychotherapy Research, 23 juin 2026) d'un essai randomisé de non-infériorité (n=272) comparant, sur 10 semaines, une TCC guidée délivrée par internet (iCBT) à une thérapie psychodynamique par internet (IPDT) chez des adolescents dépressifs. Une meilleure auto-compassion initiale prédit une amélioration plus rapide, quel que soit le traitement. L'anxiété comorbide agit comme modérateur : à anxiété élevée, l'IPDT fait mieux que l'iCBT ; à anxiété très basse, l'iCBT fait mieux. Aucun autre modérateur significatif ; réplication nécessaire.",
+    "pertinence": "Suggère des critères simples d'aiguillage : envisager l'iCBT en priorité chez l'adolescent peu anxieux, et une alternative si l'anxiété comorbide est marquée ; renforce la place des formats numériques guidés dans la dépression de l'adolescent."
   }
 ];
 /* VEILLE_DATA_END */
@@ -538,7 +698,7 @@ const RESSOURCES = [
     "titre": "Linehan (trad. Prada, Perroud, Nicastro) — Manuel d'entraînement aux compétences TCD (2e éd., Médecine & Hygiène, 2017)",
     "url": "https://boutique.revmed.ch/manuel-d-entrainement-aux-competences-tcd",
     "type": "Livre", "langue": "FR", "cout": "Payant",
-    "note": "Traduction française officielle du DBT Skills Training Manual de Linehan (2e éd.), réalisée par l'unité des troubles de la régulation émotionnelle des Hôpitaux universitaires de Genève. Inclut l'accès à 225 fiches et tableaux d'exercices en ligne pour les acheteurs. Rare traduction complète du manuel de référence en français."
+    "note": "Traduction française officielle du DBT Skills Training Manual de Linehan (2e éd.), réalisée par l'unité des troubles de la régulation émotionnelle des Hôpitaux universitaires de Genève. Contient le volume « Documents et fiches de travail » (handouts/worksheets officiels, ~225 fiches) fourni avec le manuel. ⚠️ Fiches protégées par le droit d'auteur : usage clinique/personnel uniquement, pas de rediffusion ni de mise en ligne. Rare traduction complète du manuel de référence en français."
   },
   {
     "titre": "McKay, Wood & Brantley — The DBT Skills Workbook",
@@ -649,6 +809,116 @@ const MODULES = [
         but: "Préserver son respect de soi et ses valeurs dans l'interaction.",
         comment: ["Être juste, ne pas s'excuser à l'excès, tenir ses valeurs, rester honnête."] }
     ]
+  }
+];
+
+/* ============================================================
+   3bis) CURRICULUM TCC — 4 modules (contenu fixe)
+   Résumés originaux ; acronymes anglais + glose française.
+   ids préfixés "tcc-" pour ne pas entrer en collision avec la TCD.
+   ============================================================ */
+const MODULES_TCC = [
+  {
+    id: "eval-tcc", num: "01", nom: "Évaluation & conceptualisation", central: true,
+    desc: "Module socle : comprendre le fonctionnement du patient avant d'agir. Analyse fonctionnelle et modèle cognitif partagé.",
+    skills: [
+      { id: "tcc-abc", nom: "Analyse fonctionnelle (ABC)", en: "Antecedent – Behavior – Consequence",
+        but: "Décrire précisément quand, comment et pourquoi un comportement-problème survient et se maintient.",
+        comment: ["Antécédents (déclencheurs) → Comportement → Conséquences.", "Ce sont les conséquences (renforcements) qui expliquent le maintien.", "Base de toute intervention comportementale."] },
+      { id: "tcc-conceptualisation", nom: "Conceptualisation de cas", en: "Case formulation",
+        but: "Relier situations, pensées, émotions, sensations physiques et comportements dans un schéma explicatif partagé.",
+        comment: ["Modèle de Beck : Situation → Pensées automatiques → Émotion / Corps / Comportement.", "Construite avec le patient (empirisme collaboratif).", "Elle guide le choix des techniques."] },
+      { id: "tcc-objectifs", nom: "Objectifs & psychoéducation", en: "Goal setting & psychoeducation",
+        but: "Définir des objectifs concrets et mesurables et expliquer le modèle TCC.",
+        comment: ["Objectifs SMART, hiérarchisés avec le patient.", "Le patient comprend le « pourquoi » de chaque technique.", "Auto-observation mise en place dès le départ."] }
+    ]
+  },
+  {
+    id: "comportemental-tcc", num: "02", nom: "Techniques comportementales", central: false,
+    desc: "Agir sur les comportements pour modifier les émotions : s'exposer à ce qu'on évite, réactiver ce qu'on a déserté.",
+    skills: [
+      { id: "tcc-activation", nom: "Activation comportementale", en: "Behavioral Activation",
+        but: "Réengager des activités sources de plaisir et de maîtrise pour rompre le cercle dépressif.",
+        comment: ["Contrer le retrait et l'inertie de la dépression.", "Planifier des activités graduées et observer l'effet sur l'humeur.", "L'action précède la motivation, pas l'inverse."] },
+      { id: "tcc-exposition", nom: "Exposition graduée", en: "Graded Exposure",
+        but: "Affronter progressivement les situations redoutées pour désapprendre la peur.",
+        comment: ["Construire une hiérarchie, du plus facile au plus difficile.", "Rester dans la situation jusqu'à la baisse de l'anxiété (habituation).", "Pour le TOC : exposition + prévention de la réponse (EPR)."] },
+      { id: "tcc-relaxation", nom: "Régulation physiologique", en: "Relaxation & breathing",
+        but: "Réduire l'activation corporelle (respiration, relaxation musculaire).",
+        comment: ["Respiration abdominale lente, relaxation de Jacobson.", "Outil d'appoint — pas un moyen d'éviter l'exposition.", "Utile en gestion du stress et de l'anxiété."] },
+      { id: "tcc-problemes", nom: "Résolution de problèmes", en: "Problem Solving",
+        but: "Traiter méthodiquement un problème concret plutôt que de ruminer.",
+        comment: ["Définir → lister des solutions → évaluer → choisir → agir → réviser.", "Distinguer un problème soluble d'un souci hypothétique."] }
+    ]
+  },
+  {
+    id: "cognitif-tcc", num: "03", nom: "Restructuration cognitive", central: false,
+    desc: "Repérer et assouplir les pensées et croyances qui entretiennent la souffrance.",
+    skills: [
+      { id: "tcc-pensees", nom: "Repérer les pensées automatiques", en: "Automatic Thoughts",
+        but: "Identifier les pensées qui traversent l'esprit dans les moments de détresse.",
+        comment: ["Se demander : « Qu'est-ce qui m'a traversé l'esprit ? »", "Distinguer la pensée, le fait et l'émotion.", "Journal de pensées (méthode des colonnes)."] },
+      { id: "tcc-distorsions", nom: "Distorsions cognitives", en: "Cognitive Distortions",
+        but: "Reconnaître les erreurs de raisonnement récurrentes.",
+        comment: ["Ex. : catastrophisme, tout-ou-rien, lecture de pensée, généralisation.", "Nommer la distorsion aide déjà à en prendre du recul."] },
+      { id: "tcc-socratique", nom: "Questionnement socratique", en: "Socratic Questioning",
+        but: "Examiner les preuves pour et contre une pensée, chercher une alternative plus juste.",
+        comment: ["« Quels faits appuient / contredisent cette pensée ? »", "Viser une pensée alternative réaliste, pas seulement « positive ».", "Tester la pensée par des expériences comportementales."] },
+      { id: "tcc-schemas", nom: "Croyances fondamentales & schémas", en: "Core beliefs & schemas",
+        but: "Repérer les croyances profondes (« je suis nul », « on ne peut faire confiance à personne ») qui génèrent les pensées automatiques.",
+        comment: ["Travail plus profond, après les pensées automatiques.", "Technique de la flèche descendante pour remonter à la croyance centrale.", "Lien avec la thérapie des schémas (3e vague)."] }
+    ]
+  },
+  {
+    id: "consolidation-tcc", num: "04", nom: "Consolidation & prévention de la rechute", central: false,
+    desc: "Ancrer les acquis dans le quotidien et préparer l'après-thérapie.",
+    skills: [
+      { id: "tcc-devoirs", nom: "Tâches entre les séances", en: "Homework",
+        but: "Transférer le travail thérapeutique dans la vie réelle entre les séances.",
+        comment: ["Cœur de l'efficacité de la TCC : la pratique entre les séances.", "Convenues ensemble, puis revues à la séance suivante."] },
+      { id: "tcc-monitoring", nom: "Auto-observation", en: "Self-monitoring",
+        but: "Suivre pensées, émotions et comportements pour objectiver les progrès.",
+        comment: ["Grilles, échelles, journal.", "Rend visibles les déclencheurs et les progrès."] },
+      { id: "tcc-rechute", nom: "Prévention de la rechute", en: "Relapse Prevention",
+        but: "Identifier les signaux d'alerte et préparer un plan pour y répondre.",
+        comment: ["Repérer les situations à risque et les premiers signes.", "Rédiger un plan d'action (« carte de survie »).", "Objectif final : devenir son propre thérapeute."] }
+    ]
+  }
+];
+
+/* ============================================================
+   BIBLIOTHÈQUE DE RESSOURCES TCC (contenu fixe)
+   ============================================================ */
+const RESSOURCES_TCC = [
+  {
+    "titre": "Cottraux — Les psychothérapies cognitives et comportementales (7e éd., Elsevier-Masson, 2020)",
+    "url": "https://www.elsevier-masson.fr/les-psychotherapies-cognitives-et-comportementales-9782294767784.html",
+    "type": "Livre", "langue": "FR", "cout": "Payant",
+    "note": "Le manuel de référence francophone (1re éd. 1978). Panorama complet des TCC, mis à jour avec la 3e vague (pleine conscience, ACT), les troubles de la personnalité et les neurosciences."
+  },
+  {
+    "titre": "Vera — TCC chez l'enfant et l'adolescent (3e éd., Elsevier-Masson)",
+    "url": "https://www.elsevier-masson.fr/tcc-chez-lenfant-et-ladolescent-9782294786273.html",
+    "type": "Livre", "langue": "FR", "cout": "Payant",
+    "note": "Référence francophone spécifiquement pédiatrique : modèles et techniques, puis trouble par trouble (phobie sociale, anxiété de séparation, phobie scolaire, TOC, dépression, TDAH…). Collection « Pratiques en psychothérapie »."
+  },
+  {
+    "titre": "Bouvet — Introduction aux thérapies comportementales et cognitives (TCC) (Dunod)",
+    "url": "https://www.dunod.com/sciences-humaines-et-sociales/introduction-aux-therapies-comportementales-et-cognitives-tcc-0",
+    "type": "Livre", "langue": "FR", "cout": "Payant",
+    "note": "Introduction accessible pour entrer dans la logique des TCC (modèles, techniques, déroulé d'une prise en charge). Bon point de départ avant les manuels cliniques."
+  },
+  {
+    "titre": "AFTCC — Association Française de Thérapie Comportementale et Cognitive",
+    "url": "https://www.aftcc.org/",
+    "type": "Formation", "langue": "FR", "cout": "Payant",
+    "note": "Association de référence en France : formations, congrès et annuaire de praticiens. Voie principale pour se former sérieusement à la TCC (adulte et enfant/ado)."
+  },
+  {
+    "titre": "Beck Institute for Cognitive Behavior Therapy",
+    "url": "https://beckinstitute.org/",
+    "type": "Formation", "langue": "EN", "cout": "Payant",
+    "note": "Institut fondé par Aaron T. et Judith Beck, à l'origine de la thérapie cognitive. Formations et ressources (certaines gratuites) sur la TCC fondée sur les preuves. Source primaire du modèle cognitif."
   }
 ];
 
@@ -785,7 +1055,40 @@ function renderProgress() {
 }
 function renderFormation() { renderModules(); renderResources(); renderProgress(); }
 
-document.getElementById("modules").addEventListener("click", ev => {
+/* --- Rendu formation TCC (mêmes helpers, cibles distinctes) --- */
+function renderModulesTCC() {
+  document.getElementById("modules-tcc").innerHTML = MODULES_TCC.map(m => `<section class="module">
+    <div class="module-head"><span class="module-num">${m.num}</span><h3>${esc(m.nom)}</h3>
+    ${m.central ? '<span class="module-central">Module central</span>' : ""}</div>
+    <p class="module-desc">${esc(m.desc)}</p>
+    ${m.skills.map(skillCard).join("")}
+  </section>`).join("");
+}
+function renderResourcesTCC() {
+  document.getElementById("resources-tcc").innerHTML = RESSOURCES_TCC.map(r => `<div class="res"><div>
+    <h4><a href="${esc(r.url)}" target="_blank" rel="noopener noreferrer">${esc(r.titre)}</a></h4>
+    <p class="note">${esc(r.note)}</p></div>${resBadges(r)}</div>`).join("");
+}
+function renderProgressTCC() {
+  const all = MODULES_TCC.flatMap(m => m.skills);
+  const doneAll = all.filter(s => statusOf(s.id) === "done").length;
+  const pct = all.length ? Math.round((doneAll / all.length) * 100) : 0;
+  document.getElementById("overall-pct-tcc").textContent = pct + " %";
+  document.getElementById("overall-label-tcc").textContent =
+    `des compétences acquises (${doneAll}/${all.length})` + (storageOK ? "" : " · progression non sauvegardée dans cet aperçu");
+  document.getElementById("mini-bars-tcc").innerHTML = MODULES_TCC.map(m => {
+    const done = m.skills.filter(s => statusOf(s.id) === "done").length;
+    const p = m.skills.length ? Math.round((done / m.skills.length) * 100) : 0;
+    return `<div class="mini-row"><span class="name">${esc(m.nom)}</span>
+      <div class="bar"><span style="width:${p}%"></span></div>
+      <span class="val">${done}/${m.skills.length}</span></div>`;
+  }).join("");
+}
+function renderFormationTCC() { renderModulesTCC(); renderResourcesTCC(); renderProgressTCC(); }
+
+/* Gestion du statut d'une compétence, partagée TCD + TCC.
+   Les ids étant uniques (préfixe "tcc-"), les deux progressions se calculent sans collision. */
+function onSkillClick(ev) {
   const b = ev.target.closest("button[data-skill]");
   if (!b) return;
   progress[b.dataset.skill] = b.dataset.s;
@@ -794,16 +1097,21 @@ document.getElementById("modules").addEventListener("click", ev => {
   card.dataset.status = b.dataset.s;
   card.querySelectorAll("button[data-skill]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.s === b.dataset.s)));
   renderProgress();
-});
+  renderProgressTCC();
+}
+document.getElementById("modules").addEventListener("click", onSkillClick);
+document.getElementById("modules-tcc").addEventListener("click", onSkillClick);
 
 /* ============================================================
    ONGLETS
    ============================================================ */
 const tabs = [
   { tab: "tab-veille", panel: "panel-veille" },
-  { tab: "tab-formation", panel: "panel-formation" }
+  { tab: "tab-formation", panel: "panel-formation" },
+  { tab: "tab-formation-tcc", panel: "panel-formation-tcc" }
 ];
 let formationRendered = false;
+let formationTccRendered = false;
 tabs.forEach(({ tab, panel }) => {
   document.getElementById(tab).addEventListener("click", () => {
     tabs.forEach(t => {
@@ -812,6 +1120,7 @@ tabs.forEach(({ tab, panel }) => {
       document.getElementById(t.panel).hidden = !sel;
     });
     if (panel === "panel-formation" && !formationRendered) { renderFormation(); formationRendered = true; }
+    if (panel === "panel-formation-tcc" && !formationTccRendered) { renderFormationTCC(); formationTccRendered = true; }
   });
 });
 
