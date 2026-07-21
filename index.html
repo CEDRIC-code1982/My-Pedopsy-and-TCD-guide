@@ -1000,8 +1000,13 @@ function veilleCard(e) {
     <p class="pertinence"><strong>En pratique —</strong> ${esc(e.pertinence)}</p>
     <div class="tags">${tags}</div></div></article>`;
 }
+// La puce « TCD » est un filtre parapluie : elle englobe aussi la TCD-Adolescents (DBT-A).
+function themeMatches(entryTheme, filterValue) {
+  if (filterValue === "TCD") return entryTheme === "TCD" || entryTheme === "TCD-Adolescents (DBT-A)";
+  return entryTheme === filterValue;
+}
 function veilleMatches(e) {
-  if (state.theme && e.theme !== state.theme) return false;
+  if (state.theme && !themeMatches(e.theme, state.theme)) return false;
   if (state.niveau && e.niveauPreuve !== state.niveau) return false;
   if (state.q) {
     const hay = [e.titre, e.synthese, e.pertinence, e.source, e.theme, ...(e.sousThemes ?? [])].join(" ").toLowerCase();
@@ -1022,8 +1027,8 @@ function renderVeille() {
 }
 // Compteurs par filtre (calculés sur l'ensemble des entrées)
 function chipCount(filter, value) {
-  const key = filter === "theme" ? "theme" : "niveauPreuve";
-  return VEILLE_DATA.filter(e => e[key] === value).length;
+  if (filter === "theme") return VEILLE_DATA.filter(e => themeMatches(e.theme, value)).length;
+  return VEILLE_DATA.filter(e => e.niveauPreuve === value).length;
 }
 document.querySelectorAll(".chip[data-filter]").forEach(btn => {
   const n = chipCount(btn.dataset.filter, btn.dataset.value);
