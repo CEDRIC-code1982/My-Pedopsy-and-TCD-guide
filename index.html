@@ -270,6 +270,35 @@
     .tab { padding: 10px 12px; font-size: 14px; }
   }
   @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+
+  /* ---------- Filtres : compteurs & réinitialisation ---------- */
+  .chip-count { margin-left: 6px; font-size: 11px; opacity: 0.55; font-variant-numeric: tabular-nums; }
+  .chip[aria-pressed="true"] .chip-count { opacity: 0.9; }
+  .chip-empty { opacity: 0.5; }
+  .chip-reset { margin-left: auto; color: var(--muted); border-style: dashed; }
+  .chip-reset:hover { color: var(--ink); border-color: var(--muted); }
+
+  /* ---------- Mode sombre (automatique) ---------- */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0E1618; --card: #172227; --ink: #E7EDEC; --muted: #9FB0B3; --line: #2A383C;
+      --teal: #5CC0B4; --teal-soft: #10312E; --amber: #D8A657; --amber-soft: #322813;
+      --red: #E0938B; --red-soft: #331E1B; --grey: #93A3B4; --grey-soft: #222E36;
+      --done: #5CC0B4; --doing: #D8A657; --todo: #33454A;
+    }
+    .chip[aria-pressed="true"] { color: #08201D; }
+    .tag.theme, .badge.lang { color: var(--paper); }
+  }
+
+  /* ---------- Impression (sortir une fiche proprement) ---------- */
+  @media print {
+    .tabs, .filters, .legend, .status-btns, .chip-reset, .demo-banner { display: none !important; }
+    body { max-width: none; margin: 0; padding: 0; color: #000; }
+    html, body { background: #fff; }
+    .panel[hidden] { display: none !important; }
+    .card, .skill, .res, .theory-block, .goal, .progress-head, .step { break-inside: avoid; }
+    a { color: #000; text-decoration: underline; }
+  }
 </style>
 </head>
 <body>
@@ -280,9 +309,9 @@
 </header>
 
 <div class="tabs" role="tablist">
-  <button class="tab" role="tab" id="tab-veille" aria-controls="panel-veille" aria-selected="true">Veille</button>
-  <button class="tab" role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false">Formation TCD</button>
-  <button class="tab" role="tab" id="tab-formation-tcc" aria-controls="panel-formation-tcc" aria-selected="false">Formation TCC</button>
+  <button class="tab" role="tab" id="tab-veille" aria-controls="panel-veille" aria-selected="true" tabindex="0">Veille</button>
+  <button class="tab" role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false" tabindex="-1">Formation TCD</button>
+  <button class="tab" role="tab" id="tab-formation-tcc" aria-controls="panel-formation-tcc" aria-selected="false" tabindex="-1">Formation TCC</button>
 </div>
 
 <!-- ==================== PANEL VEILLE ==================== -->
@@ -299,12 +328,16 @@
     <button class="chip" data-filter="theme" data-value="TCD" aria-pressed="false">TCD</button>
     <button class="chip" data-filter="theme" data-value="TCD-Adolescents (DBT-A)" aria-pressed="false">DBT-A</button>
     <button class="chip" data-filter="theme" data-value="TCC" aria-pressed="false">TCC</button>
+    <button class="chip" data-filter="theme" data-value="Transversal" aria-pressed="false">Transversal</button>
     <span class="sep" aria-hidden="true"></span>
     <span class="group-label">Preuve</span>
     <button class="chip" data-filter="niveau" data-value="Élevé" aria-pressed="false">Élevé</button>
     <button class="chip" data-filter="niveau" data-value="Modéré" aria-pressed="false">Modéré</button>
+    <button class="chip" data-filter="niveau" data-value="Faible" aria-pressed="false">Faible</button>
+    <button class="chip" data-filter="niveau" data-value="Avis d'expert" aria-pressed="false">Avis d'expert</button>
     <span class="sep" aria-hidden="true"></span>
     <input class="search" id="search" type="search" placeholder="Rechercher…" aria-label="Rechercher dans la veille">
+    <button class="chip chip-reset" id="reset-filters" type="button" hidden>Réinitialiser</button>
   </div>
 
   <div class="legend" aria-hidden="true">
@@ -971,7 +1004,7 @@ function veilleMatches(e) {
   if (state.theme && e.theme !== state.theme) return false;
   if (state.niveau && e.niveauPreuve !== state.niveau) return false;
   if (state.q) {
-    const hay = [e.titre, e.synthese, e.pertinence, e.source, ...(e.sousThemes ?? [])].join(" ").toLowerCase();
+    const hay = [e.titre, e.synthese, e.pertinence, e.source, e.theme, ...(e.sousThemes ?? [])].join(" ").toLowerCase();
     if (!hay.includes(state.q)) return false;
   }
   return true;
@@ -985,8 +1018,20 @@ function renderVeille() {
   document.getElementById("veille-stats").textContent =
     `${VEILLE_DATA.length} entrée${VEILLE_DATA.length > 1 ? "s" : ""} · ${visible.length} affichée${visible.length > 1 ? "s" : ""} · dernière mise à jour : ${last}`;
   document.getElementById("demoBanner").hidden = !VEILLE_DATA.some(e => e.titre.includes("[EXEMPLE FICTIF]"));
+  document.getElementById("reset-filters").hidden = !(state.theme || state.niveau || state.q);
 }
-document.querySelectorAll(".chip").forEach(btn => {
+// Compteurs par filtre (calculés sur l'ensemble des entrées)
+function chipCount(filter, value) {
+  const key = filter === "theme" ? "theme" : "niveauPreuve";
+  return VEILLE_DATA.filter(e => e[key] === value).length;
+}
+document.querySelectorAll(".chip[data-filter]").forEach(btn => {
+  const n = chipCount(btn.dataset.filter, btn.dataset.value);
+  if (n === 0) btn.classList.add("chip-empty");
+  const span = document.createElement("span");
+  span.className = "chip-count";
+  span.textContent = n;
+  btn.appendChild(span);
   btn.addEventListener("click", () => {
     const { filter, value } = btn.dataset, active = state[filter] === value;
     state[filter] = active ? null : value;
@@ -995,6 +1040,12 @@ document.querySelectorAll(".chip").forEach(btn => {
   });
 });
 document.getElementById("search").addEventListener("input", ev => { state.q = ev.target.value.trim().toLowerCase(); renderVeille(); });
+document.getElementById("reset-filters").addEventListener("click", () => {
+  state.theme = null; state.niveau = null; state.q = "";
+  document.querySelectorAll(".chip[data-filter]").forEach(b => b.setAttribute("aria-pressed", "false"));
+  document.getElementById("search").value = "";
+  renderVeille();
+});
 
 /* ============================================================
    RENDU FORMATION + PROGRESSION
@@ -1123,16 +1174,33 @@ const tabs = [
 ];
 let formationRendered = false;
 let formationTccRendered = false;
-tabs.forEach(({ tab, panel }) => {
-  document.getElementById(tab).addEventListener("click", () => {
-    tabs.forEach(t => {
-      const sel = t.tab === tab;
-      document.getElementById(t.tab).setAttribute("aria-selected", String(sel));
-      document.getElementById(t.panel).hidden = !sel;
-    });
-    if (panel === "panel-formation" && !formationRendered) { renderFormation(); formationRendered = true; }
-    if (panel === "panel-formation-tcc" && !formationTccRendered) { renderFormationTCC(); formationTccRendered = true; }
+function selectTab(tabId, { focus = false } = {}) {
+  tabs.forEach(t => {
+    const sel = t.tab === tabId;
+    const el = document.getElementById(t.tab);
+    el.setAttribute("aria-selected", String(sel));
+    el.tabIndex = sel ? 0 : -1;
+    document.getElementById(t.panel).hidden = !sel;
+    if (sel && focus) el.focus();
   });
+  if (tabId === "tab-formation" && !formationRendered) { renderFormation(); formationRendered = true; }
+  if (tabId === "tab-formation-tcc" && !formationTccRendered) { renderFormationTCC(); formationTccRendered = true; }
+}
+tabs.forEach(({ tab }) => {
+  document.getElementById(tab).addEventListener("click", () => selectTab(tab));
+});
+// Navigation clavier ARIA tablist : flèches ←/→, Home/End
+document.querySelector(".tabs").addEventListener("keydown", ev => {
+  const i = tabs.findIndex(t => t.tab === document.activeElement.id);
+  if (i === -1) return;
+  let next = null;
+  if (ev.key === "ArrowRight") next = (i + 1) % tabs.length;
+  else if (ev.key === "ArrowLeft") next = (i - 1 + tabs.length) % tabs.length;
+  else if (ev.key === "Home") next = 0;
+  else if (ev.key === "End") next = tabs.length - 1;
+  if (next === null) return;
+  ev.preventDefault();
+  selectTab(tabs[next].tab, { focus: true });
 });
 
 renderVeille();
