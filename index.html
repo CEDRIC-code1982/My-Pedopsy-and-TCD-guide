@@ -263,6 +263,48 @@
     margin-top: 40px; padding-top: 16px;
   }
 
+  /* ---------- Traitements ---------- */
+  .intro-traitements { font-size: 15px; margin-bottom: 18px; }
+  .warn-banner {
+    background: var(--red-soft); border: 1px solid var(--red); color: var(--red);
+    border-radius: 8px; padding: 10px 14px; font-size: 13.5px; margin-bottom: 28px;
+  }
+  .tt-trouble {
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 16px 18px; margin-bottom: 14px;
+  }
+  .tt-trouble > h4 {
+    font-family: "Spectral", serif; font-weight: 700; font-size: 18px;
+    margin-bottom: 12px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .tt-trouble > h4 .tt-theme { font: 600 11px "Source Sans 3"; text-transform: uppercase; letter-spacing: 0.06em; background: var(--ink); color: var(--card); border-radius: 999px; padding: 2px 9px; }
+  .tt-row { display: grid; grid-template-columns: 132px 1fr; gap: 12px; padding: 8px 0; border-top: 1px solid var(--line); }
+  .tt-row:first-of-type { border-top: none; }
+  .tt-kind {
+    font: 700 11.5px "Source Sans 3"; text-transform: uppercase; letter-spacing: 0.06em;
+    padding-top: 2px;
+  }
+  .tt-kind.psycho { color: var(--teal); }
+  .tt-kind.pharma { color: var(--amber); }
+  .tt-kind.autre { color: var(--grey); }
+  .tt-detail { font-size: 14px; }
+  .tt-detail .src { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; margin-top: 4px; }
+  .tt-detail .src a { color: var(--muted); }
+  .tt-detail .src a:hover { color: var(--teal); }
+
+  .pharma-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin-bottom: 10px; }
+  table.pharma {
+    width: 100%; border-collapse: collapse; font-size: 13.5px; min-width: 560px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+  }
+  table.pharma th, table.pharma td { text-align: left; padding: 10px 12px; vertical-align: top; border-bottom: 1px solid var(--line); }
+  table.pharma thead th { background: var(--paper); font: 700 12px "Source Sans 3"; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  table.pharma tbody tr:last-child td { border-bottom: none; }
+  table.pharma .cls { font-weight: 700; }
+  table.pharma .amm-oui { color: var(--teal); font-weight: 600; }
+  table.pharma .amm-partiel { color: var(--amber); font-weight: 600; }
+  table.pharma .amm-hors { color: var(--red); font-weight: 600; }
+
   @media (max-width: 560px) {
     body { padding: 24px 14px 60px; }
     .card { grid-template-columns: 10px 1fr; padding: 14px; }
@@ -312,6 +354,7 @@
   <button class="tab" role="tab" id="tab-veille" aria-controls="panel-veille" aria-selected="true" tabindex="0">Veille</button>
   <button class="tab" role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false" tabindex="-1">Formation TCD</button>
   <button class="tab" role="tab" id="tab-formation-tcc" aria-controls="panel-formation-tcc" aria-selected="false" tabindex="-1">Formation TCC</button>
+  <button class="tab" role="tab" id="tab-traitements" aria-controls="panel-traitements" aria-selected="false" tabindex="-1">Traitements</button>
 </div>
 
 <!-- ==================== PANEL VEILLE ==================== -->
@@ -586,6 +629,29 @@
 
   <p class="foot-note">
     Les fiches de compétences sont des résumés originaux à visée pédagogique. La TCC couvre une famille de méthodes : les protocoles précis (exposition, restructuration, activation) se travaillent avec les ouvrages de référence listés ci-dessus. Apprendre les principes pour soi est accessible, mais conduire une TCC en clinique requiert une formation reconnue (ex. AFTCC, DU universitaires) et de la supervision.
+  </p>
+</section>
+
+<!-- ==================== PANEL TRAITEMENTS ==================== -->
+<section class="panel" id="panel-traitements" role="tabpanel" aria-labelledby="tab-traitements" hidden>
+  <p class="intro-traitements">Deux vues complémentaires : une <strong>synthèse par trouble</strong> des interventions issues des entrées de veille, et un <strong>référentiel pharmacologique</strong> de repère chez l'enfant et l'adolescent. Contenu à visée d'orientation ; il ne remplace ni les RCP, ni les recommandations officielles, ni l'avis d'un prescripteur.</p>
+
+  <div class="warn-banner">
+    ⚠️ Aide-mémoire non prescriptif. Toute prescription de psychotrope chez le mineur relève d'un spécialiste (pédopsychiatre, pédiatre, neuropédiatre) ; se référer aux RCP, à l'AMM et aux recommandations HAS/ANSM en vigueur.
+  </div>
+
+  <!-- Volet 1 : synthèse des traitements de la veille, par trouble -->
+  <h3 class="res-head" style="margin-top:8px">Synthèse par trouble — d'après la veille</h3>
+  <p class="res-sub">Interventions non médicamenteuses et médicamenteuses citées dans les entrées de veille, regroupées par trouble. Chaque ligne renvoie à l'entrée source.</p>
+  <div id="traitements-synthese"></div>
+
+  <!-- Volet 2 : référentiel pharmacologique -->
+  <h3 class="res-head">Référentiel pharmacologique — repères</h3>
+  <p class="res-sub">Grandes classes de psychotropes par indication chez l'enfant/adolescent. Le statut d'AMM pédiatrique varie selon la molécule, l'âge et le pays : à vérifier au cas par cas.</p>
+  <div id="traitements-pharma"></div>
+
+  <p class="foot-note">
+    Sources d'orientation : recommandations HAS (TDAH 2024, TSA 2026), AACAP, NICE, et site d'aide à la prescription de psychotropes de la SFPEADA. Les niveaux d'AMM et les précautions d'emploi évoluent : ce tableau est un point de départ, pas une référence de prescription.
   </p>
 </section>
 
@@ -992,6 +1058,82 @@ const RESSOURCES_TCC = [
 ];
 
 /* ============================================================
+   4) TRAITEMENTS
+   Volet A (SYNTHESE_TROUBLES) : interventions regroupées par trouble,
+   chaque item pointe vers une entrée de veille (champ « src » = URL présente
+   dans VEILLE_DATA). Contenu de synthèse, à maintenir cohérent avec la veille.
+   Volet B (PHARMA_REF) : référentiel pharmacologique de repère.
+   kind: "psycho" (non médicamenteux) | "pharma" | "autre"
+   ============================================================ */
+const SYNTHESE_TROUBLES = [
+  {
+    trouble: "TDAH", theme: "Pédopsychiatrie",
+    lignes: [
+      { kind: "psycho", texte: "Psychoéducation et guidance parentale en première intention ; aménagements scolaires. Interventions numériques (neurofeedback surtout) prometteuses mais préliminaires — à considérer comme adjuvant.", src: "https://doi.org/10.3389/fpsyt.2026.1747368" },
+      { kind: "pharma", texte: "Méthylphénidate (psychostimulant) en traitement médicamenteux de référence, en complément des mesures non médicamenteuses ; instauration réservée au spécialiste (reco HAS 2024).", src: null }
+    ]
+  },
+  {
+    trouble: "TSA — Trouble du spectre de l'autisme", theme: "Pédopsychiatrie",
+    lignes: [
+      { kind: "psycho", texte: "Interventions précoces, développementales et comportementales ciblant communication, habiletés sociales, autonomie, sensorialité et motricité, en lien étroit avec les familles (reco HAS 2026). La psychanalyse n'est pas recommandée.", src: "https://www.has-sante.fr/jcms/p_3859897/fr/autisme-les-nouvelles-recommandations-pour-le-nourrisson-l-enfant-et-l-adolescent" },
+      { kind: "psycho", texte: "Chez le nourrisson à risque : interventions médiées par les parents, avec effet sur la communication et l'interaction parent-enfant ; preuves encore limitées sur la réduction des symptômes.", src: "https://pubmed.ncbi.nlm.nih.gov/42052530/" }
+    ]
+  },
+  {
+    trouble: "TOC — Trouble obsessionnel compulsif", theme: "Pédopsychiatrie",
+    lignes: [
+      { kind: "psycho", texte: "Thérapie d'exposition avec prévention de la réponse (TERP), en présentiel ou télésoin, en première intention — seule ou associée à un ISRS (association supérieure à l'ISRS seul).", src: "https://doi.org/10.1542/peds.2024-068992" },
+      { kind: "pharma", texte: "ISRS (et clomipramine) efficaces vs placebo ; à réserver aux formes modérées à sévères, en association à la TERP quand c'est possible.", src: "https://doi.org/10.1542/peds.2024-068992" }
+    ]
+  },
+  {
+    trouble: "Anxiété", theme: "Pédopsychiatrie",
+    lignes: [
+      { kind: "psycho", texte: "TCC en première intention ; personnaliser le format selon l'âge et l'implication parentale (surtout chez les plus jeunes). Interventions psychosociales et pharmacologiques d'efficacité comparable sur l'anxiété.", src: "https://doi.org/10.1016/j.cpr.2025.102548" },
+      { kind: "pharma", texte: "Traitement pharmacologique (ISRS) envisageable, d'efficacité proche des psychothérapies sur l'anxiété (revue parapluie 2026) ; décision spécialisée.", src: "https://doi.org/10.1007/s00787-026-03064-w" }
+    ]
+  },
+  {
+    trouble: "Dépression", theme: "Pédopsychiatrie",
+    lignes: [
+      { kind: "psycho", texte: "Psychothérapies (dont TCC et formats numériques guidés, iCBT). Aiguillage possible selon l'anxiété comorbide : iCBT plutôt si peu anxieux. L'activité physique montre un intérêt émergent.", src: "https://doi.org/10.1080/10503307.2026.2686693" },
+      { kind: "autre", texte: "Interventions physiques (activité physique) : signal d'efficacité émergent sur la dépression, devançant psychothérapies et pharmacologie dans une revue parapluie — à surveiller.", src: "https://doi.org/10.1007/s00787-026-03064-w" }
+    ]
+  },
+  {
+    trouble: "Auto-agression & suicidalité", theme: "TCD-Adolescents (DBT-A)",
+    lignes: [
+      { kind: "psycho", texte: "TCD adaptée aux adolescents (DBT-A) : intervention de premier plan pour prévenir la répétition de l'auto-agression. Compétences TCD également testées en prévention scolaire.", src: "https://pubmed.ncbi.nlm.nih.gov/41014367/" },
+      { kind: "psycho", texte: "Aux urgences pédiatriques, aucune intervention brève n'a clairement fait ses preuves : privilégier suivi/contact post-urgence, implication familiale et plan de sécurité.", src: "https://pubmed.ncbi.nlm.nih.gov/40186641/" }
+    ]
+  },
+  {
+    trouble: "Trouble de la personnalité borderline (adolescent)", theme: "TCD-Adolescents (DBT-A)",
+    lignes: [
+      { kind: "psycho", texte: "TCD-A l'option la mieux étayée, mais effet global des thérapies spécialisées modeste et s'érodant dans le temps ; informer les familles sur des attentes réalistes.", src: "https://doi.org/10.3389/fpsyt.2026.1833555" }
+    ]
+  },
+  {
+    trouble: "Addictions / usage de substances (adolescent)", theme: "Pédopsychiatrie",
+    lignes: [
+      { kind: "psycho", texte: "Approches psychosociales privilégiées (entretien motivationnel non bref, TCC, thérapie familiale) ; les interventions combinées sont les plus efficaces (reco AACAP 2025).", src: "https://www.jaacap.org/article/S0890-8567(25)01424-8/fulltext" },
+      { kind: "pharma", texte: "Trouble de l'usage d'opioïdes : buprénorphine possible, durée prolongée et sevrage progressif.", src: "https://www.jaacap.org/article/S0890-8567(25)01424-8/fulltext" }
+    ]
+  }
+];
+
+const PHARMA_REF = [
+  { indication: "TDAH", classe: "Psychostimulants", exemples: "Méthylphénidate", amm: "oui", ammLabel: "AMM pédiatrique", note: "Référence médicamenteuse, en complément des mesures non médicamenteuses. Instauration par spécialiste, surveillance cardiovasculaire, croissance et sommeil." },
+  { indication: "TDAH", classe: "Non-stimulants", exemples: "Atomoxétine, guanfacine", amm: "partiel", ammLabel: "Selon molécule", note: "Alternative/complément aux stimulants (contre-indication, mésusage, comorbidité). Disponibilité et AMM variables selon le pays." },
+  { indication: "Dépression", classe: "ISRS", exemples: "Fluoxétine (réf.), sertraline", amm: "partiel", ammLabel: "Fluoxétine surtout", note: "La fluoxétine est l'antidépresseur le mieux étayé chez le mineur. Surveillance rapprochée du risque suicidaire en début de traitement." },
+  { indication: "Anxiété / TOC", classe: "ISRS", exemples: "Sertraline, fluvoxamine, fluoxétine", amm: "partiel", ammLabel: "Selon molécule/âge", note: "En association à la TCC/TERP pour les formes modérées à sévères. Clomipramine (tricyclique) en 2e ligne dans le TOC." },
+  { indication: "Troubles bipolaires / psychotiques", classe: "Antipsychotiques 2e génération", exemples: "Aripiprazole, rispéridone, quétiapine", amm: "partiel", ammLabel: "Selon molécule/âge", note: "Prescription spécialisée. Surveillance métabolique (poids, glycémie, lipides), neurologique et cardiaque." },
+  { indication: "Irritabilité / agressivité (TSA, TND)", classe: "Antipsychotiques 2e génération", exemples: "Rispéridone, aripiprazole", amm: "partiel", ammLabel: "Indications ciblées", note: "Réservé à l'irritabilité sévère après échec des approches non médicamenteuses, qui restent la base de la prise en charge du TSA." },
+  { indication: "Usage d'opioïdes (adolescent)", classe: "Agoniste opioïde partiel", exemples: "Buprénorphine", amm: "partiel", ammLabel: "Cadre spécialisé", note: "Traitement de durée prolongée avec sevrage progressif, dans un cadre spécialisé (reco AACAP 2025)." }
+];
+
+/* ============================================================
    RENDU VEILLE
    ============================================================ */
 const LEVELS = { "Élevé": 4, "Modéré": 3, "Faible": 2, "Avis d'expert": 1 };
@@ -1189,6 +1331,42 @@ function renderProgressTCC() {
 }
 function renderFormationTCC() { renderModulesTCC(); renderResourcesTCC(); renderProgressTCC(); }
 
+/* --- Rendu Traitements --- */
+const KIND_LABEL = { psycho: "Non médicamenteux", pharma: "Médicamenteux", autre: "Autre" };
+function srcLink(url) {
+  if (!url) return "";
+  const e = VEILLE_DATA.find(v => v.url === url);
+  const label = e ? `${esc(e.source)} · ${esc(e.typeSource)}` : "Source";
+  return `<span class="src">↪ <a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${label}</a></span>`;
+}
+function renderTraitementsSynthese() {
+  document.getElementById("traitements-synthese").innerHTML = SYNTHESE_TROUBLES.map(t => `
+    <div class="tt-trouble">
+      <h4>${esc(t.trouble)} <span class="tt-theme">${esc(t.theme)}</span></h4>
+      ${t.lignes.map(l => `<div class="tt-row">
+        <span class="tt-kind ${l.kind}">${esc(KIND_LABEL[l.kind] ?? l.kind)}</span>
+        <div class="tt-detail">${esc(l.texte)}${l.src ? "<br>" + srcLink(l.src) : ""}</div>
+      </div>`).join("")}
+    </div>`).join("");
+}
+const AMM_CLASS = { oui: "amm-oui", partiel: "amm-partiel", hors: "amm-hors" };
+function renderTraitementsPharma() {
+  const rows = PHARMA_REF.map(p => `<tr>
+    <td>${esc(p.indication)}</td>
+    <td class="cls">${esc(p.classe)}</td>
+    <td>${esc(p.exemples)}</td>
+    <td class="${AMM_CLASS[p.amm] ?? ""}">${esc(p.ammLabel)}</td>
+    <td>${esc(p.note)}</td>
+  </tr>`).join("");
+  document.getElementById("traitements-pharma").innerHTML = `<div class="pharma-table-wrap">
+    <table class="pharma">
+      <thead><tr><th>Indication</th><th>Classe</th><th>Exemples</th><th>AMM pédiatrique</th><th>Repères &amp; précautions</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+function renderTraitements() { renderTraitementsSynthese(); renderTraitementsPharma(); }
+
 /* Gestion du statut d'une compétence, partagée TCD + TCC.
    Les ids étant uniques (préfixe "tcc-"), les deux progressions se calculent sans collision. */
 function onSkillClick(ev) {
@@ -1211,10 +1389,12 @@ document.getElementById("modules-tcc").addEventListener("click", onSkillClick);
 const tabs = [
   { tab: "tab-veille", panel: "panel-veille" },
   { tab: "tab-formation", panel: "panel-formation" },
-  { tab: "tab-formation-tcc", panel: "panel-formation-tcc" }
+  { tab: "tab-formation-tcc", panel: "panel-formation-tcc" },
+  { tab: "tab-traitements", panel: "panel-traitements" }
 ];
 let formationRendered = false;
 let formationTccRendered = false;
+let traitementsRendered = false;
 function selectTab(tabId, { focus = false } = {}) {
   tabs.forEach(t => {
     const sel = t.tab === tabId;
@@ -1226,6 +1406,7 @@ function selectTab(tabId, { focus = false } = {}) {
   });
   if (tabId === "tab-formation" && !formationRendered) { renderFormation(); formationRendered = true; }
   if (tabId === "tab-formation-tcc" && !formationTccRendered) { renderFormationTCC(); formationTccRendered = true; }
+  if (tabId === "tab-traitements" && !traitementsRendered) { renderTraitements(); traitementsRendered = true; }
 }
 tabs.forEach(({ tab }) => {
   document.getElementById(tab).addEventListener("click", () => selectTab(tab));
