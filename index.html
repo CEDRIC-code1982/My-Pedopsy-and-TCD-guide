@@ -304,6 +304,11 @@
   table.pharma .amm-oui { color: var(--teal); font-weight: 600; }
   table.pharma .amm-partiel { color: var(--amber); font-weight: 600; }
   table.pharma .amm-hors { color: var(--red); font-weight: 600; }
+  table.pharma .src { display: inline-block; font-family: "IBM Plex Mono", monospace; font-size: 11.5px; margin-top: 6px; }
+  table.pharma .src a { color: var(--muted); }
+  table.pharma .src a:hover { color: var(--teal); }
+  table.pharma .mol { font-weight: 700; }
+  table.pharma .mol small { display: block; font-weight: 400; color: var(--muted); font-size: 11.5px; margin-top: 2px; }
 
   @media (max-width: 560px) {
     body { padding: 24px 14px 60px; }
@@ -650,6 +655,14 @@
   <p class="res-sub">Grandes classes de psychotropes par indication chez l'enfant/adolescent. Le statut d'AMM pédiatrique varie selon la molécule, l'âge et le pays : à vérifier au cas par cas.</p>
   <div id="traitements-pharma"></div>
 
+  <!-- Volet 3 : molécules explorées hors AMM pédiatrique -->
+  <h3 class="res-head">Pistes hors AMM à l'étude</h3>
+  <p class="res-sub">Molécules testées chez l'enfant ou l'adolescent <strong>en dehors de leur AMM pédiatrique</strong> : soit sans autorisation dans l'indication visée, soit sans autorisation européenne. Le niveau de preuve et le statut réglementaire varient fortement d'une ligne à l'autre — un niveau de preuve élevé ne vaut pas autorisation, et l'absence d'AMM ne vaut pas absence de données.</p>
+  <div class="warn-banner">
+    ⚠️ Hors AMM n'est pas synonyme d'interdit, mais la prescription hors AMM engage la responsabilité du prescripteur (art. L5121-12-1 du code de la santé publique) : absence d'alternative appropriée disposant d'une AMM, justification par les données de la science, information spécifique du patient et des titulaires de l'autorité parentale, et mention « prescription hors AMM » sur l'ordonnance et dans le dossier.
+  </div>
+  <div id="traitements-hors-amm"></div>
+
   <p class="foot-note">
     Sources d'orientation : recommandations HAS (TDAH 2024, TSA 2026), AACAP, NICE, et site d'aide à la prescription de psychotropes de la SFPEADA. Les niveaux d'AMM et les précautions d'emploi évoluent : ce tableau est un point de départ, pas une référence de prescription.
   </p>
@@ -665,371 +678,1063 @@ const VEILLE_DATA = [
   {
     "titre": "Efficacité des interventions contre l'auto-agression chez l'enfant et l'adolescent : revue systématique et méta-analyse",
     "url": "https://pubmed.ncbi.nlm.nih.gov/41014367/",
-    "datePublication": "2025-09-27", "dateAjout": "2026-07-20T14:30",
-    "theme": "TCD-Adolescents (DBT-A)", "sousThemes": ["Auto-mutilation", "Suicidalité", "Régulation émotionnelle"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Consensus établi", "source": "PubMed",
+    "datePublication": "2025-09-27",
+    "dateAjout": "2026-07-20T14:30",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Auto-mutilation",
+      "Suicidalité",
+      "Régulation émotionnelle"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Consensus établi",
+    "source": "PubMed",
     "synthese": "Méta-analyse de 21 RCT (parmi 6 497 références) portant sur les interventions contre l'auto-agression chez les moins de 18 ans, publiée dans European Child & Adolescent Psychiatry. La TCD adaptée aux adolescents (DBT-A), évaluée dans trois essais, réduit la proportion d'adolescents ayant des conduites auto-agressives (différence de risque = -0,12 ; IC95% -0,22 à -0,02) avec un niveau de certitude modéré. Les auteurs concluent que la DBT-A prévient la répétition de l'auto-agression, résultat retrouvé par plusieurs équipes indépendantes. Une thérapie de régulation émotionnelle délivrée par internet (IERITA) montre un bénéfice sur l'automutilation non suicidaire, mais avec un faible niveau de preuve.",
     "pertinence": "Conforte la DBT-A comme intervention de premier plan pour les adolescents auto-agresseurs et fournit une base chiffrée pour argumenter son déploiement."
   },
   {
     "titre": "TSA : nouvelles recommandations HAS sur les interventions et le parcours de vie du nourrisson, de l'enfant et de l'adolescent",
     "url": "https://www.has-sante.fr/jcms/p_3859897/fr/autisme-les-nouvelles-recommandations-pour-le-nourrisson-l-enfant-et-l-adolescent",
-    "datePublication": "2026-02-12", "dateAjout": "2026-07-20T14:30",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TSA", "Intervention précoce", "Politique de santé"],
-    "typeSource": "Recommandation officielle", "niveauPreuve": "Modéré", "consensus": "Consensus établi", "source": "HAS",
+    "datePublication": "2026-02-12",
+    "dateAjout": "2026-07-20T14:30",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TSA",
+      "Intervention précoce",
+      "Politique de santé"
+    ],
+    "typeSource": "Recommandation officielle",
+    "niveauPreuve": "Modéré",
+    "consensus": "Consensus établi",
+    "source": "HAS",
     "synthese": "La HAS a publié le 12 février 2026 des recommandations actualisées (remplaçant celles de 2012) sur les interventions dans le trouble du spectre de l'autisme, du nourrisson à l'adolescent. Elle réaffirme la priorité aux interventions précoces, développementales et comportementales ciblant communication, habiletés sociales, autonomie, sensorialité et motricité, en collaboration étroite avec les familles. Le texte insiste sur un parcours inclusif (scolarité, loisirs) et l'évaluation annuelle des effets. La psychanalyse figure explicitement parmi les méthodes non recommandées faute de preuves d'efficacité.",
     "pertinence": "Cadre de référence français actualisé qui oriente le repérage précoce et écarte les approches non fondées ; à intégrer dans les pratiques d'orientation et de coordination."
   },
   {
     "titre": "Recommandation AACAP : évaluation et traitement des troubles liés à l'usage de substances chez l'adolescent et le jeune adulte",
     "url": "https://www.jaacap.org/article/S0890-8567(25)01424-8/fulltext",
-    "datePublication": "2025-08-14", "dateAjout": "2026-07-20T14:30",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Addictions", "Usage de substances"],
-    "typeSource": "Recommandation officielle", "niveauPreuve": "Modéré", "consensus": "Consensus établi", "source": "AACAP",
+    "datePublication": "2025-08-14",
+    "dateAjout": "2026-07-20T14:30",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Addictions",
+      "Usage de substances"
+    ],
+    "typeSource": "Recommandation officielle",
+    "niveauPreuve": "Modéré",
+    "consensus": "Consensus établi",
+    "source": "AACAP",
     "synthese": "Nouvelle recommandation de bonne pratique de l'AACAP (JAACAP, en ligne le 14 août 2025) sur l'évaluation et le traitement des troubles de l'usage de substances (hors tabac) chez l'adolescent et le jeune adulte, fondée sur une revue systématique de la littérature. Elle privilégie les approches psychosociales (entretien motivationnel non bref, TCC, thérapie familiale), les interventions combinées étant les plus efficaces. Pour le trouble de l'usage d'opioïdes, la buprénorphine peut être proposée, avec une durée de traitement prolongée et un sevrage progressif. Ce texte remplace l'ancien paramètre de pratique.",
     "pertinence": "Actualise les standards de prise en charge des addictions à l'adolescence en valorisant l'association thérapie familiale + intervention individuelle et le traitement médicamenteux de l'usage d'opioïdes."
   },
   {
     "titre": "Hospitalisations pour tentatives de suicide et automutilations : la hausse se poursuit chez les adolescentes et jeunes femmes en 2025 (DREES)",
     "url": "https://drees.solidarites-sante.gouv.fr/communique-de-presse-jeux-de-donnees/jeux-de-donnees/250511_hospitalisations-pour-tentatives-de-suicide",
-    "datePublication": "2026-05-11", "dateAjout": "2026-07-20T14:30",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Suicidalité", "Automutilation", "Épidémiologie"],
-    "typeSource": "Étude observationnelle", "niveauPreuve": "Modéré", "consensus": "Consensus établi", "source": "Autre",
+    "datePublication": "2026-05-11",
+    "dateAjout": "2026-07-20T14:30",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Suicidalité",
+      "Automutilation",
+      "Épidémiologie"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Modéré",
+    "consensus": "Consensus établi",
+    "source": "Autre",
     "synthese": "Données nationales de la DREES (publiées le 11 mai 2026) : plus de 84 000 personnes de 10 ans et plus ont été hospitalisées en 2025 pour un geste auto-infligé, dont 64% de femmes. Chez les filles de 10-19 ans, le taux atteint 482 pour 100 000, le plus élevé de toutes les classes d'âge et de sexe, soit près du double de la moyenne 2012-2019. La progression, très forte après 2020, ralentit (+4% entre 2024 et 2025) mais reste persistante. La hausse touche aussi les garçons, de façon moins marquée.",
     "pertinence": "Confirme l'ampleur et la persistance de la crise suicidaire des adolescentes en France ; justifie le renforcement des dispositifs de repérage et des interventions ciblées (dont la DBT-A)."
   },
   {
     "titre": "Interventions contre l'auto-agression et la suicidalité aux urgences pédiatriques : méta-revue",
     "url": "https://pubmed.ncbi.nlm.nih.gov/40186641/",
-    "datePublication": "2025-04-05", "dateAjout": "2026-07-20T14:30",
-    "theme": "Transversal", "sousThemes": ["Urgences pédiatriques", "Suicidalité", "Auto-mutilation"],
-    "typeSource": "Revue narrative", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2025-04-05",
+    "dateAjout": "2026-07-20T14:30",
+    "theme": "Transversal",
+    "sousThemes": [
+      "Urgences pédiatriques",
+      "Suicidalité",
+      "Auto-mutilation"
+    ],
+    "typeSource": "Revue narrative",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Méta-revue (revue systématique de revues) publiée dans European Child & Adolescent Psychiatry (en ligne le 5 avril 2025) synthétisant 5 revues systématiques couvrant 14 études sur les interventions aux urgences pédiatriques pour auto-agression et suicidalité. Elle constate un manque d'essais informatifs et une efficacité globalement faible des interventions testées. Les éléments communs aux interventions les plus prometteuses sont le suivi/contact après la sortie des urgences, l'implication de la famille et la psychoéducation avec plan de sécurité.",
     "pertinence": "Rappelle qu'aucune intervention brève aux urgences n'a clairement fait ses preuves : privilégier le suivi post-urgence structuré, l'implication familiale et le plan de sécurité."
   },
   {
     "titre": "Interventions efficaces contre l'anxiété et la dépression chez l'enfant et l'adolescent : revue parapluie de méta-analyses",
     "url": "https://doi.org/10.1007/s00787-026-03064-w",
-    "datePublication": "2026-05-26", "dateAjout": "2026-07-20T15:08",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Anxiété", "Dépression", "Interventions psychosociales", "Pharmacothérapie"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Élevé", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-05-26",
+    "dateAjout": "2026-07-20T15:08",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Anxiété",
+      "Dépression",
+      "Interventions psychosociales",
+      "Pharmacothérapie"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Revue parapluie (méta-analyse de méta-analyses) publiée le 26 mai 2026 dans European Child & Adolescent Psychiatry, portant sur les interventions contre l'anxiété et la dépression chez les moins de 18 ans. Après recherche dans cinq bases de données puis mise à jour PubMed jusqu'en février 2026, les auteurs ont retenu 57 méta-analyses (569 tailles d'effet), dont 43 (391 effets) analysées statistiquement. Pour l'anxiété, les interventions psychosociales (d=-0,51) et pharmacologiques (d=-0,67) se montrent d'efficacité comparable (p=0,546 pour la différence). Pour la dépression, les interventions physiques (d=-0,49) devancent les psychosociales (d=-0,35) puis les pharmacologiques (d=-0,17), différence statistiquement significative (p<0,001) ; les interventions psychosociales restent globalement plus efficaces sur l'anxiété que sur la dépression.",
     "pertinence": "Signale l'intérêt émergent de l'activité physique et de la thérapie interpersonnelle dans la dépression de l'enfant/ado, à surveiller avant de modifier les pratiques ; confirme l'équivalence globale psychothérapie/médicament pour l'anxiété."
   },
   {
     "titre": "Efficacité des interventions psychologiques (dont la TCD-A) chez les adolescents avec trouble de la personnalité borderline : méta-analyse",
     "url": "https://doi.org/10.3389/fpsyt.2026.1833555",
-    "datePublication": "2026-06-11", "dateAjout": "2026-07-20T15:08",
-    "theme": "TCD-Adolescents (DBT-A)", "sousThemes": ["Trouble borderline", "Régulation émotionnelle", "Comparaison de thérapies"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-06-11",
+    "dateAjout": "2026-07-20T15:08",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Trouble borderline",
+      "Régulation émotionnelle",
+      "Comparaison de thérapies"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Méta-analyse publiée le 11 juin 2026 dans Frontiers in Psychiatry (Cai, Song & Tong), incluant 12 essais randomisés et 844 adolescents (âge moyen 15,8 ans, 81% de filles), comparant TCD-A, MBT-A, thérapie analytique cognitive, thérapie de régulation émotionnelle, protocole unifié et d'autres approches structurées. Les interventions psychologiques produisent des effets faibles mais significatifs sur la sévérité des symptômes borderline (DME=-0,27 ; p=0,012), la régulation émotionnelle (DME=-0,26 ; p=0,020) et la psychopathologie générale (DME=-0,34 ; p=0,003), mais aucun effet significatif sur les symptômes dépressifs ni la qualité de vie. Les bénéfices s'atténuent progressivement sur 12 à 36 mois de suivi ; une évaluation formelle du niveau de certitude (GRADE) n'a pas été possible faute d'un nombre suffisant d'études par critère.",
     "pertinence": "Tempère l'enthousiasme : la TCD-A reste l'option la mieux étayée pour les adolescents borderline, mais l'effet global des thérapies spécialisées reste modeste et s'érode dans le temps — à intégrer dans l'information donnée aux familles sur des attentes réalistes."
   },
   {
     "titre": "Prévention de l'automutilation non suicidaire en milieu scolaire par un programme fondé sur la TCD : essai randomisé en Chine",
     "url": "https://doi.org/10.1186/s12889-025-24978-1",
-    "datePublication": "2025-12-01", "dateAjout": "2026-07-20T15:08",
-    "theme": "TCD-Adolescents (DBT-A)", "sousThemes": ["Automutilation non suicidaire", "Prévention scolaire", "Compétences TCD"],
-    "typeSource": "RCT", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2025-12-01",
+    "dateAjout": "2026-07-20T15:08",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Automutilation non suicidaire",
+      "Prévention scolaire",
+      "Compétences TCD"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Essai contrôlé randomisé en clusters publié dans BMC Public Health (Li et al., décembre 2025), mené auprès de 220 collégiens de 7e année (2 écoles, 4 classes) à Shantou (Chine), comparant un programme de prévention fondé sur les compétences TCD à une intervention éducative classique. Après 6 mois, l'occurrence de l'automutilation non suicidaire dans le groupe TCD est passée de 23,60% à 10,91% (p<0,05), avec une réduction de la fréquence des gestes (p<0,001) et une amélioration des scores de dépression et de santé sub-optimale (p<0,05) ; le groupe contrôle n'a montré aucune amélioration significative sur ces mesures.",
     "pertinence": "Étude de petite taille et monocentrique (population scolaire chinoise), mais elle suggère qu'un format bref et collectif des compétences TCD, hors cadre clinique individuel, peut réduire l'automutilation — piste à surveiller pour des programmes de prévention primaire en milieu scolaire français."
   },
   {
     "titre": "TCC des troubles mentaux de l'adulte : série unifiée de méta-analyses (375 essais)",
     "url": "https://doi.org/10.1001/jamapsychiatry.2025.0482",
-    "datePublication": "2025-04-16", "dateAjout": "2026-07-21T20:22",
-    "theme": "TCC", "sousThemes": ["Dépression", "Troubles anxieux", "TOC", "TSPT", "Efficacité comparée"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Élevé", "consensus": "Consensus établi", "source": "PubMed",
+    "datePublication": "2025-04-16",
+    "dateAjout": "2026-07-21T20:22",
+    "theme": "TCC",
+    "sousThemes": [
+      "Dépression",
+      "Troubles anxieux",
+      "TOC",
+      "TSPT",
+      "Efficacité comparée"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Consensus établi",
+    "source": "PubMed",
     "synthese": "Vaste série de méta-analyses harmonisées (Cuijpers et al., JAMA Psychiatry, 16 avril 2025) intégrant 375 essais randomisés et 32 968 patients adultes, comparant la TCC à des conditions contrôles inactives pour la dépression majeure, quatre troubles anxieux, le TOC, le TSPT, deux troubles du comportement alimentaire, ainsi que les troubles psychotiques et bipolaires. Les tailles d'effet (g de Hedges) vont de 0,31 (trouble bipolaire) à 1,27 (TSPT) : > 1,0 pour le TSPT et les phobies spécifiques ; entre 0,5 et 1,0 pour les troubles paniques, l'anxiété sociale, l'anxiété généralisée, la boulimie, l'hyperphagie, la dépression et le TOC ; < 0,5 pour les troubles bipolaires et psychotiques. L'ampleur dépend fortement du type de contrôle (effets plus grands vs liste d'attente que vs soins habituels).",
     "pertinence": "Référence de synthèse la plus complète à ce jour : conforte la TCC comme traitement de première intention pour la plupart des troubles internalisés, tout en rappelant que l'effet réel dépend du comparateur et reste modeste dans les troubles psychotiques/bipolaires."
   },
   {
     "titre": "Modérateurs de l'efficacité des TCC pour l'anxiété de l'enfant et de l'adolescent : revue systématique et méta-analyse",
     "url": "https://doi.org/10.1016/j.cpr.2025.102548",
-    "datePublication": "2025-01-09", "dateAjout": "2026-07-21T20:22",
-    "theme": "TCC", "sousThemes": ["Anxiété", "Enfant/Adolescent", "Prévention", "Implication parentale"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2025-01-09",
+    "dateAjout": "2026-07-21T20:22",
+    "theme": "TCC",
+    "sousThemes": [
+      "Anxiété",
+      "Enfant/Adolescent",
+      "Prévention",
+      "Implication parentale"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Méta-analyse (Zhou, Creswell, Reardon ; Clinical Psychology Review, janvier 2025) de 86 essais randomisés évaluant 98 interventions TCC contre contrôles non actifs pour la prévention universelle, la prévention ciblée et le traitement des troubles anxieux chez l'enfant et l'adolescent. L'analyse cherche « ce qui marche pour qui » : l'âge de l'enfant, le profil de l'animateur et l'implication parentale modèrent l'efficacité en prévention universelle ; l'âge et la durée en prévention ciblée ; l'âge, le temps de contact et le format de délivrance en traitement. Le niveau d'anxiété initial ne ressort pas comme modérateur. Les auteurs appellent à la prudence vu l'hétérogénéité et les divergences entre auto-évaluations enfant et parent.",
     "pertinence": "Invite à personnaliser le format des TCC selon l'âge et le contexte (implication des parents surtout chez les plus jeunes), plutôt qu'à appliquer un protocole unique ; utile pour calibrer les programmes de prévention en milieu scolaire ou clinique."
   },
   {
     "titre": "Effets à long terme des TCC scolaires universelles chez des enfants et adolescents à bas risque : méta-analyse bayésienne",
     "url": "https://doi.org/10.1002/jclp.70069",
-    "datePublication": "2025-11-24", "dateAjout": "2026-07-21T20:22",
-    "theme": "TCC", "sousThemes": ["Prévention scolaire", "Dépression", "Anxiété", "Santé publique"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2025-11-24",
+    "dateAjout": "2026-07-21T20:22",
+    "theme": "TCC",
+    "sousThemes": [
+      "Prévention scolaire",
+      "Dépression",
+      "Anxiété",
+      "Santé publique"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Méta-analyse bayésienne (Zhang, Liang, Kang ; Journal of Clinical Psychology, 24 novembre 2025) de 31 essais randomisés totalisant 19 865 enfants et adolescents « à bas risque », évaluant la TCC scolaire universelle en prévention. Comparée aux contrôles, elle produit une amélioration statistiquement significative mais très faible des symptômes dépressifs (DMS -0,06) et une réduction faible de l'anxiété (DMS -0,19), effets maintenus jusqu'à un an. Les auteurs soulignent eux-mêmes la très faible qualité des preuves sous-jacentes : signal prometteur mais insuffisant pour recommander un déploiement généralisé sans essais de grande ampleur.",
     "pertinence": "Nuance l'engouement pour les programmes TCC universels à l'école : bénéfice préventif réel mais très modeste chez les jeunes tout-venant ; à réserver/évaluer plutôt qu'à généraliser en l'état."
   },
   {
     "titre": "Prédicteurs et modérateurs des thérapies délivrées par internet pour la dépression de l'adolescent : essai de non-infériorité",
     "url": "https://doi.org/10.1080/10503307.2026.2686693",
-    "datePublication": "2026-06-23", "dateAjout": "2026-07-21T20:22",
-    "theme": "TCC", "sousThemes": ["Dépression", "iCBT", "Adolescents", "Choix du traitement"],
-    "typeSource": "RCT", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2026-06-23",
+    "dateAjout": "2026-07-21T20:22",
+    "theme": "TCC",
+    "sousThemes": [
+      "Dépression",
+      "iCBT",
+      "Adolescents",
+      "Choix du traitement"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Analyse secondaire (Mechler et al., Psychotherapy Research, 23 juin 2026) d'un essai randomisé de non-infériorité (n=272) comparant, sur 10 semaines, une TCC guidée délivrée par internet (iCBT) à une thérapie psychodynamique par internet (IPDT) chez des adolescents dépressifs. Une meilleure auto-compassion initiale prédit une amélioration plus rapide, quel que soit le traitement. L'anxiété comorbide agit comme modérateur : à anxiété élevée, l'IPDT fait mieux que l'iCBT ; à anxiété très basse, l'iCBT fait mieux. Aucun autre modérateur significatif ; réplication nécessaire.",
     "pertinence": "Suggère des critères simples d'aiguillage : envisager l'iCBT en priorité chez l'adolescent peu anxieux, et une alternative si l'anxiété comorbide est marquée ; renforce la place des formats numériques guidés dans la dépression de l'adolescent."
   },
   {
     "titre": "Interventions numériques dans le TDAH de l'enfant et de l'adolescent : méta-analyse en réseau",
     "url": "https://doi.org/10.3389/fpsyt.2026.1747368",
-    "datePublication": "2026-06-10", "dateAjout": "2026-07-21T21:38",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TDAH", "Interventions numériques", "Neurofeedback"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-06-10",
+    "dateAjout": "2026-07-21T21:38",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TDAH",
+      "Interventions numériques",
+      "Neurofeedback"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Méta-analyse en réseau (Mei, Zhang & Bin ; Frontiers in Psychiatry, 10 juin 2026) portant sur 37 essais randomisés (2 922 participants, dont 32 essais/2 726 participants avec mesures subjectives) comparant différentes interventions numériques pour le TDAH de l'enfant et de l'adolescent (neurofeedback, entraînement cognitif informatisé, jeux vidéo thérapeutiques, télésoins). Le neurofeedback ressort comme l'intervention numérique la plus efficace sur l'inattention (SUCRA 79,4%), les tâches cognitives informatisées sur l'hyperactivité/impulsivité (SUCRA 76,1%) et les jeux mobiles sur les fonctions exécutives (SUCRA 72,9%). Les auteurs appellent à une interprétation prudente compte tenu de l'hétérogénéité méthodologique et du nombre limité d'essais par comparaison.",
     "pertinence": "Signale des pistes numériques complémentaires (neurofeedback en particulier) au traitement pharmacologique et aux TCC du TDAH, mais preuves encore préliminaires : à considérer comme adjuvant, pas comme alternative validée aux prises en charge de référence."
   },
   {
     "titre": "Traitement du trouble obsessionnel compulsif chez l'enfant et l'adolescent : méta-analyse en réseau (American Academy of Pediatrics)",
     "url": "https://doi.org/10.1542/peds.2024-068992",
-    "datePublication": "2024-12-06", "dateAjout": "2026-07-21T21:38",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TOC", "Thérapie d'exposition", "Pharmacothérapie"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Élevé", "consensus": "Consensus établi", "source": "Autre",
+    "datePublication": "2024-12-06",
+    "dateAjout": "2026-07-21T21:38",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TOC",
+      "Thérapie d'exposition",
+      "Pharmacothérapie"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Consensus établi",
+    "source": "Autre",
     "synthese": "Méta-analyse en réseau (Steele, Kanaan, Caputo et al., Pediatrics/American Academy of Pediatrics, 6 décembre 2024) incluant 71 essais randomisés chez l'enfant et l'adolescent avec TOC, évaluant la thérapie d'exposition avec prévention de la réponse (TERP), les ISRS, la clomipramine et leurs associations, avec la CY-BOCS comme mesure principale. La TERP est supérieure à la liste d'attente (différence moyenne nette -10,5 ; IC95% -12,6 à -8,4) et au contrôle comportemental (-5,3 ; IC95% -8,0 à -2,7) ; la TERP à distance reste efficace (-9,4 vs liste d'attente). Les ISRS sont efficaces vs placebo (-4,4). La TERP est probablement plus efficace que les ISRS seuls (-2,7), et l'association TERP+ISRS surpasse l'ISRS seul (-3,0).",
     "pertinence": "Confirme la thérapie d'exposition avec prévention de la réponse (en présentiel ou télésoin) comme traitement de première intention du TOC pédiatrique, seule ou associée à un ISRS, avec des estimations d'effet chiffrées utiles pour l'information des familles."
   },
   {
     "titre": "Interventions précoces médiées par les parents chez les nourrissons à risque élevé de TSA : revue systématique d'essais randomisés",
     "url": "https://pubmed.ncbi.nlm.nih.gov/42052530/",
-    "datePublication": "2026-04-13", "dateAjout": "2026-07-21T21:38",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TSA", "Intervention précoce", "Nourrisson"],
-    "typeSource": "Revue narrative", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2026-04-13",
+    "dateAjout": "2026-07-21T21:38",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TSA",
+      "Intervention précoce",
+      "Nourrisson"
+    ],
+    "typeSource": "Revue narrative",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Revue systématique (Conti, Ieri, Calderoni et al., Frontiers in Psychiatry, 13 avril 2026) de 11 essais randomisés testant des interventions précoces médiées par les parents chez des nourrissons de moins de 18 mois en moyenne, présentant des signes précoces de TSA ou à risque élevé. Les résultats montrent un effet cohérent sur la communication/langage (4/11 études) et sur la qualité de l'interaction parent-enfant (6/8 études), avec des mesures neurophysiologiques modifiées (eye-tracking, EEG) dans 3 études, mais des résultats mitigés sur la réduction des symptômes autistiques (4/9 études) et aucun effet significatif sur la cognition ou les compétences adaptatives. L'étude la plus large (n=103) rapporte une réduction de la sévérité des symptômes et des probabilités de diagnostic de TSA à 3 ans. Les auteurs soulignent la petite taille des échantillons (7 cohortes distinctes), le suivi limité (4/11 études) et une forte hétérogénéité méthodologique.",
     "pertinence": "Apporte des données d'essais randomisés à l'appui de l'intervention précoce déjà recommandée par la HAS pour le TSA (repérage avant même le diagnostic formel), tout en rappelant que les preuves sur la réduction des symptômes autistiques restent limitées et hétérogènes."
   },
   {
     "titre": "Programmes de thérapie comportementale dialectique pour adolescents : revue systématique et méta-analyse des résultats cliniques et d'implémentation",
     "url": "https://pubmed.ncbi.nlm.nih.gov/39565348/",
-    "datePublication": "2024-11-20", "dateAjout": "2026-07-21T21:38",
-    "theme": "TCD-Adolescents (DBT-A)", "sousThemes": ["Revue systématique", "Multi-cadres cliniques", "Troubles externalisés"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2024-11-20",
+    "dateAjout": "2026-07-21T21:38",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Revue systématique",
+      "Multi-cadres cliniques",
+      "Troubles externalisés"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Revue systématique et méta-analyse (Boustani, Mazzone, Hodgins & Rith-Najarian ; Journal of Clinical Child & Adolescent Psychology, en ligne le 20 novembre 2024, publiée dans le numéro de mars-avril 2026) portant sur 72 études de programmes de TCD pour adolescents (2000-2023), menées dans des cadres variés (hospitalisation, ambulatoire, résidentiel, hôpital de jour, milieu carcéral, milieu scolaire) et à différents niveaux d'intervention (clinique, ciblée, prévention universelle). Les auteurs rapportent une efficacité de la TCD sur cinq domaines : dépression, dysrégulation émotionnelle, comportements suicidaires et auto-agressifs, troubles externalisés (réduction des symptômes externalisés : g de Hedges = -0,499 ; IC95% -0,683 à -0,315 ; p<0,001 sur 17 études/25 mesures) et troubles alimentaires. Une durée d'intervention plus longue est associée à une plus grande réduction des symptômes, effet toutefois non significatif après retrait d'une valeur aberrante.",
     "pertinence": "Élargit le champ de preuve de la TCD-A au-delà de l'auto-agression/suicidalité déjà bien établie, vers les troubles externalisés et alimentaires et vers des formats de prévention scolaire/universelle ; les auteurs appellent cependant à davantage d'essais randomisés avant généralisation."
   },
   {
     "titre": "Coordination entre protection de l'enfance et psychiatrie de l'enfant et de l'adolescent : nouvelle recommandation de bonne pratique HAS",
     "url": "https://www.has-sante.fr/jcms/p_3261731/fr/coordination-entre-protection-de-l-enfance-et-psychiatrie-de-l-enfant-et-de-l-adolescent",
-    "datePublication": "2025-04-30", "dateAjout": "2026-07-22T09:15",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Protection de l'enfance", "Parcours de soins", "Politique de santé"],
-    "typeSource": "Recommandation officielle", "niveauPreuve": "Avis d'expert", "consensus": "Consensus établi", "source": "HAS",
+    "datePublication": "2025-04-30",
+    "dateAjout": "2026-07-22T09:15",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Protection de l'enfance",
+      "Parcours de soins",
+      "Politique de santé"
+    ],
+    "typeSource": "Recommandation officielle",
+    "niveauPreuve": "Avis d'expert",
+    "consensus": "Consensus établi",
+    "source": "HAS",
     "synthese": "La HAS a validé le 30 avril 2025 (mise en ligne le 26 mai 2025) une recommandation de bonne pratique sur la coordination entre protection de l'enfance et psychiatrie de l'enfant et de l'adolescent, élaborée dans le cadre de la Grande cause nationale 2025 consacrée à la santé mentale. Le texte fixe trois objectifs : améliorer le repérage précoce des besoins de soins psychiques chez les enfants protégés (bilan de santé systématique dans le mois suivant une mesure de protection), faciliter un accès effectif aux soins (référents de liaison en psychiatrie, évaluation rapide sans liste d'attente lors des changements de placement) et garantir la continuité du suivi (échanges réguliers entre les deux secteurs, document de liaison lors des passages aux urgences ou hospitalisations). La HAS recommande aussi des conventions locales formalisées, des formations croisées et une culture partagée entre les deux secteurs, tout en soulignant que leur application suppose des moyens humains et financiers dédiés.",
     "pertinence": "Fournit un cadre organisationnel concret (référents, bilans systématiques, document de liaison) pour fluidifier la coordination entre protection de l'enfance et pédopsychiatrie, point de friction fréquent en pratique clinique."
   },
   {
     "titre": "DBT-K : faisabilité et résultats préliminaires d'un groupe de compétences TCD transdiagnostique créatif de 8 semaines chez l'adolescent",
     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12939821/",
-    "datePublication": "2026-01-26", "dateAjout": "2026-07-22T09:15",
-    "theme": "TCD-Adolescents (DBT-A)", "sousThemes": ["Compétences TCD", "Groupe transdiagnostique", "Faisabilité"],
-    "typeSource": "Étude observationnelle", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2026-01-26",
+    "dateAjout": "2026-07-22T09:15",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Compétences TCD",
+      "Groupe transdiagnostique",
+      "Faisabilité"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Étude pilote non contrôlée (Legat, Rainer, Huber et al., revue Children, 26 janvier 2026) évaluant la faisabilité d'un groupe de compétences TCD transdiagnostique créatif de 8 séances hebdomadaires (DBT-K) chez 53 adolescents ambulatoires (94% de filles, âge moyen 15,6 ans) présentant des comorbidités psychiatriques hétérogènes. Les émotions négatives diminuent significativement dès les premières séances (p<0,001) et le recours à des stratégies d'expression émotionnelle augmente (p<0,05), mais les émotions positives et l'estime de soi restent stables sur la période. Le taux d'abandon atteint 53% à la 8e séance ; les auteurs pointent eux-mêmes l'absence de groupe contrôle, un échantillon modeste et très majoritairement féminin, et l'absence de suivi à distance comme limites majeures.",
     "pertinence": "Suggère l'intérêt d'un format bref et créatif de compétences TCD en ambulatoire, mais l'attrition très élevée (plus d'un adolescent sur deux) invite à la prudence avant toute généralisation de ce format en pratique courante."
   },
   {
     "titre": "Efficacité des thérapies psychologiques pour le trouble d'anxiété généralisée isolé chez l'enfant et l'adolescent : revue systématique et synthèse narrative",
     "url": "https://acamh.onlinelibrary.wiley.com/doi/full/10.1002/jcv2.70056",
-    "datePublication": "2025-10-16", "dateAjout": "2026-07-22T09:15",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Anxiété", "TAG", "Méthodologie de revue"],
-    "typeSource": "Revue narrative", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2025-10-16",
+    "dateAjout": "2026-07-22T09:15",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Anxiété",
+      "TAG",
+      "Méthodologie de revue"
+    ],
+    "typeSource": "Revue narrative",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Première revue systématique consacrée spécifiquement au trouble d'anxiété généralisée (TAG) chez l'enfant et l'adolescent, sans l'englober avec les autres troubles anxieux (Shipp et al., JCPP Advances, publié en ligne le 16 octobre 2025). Après recherche dans PsycINFO, Medline, Embase, CENTRAL et ClinicalTrials.gov (25 juin 2024, mise à jour au 10 juin 2025) ayant identifié 7705 références, seuls 6 essais randomisés portant sur 217 participants avec un diagnostic clinique de TAG primaire ont pu être inclus. En raison d'une forte hétérogénéité des mesures et comparateurs, les résultats ont été synthétisés de façon narrative plutôt que statistique : les thérapies psychologiques semblent augmenter les taux de rémission par rapport à l'absence de traitement, mais les auteurs jugent les données non concluantes et appellent à des essais et à un reporting de meilleure qualité centrés spécifiquement sur le TAG pédiatrique isolé.",
     "pertinence": "Rappelle que l'efficacité des psychothérapies pour l'anxiété pédiatrique, bien établie pour les troubles anxieux en général, reste peu documentée spécifiquement pour le TAG isolé ; incite à la prudence dans l'extrapolation des données globales sur l'anxiété à ce trouble particulier."
   },
   {
     "titre": "Thérapie métacognitive dans le trouble d'anxiété généralisée de l'adolescent : essai ouvert avec suivi à 3 et 6 mois",
     "url": "https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2026.1765814/full",
-    "datePublication": "2026-05-05", "dateAjout": "2026-07-22T09:15",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Anxiété", "TAG", "Thérapie métacognitive"],
-    "typeSource": "Étude observationnelle", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-05-05",
+    "dateAjout": "2026-07-22T09:15",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Anxiété",
+      "TAG",
+      "Thérapie métacognitive"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Essai ouvert sans groupe contrôle (Hoff, Hjemdal & Nordahl, Frontiers in Psychiatry, 5 mai 2026) testant l'adaptation de la thérapie métacognitive au trouble d'anxiété généralisée (TAG) chez 10 adolescentes (âge moyen 15,2 ans), avec suivi à 3 et 6 mois. Neuf adolescentes sur dix ne remplissaient plus les critères diagnostiques de TAG après traitement, avec des tailles d'effet très importantes (g de Hedges 1,93 à 3,83) sur l'anxiété, la dépression et les croyances métacognitives dysfonctionnelles ; 80% étaient en rémission clinique en fin de traitement et 90% à 6 mois, avec une forte satisfaction rapportée par les adolescentes et leurs parents. Les auteurs soulignent eux-mêmes que l'absence de groupe contrôle, le très petit échantillon homogène (uniquement des filles) et le rôle de chercheurs-thérapeutes limitent fortement la portée des conclusions causales.",
     "pertinence": "Résultats très prometteurs mais préliminaires (essai ouvert, n=10) : une piste sérieuse pour le TAG de l'adolescent, à confirmer par un essai randomisé avant toute application clinique large."
   },
   {
     "titre": "Effet de la thérapie comportementale dialectique sur la dépression et l'expression de la colère dans le trouble borderline (adulte) : revue systématique et méta-analyse",
     "url": "https://www.sciencedirect.com/science/article/abs/pii/S0165178126001162",
-    "datePublication": "2026-02-26", "dateAjout": "2026-07-22T09:15",
-    "theme": "TCD", "sousThemes": ["Trouble borderline (adulte)", "Dépression", "Régulation de la colère"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-02-26",
+    "dateAjout": "2026-07-22T09:15",
+    "theme": "TCD",
+    "sousThemes": [
+      "Trouble borderline (adulte)",
+      "Dépression",
+      "Régulation de la colère"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Revue systématique et méta-analyse (Psychiatry Research, vol. 194, 26 février 2026) portant spécifiquement sur l'effet de la TCD standard sur la dépression et l'expression de la colère chez des adultes avec trouble de la personnalité borderline, à partir d'essais randomisés et d'essais non randomisés de bonne qualité (recherche PubMed, Scopus et Web of Science jusqu'au 24 février 2025). La TCD est associée à une diminution modeste mais statistiquement significative des symptômes dépressifs post-traitement par rapport aux groupes contrôles (d de Cohen = -0,59 ; IC95% -1,02 à -0,16 ; p=0,007), avec un effet également favorable rapporté sur l'expression de la colère. Les auteurs soulignent que ces deux dimensions restent nettement moins étudiées que l'effet, déjà bien établi, de la TCD sur les symptômes borderline globaux et l'auto-agression.",
     "pertinence": "Précise, au-delà de l'effet global déjà connu de la TCD sur le trouble borderline, un bénéfice chiffré spécifique sur la dépression comorbide chez l'adulte — utile pour argumenter le maintien de la TCD quand la présentation clinique est dominée par des symptômes dépressifs plutôt que par l'auto-agression."
   },
   {
     "titre": "Interventions pharmacologiques du TDAH : revue systématique et méta-analyse en réseau dose-effet (Lancet Psychiatry)",
     "url": "https://pubmed.ncbi.nlm.nih.gov/42134365/",
-    "datePublication": "2026-06-01", "dateAjout": "2026-07-22T16:35",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TDAH", "Pharmacothérapie", "Posologie"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Élevé", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-06-01",
+    "dateAjout": "2026-07-22T16:35",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TDAH",
+      "Pharmacothérapie",
+      "Posologie"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Revue systématique et méta-analyse en réseau dose-effet (Nourredine et al., The Lancet Psychiatry, juin 2026 ; 13(6):485-495), portant sur 113 essais randomisés en double aveugle et 25 154 participants dont 14 138 enfants et adolescents, modélisant les relations dose-efficacité et dose-tolérance des médicaments du TDAH via un modèle bayésien hiérarchique. Chez l'enfant et l'adolescent, l'efficacité médiane du méthylphénidate, des amphétamines et de la guanfacine augmente jusqu'à respectivement 45 mg/j, 25 mg/j et 4 mg/j, sans bénéfice supplémentaire au-delà. Les amphétamines montrent un risque d'effets indésirables dose-dépendant au-delà de 25 mg/j, alors que le méthylphénidate ne présente pas de signal net de mauvaise tolérance dose-dépendante dans cette tranche d'âge ; l'atomoxétine et le modafinil ne montrent pas de relation dose-effet claire. Les auteurs concluent que ces résultats remettent en cause à la fois l'inertie thérapeutique et l'escalade non critique des doses au-delà des limites autorisées.",
     "pertinence": "Fournit des seuils posologiques chiffrés chez l'enfant et l'adolescent (plafond d'efficacité autour de 45 mg/j pour le méthylphénidate) : au-delà, on augmente surtout les effets indésirables sans gain d'efficacité — argument direct pour éviter l'escalade de dose systématique."
   },
   {
     "titre": "Traitement antidépresseur de la dépression de l'enfant et de l'adolescent : revue systématique et méta-analyse dose-réponse",
     "url": "https://pubmed.ncbi.nlm.nih.gov/40056173/",
-    "datePublication": "2025-03-08", "dateAjout": "2026-07-22T16:35",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Dépression", "Pharmacothérapie", "Posologie"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2025-03-08",
+    "dateAjout": "2026-07-22T16:35",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Dépression",
+      "Pharmacothérapie",
+      "Posologie"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Revue systématique et méta-analyse dose-réponse (Zhang, Gao, Li et al., European Child & Adolescent Psychiatry, en ligne le 8 mars 2025 ; 34:1979-1990) incluant 22 essais randomisés en double aveugle (durée majoritairement de 6 à 12 semaines) sur les antidépresseurs dans la dépression de l'enfant et de l'adolescent, avec recherche jusqu'au 31 juillet 2023. Les antidépresseurs sont marginalement plus efficaces que le placebo sur la réponse au traitement mais augmentent significativement le risque d'effets indésirables ; aucune différence significative n'est observée sur la rémission, la suicidalité ou les abandons globaux. L'analyse dose-réponse met en évidence une augmentation très plate de la probabilité de réponse avec des doses plus élevées (exprimées en équivalent fluoxétine), contrastant avec une hausse marquée des arrêts pour effets indésirables. Les auteurs soulignent que le bénéfice paraît plus faible que chez l'adulte.",
     "pertinence": "Renforce l'idée qu'augmenter la dose d'antidépresseur chez l'enfant ou l'adolescent dépressif n'améliore guère la réponse mais dégrade la tolérance : plaide pour des doses modérées et une évaluation attentive du rapport bénéfice/risque plutôt qu'une titration agressive."
   },
   {
     "titre": "Thérapie familiale centrée sur les troubles alimentaires pour l'anorexie mentale de l'adolescent : revue systématique et méta-analyse",
     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11754536/",
-    "datePublication": "2024-07-23", "dateAjout": "2026-07-22T16:35",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Troubles des conduites alimentaires", "Anorexie mentale", "Thérapie familiale"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Élevé", "consensus": "Consensus établi", "source": "Autre",
+    "datePublication": "2024-07-23",
+    "dateAjout": "2026-07-22T16:35",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Troubles des conduites alimentaires",
+      "Anorexie mentale",
+      "Thérapie familiale"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Consensus établi",
+    "source": "Autre",
     "synthese": "Revue systématique et méta-analyse (Austin et al., International Journal of Eating Disorders, 23 juillet 2024) portant sur 18 essais randomisés (1 138 patients) de thérapie familiale centrée sur les troubles alimentaires (FT-ED) dans l'anorexie mentale de l'adolescent. En fin de traitement, la FT-ED est significativement supérieure aux psychothérapies individuelles sur la reprise pondérale (g = 0,46 ; IC95% 0,17-0,75), avec une tendance non significative en faveur de la rémission (RR = 1,27 ; IC95% 0,94-1,72). L'avantage pondéral s'atténue et devient non significatif au suivi à long terme (2 à 5 ans ; g = 0,24 ; IC95% -0,08 à 0,56). Le format séparé (parents et adolescent reçus séparément) est significativement supérieur au format conjoint sur la reprise pondérale (g = -0,42 ; IC95% -0,73 à -0,11).",
     "pertinence": "Conforte la thérapie familiale comme traitement de première intention de l'anorexie de l'adolescent pour la reprise pondérale à court terme et suggère qu'un format séparant parents et adolescent peut être préférable ; l'effet s'érodant à long terme, elle rappelle l'importance d'un suivi prolongé."
   },
   {
     "titre": "Interventions de plan de sécurité pour la prévention du suicide chez l'enfant et l'adolescent : revue systématique et méta-analyse (JAMA Pediatrics)",
     "url": "https://jamanetwork.com/journals/jamapediatrics/fullarticle/2834286",
-    "datePublication": "2025-05-19", "dateAjout": "2026-07-22T16:35",
-    "theme": "Transversal", "sousThemes": ["Suicidalité", "Prévention du suicide", "Plan de sécurité"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2025-05-19",
+    "dateAjout": "2026-07-22T16:35",
+    "theme": "Transversal",
+    "sousThemes": [
+      "Suicidalité",
+      "Prévention du suicide",
+      "Plan de sécurité"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Revue systématique et méta-analyse (Albaum, Irwin, Muha et al., JAMA Pediatrics, 19 mai 2025) sur les interventions de plan de sécurité (safety planning) pour la prévention du suicide chez l'enfant et l'adolescent : 10 études (1 002 adolescents), dont 5 (619 participants) incluses dans la méta-analyse. Aucune association significative n'est retrouvée entre le plan de sécurité et les critères liés au suicide : idées suicidaires (g de Hedges = 0,11 ; IC95% 0,01-0,21), comportements suicidaires (g = -0,09 ; IC95% -0,20 à 0,02), tentatives de suicide (RR = 0,81 ; IC95% 0,24-2,67) ni re-présentation aux soins (RR = 0,99 ; IC95% 0,29-3,35). Les auteurs concluent que les preuves soutenant le plan de sécurité comme intervention efficace chez les mineurs restent limitées et appellent à des essais bien dimensionnés.",
     "pertinence": "Nuance une pratique très répandue : contrairement aux données chez l'adulte, le plan de sécurité seul n'a pas fait la preuve de son efficacité chez l'enfant et l'adolescent — à considérer comme un élément d'une prise en charge plus large (suivi structuré, réduction de l'accès aux moyens létaux) plutôt qu'une intervention autonome suffisante."
   },
   {
     "titre": "Mortalité de l'adolescent après intervention thérapeutique pour auto-agression : revue systématique et méta-analyse",
     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7617579/",
-    "datePublication": "2025-01-23", "dateAjout": "2026-07-22T16:35",
-    "theme": "Transversal", "sousThemes": ["Auto-mutilation", "Suicidalité", "Mortalité"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2025-01-23",
+    "dateAjout": "2026-07-22T16:35",
+    "theme": "Transversal",
+    "sousThemes": [
+      "Auto-mutilation",
+      "Suicidalité",
+      "Mortalité"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Revue systématique et méta-analyse (Mughal, Young, Stahl, Asarnow & Ougrin ; JCPP Advances, 23 janvier 2025) de 24 essais randomisés (3 470 adolescents, dont 1 729 recevant une intervention thérapeutique) évaluant l'effet des interventions thérapeutiques après auto-agression sur la mortalité. Aucun effet significatif sur la mortalité future n'est mis en évidence (différence de risque = 0,002 ; IC95% -0,003 à 0,008 ; p = 0,42 ; 6 décès dans le groupe intervention contre 15 dans le groupe comparateur). En revanche, les interventions réduisent significativement la répétition de l'auto-agression (différence de risque = -0,07 ; IC95% -0,132 à -0,007 ; p = 0,028) et les tentatives de suicide (différence de risque = -0,05 ; IC95% -0,086 à -0,007 ; p = 0,022).",
     "pertinence": "Rappelle qu'aucune étude n'a la puissance de démontrer une baisse de mortalité (événement rare), mais que les interventions (dont la DBT-A) réduisent réellement la répétition de l'auto-agression et les tentatives de suicide — bénéfices cliniques concrets à valoriser auprès des équipes et des familles."
   },
   {
     "titre": "Recommandations du groupe transitions du Conseil scientifique de la SFPEADA pour une psychiatrie de transition 15-25 ans",
     "url": "https://www.em-consulte.com/article/1824019/recommandations-de-la-sfpeada-pour-une-psychiatrie",
-    "datePublication": "2026-06-19", "dateAjout": "2026-07-24T08:36",
-    "theme": "Transversal", "sousThemes": ["Psychiatrie de transition", "Parcours de soins", "Coordination des soins"],
-    "typeSource": "Recommandation officielle", "niveauPreuve": "Avis d'expert", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-06-19",
+    "dateAjout": "2026-07-24T08:36",
+    "theme": "Transversal",
+    "sousThemes": [
+      "Psychiatrie de transition",
+      "Parcours de soins",
+      "Coordination des soins"
+    ],
+    "typeSource": "Recommandation officielle",
+    "niveauPreuve": "Avis d'expert",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Le groupe transitions du Conseil scientifique de la SFPEADA a publié le 19 juin 2026, dans Neuropsychiatrie de l'Enfance et de l'Adolescence, des recommandations pour structurer une psychiatrie de transition entre 15 et 25 ans en France. Le texte repose sur trois piliers : favoriser la continuité des soins dans une dynamique inclusive et exhaustive, encourager une approche dimensionnelle et intégrative des troubles plutôt qu'un découpage strict enfant/adulte, et promouvoir la mixité des intervenants au sein de dispositifs collaboratifs et pluridisciplinaires. Les propositions concrètes incluent la création d'équipes mixtes dédiées, un case management d'équipe, le renforcement de la formation croisée des professionnels et l'implication des familles et des pairs-aidants.",
     "pertinence": "Fournit un cadre structurant pour organiser la période charnière 15-25 ans, actuellement marquée par une rupture fréquente du suivi au passage à la psychiatrie adulte ; utile pour argumenter la mise en place de dispositifs de transition dans les organisations locales."
   },
   {
     "titre": "Efficacité de la thérapie comportementale dialectique chez des adolescents en hospitalisation résidentielle psychiatrique : essai pilote hybride effectivité-implémentation",
     "url": "https://doi.org/10.1176/appi.psychotherapy.20250014",
-    "datePublication": "2026-02-22", "dateAjout": "2026-07-24T08:36",
-    "theme": "TCD-Adolescents (DBT-A)", "sousThemes": ["Hospitalisation résidentielle", "Implémentation clinique", "Fonctionnement global"],
-    "typeSource": "Étude observationnelle", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-02-22",
+    "dateAjout": "2026-07-24T08:36",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Hospitalisation résidentielle",
+      "Implémentation clinique",
+      "Fonctionnement global"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Essai pilote hybride effectivité-implémentation (American Journal of Psychotherapy, 22 février 2026) comparant, dans un centre de traitement résidentiel psychiatrique pour adolescents aux troubles complexes (psychiatriques, addictifs, développementaux), les scores de fonctionnement global de 113 adolescents ayant reçu la TCD à ceux de 114 adolescents en traitement habituel, sur une cohorte de 227 admissions (juillet 2018-juin 2020). Les deux groupes améliorent leur fonctionnement global entre l'admission et la sortie, mais la différence entre le groupe TCD et le groupe traitement habituel n'est pas statistiquement significative.",
     "pertinence": "Nuance l'extrapolation systématique des bénéfices de la TCD-A au cadre résidentiel institutionnel : dans ce contexte spécifique et avec ce devis non randomisé, la TCD ne se distingue pas clairement du traitement habituel sur le fonctionnement global, ce qui invite à la prudence sur les attentes d'implémentation en institution."
   },
   {
     "titre": "Effet de l'eskétamine intranasale sur les symptômes dépressifs d'adolescents en risque suicidaire imminent : essai randomisé contrôlé contre psychoactif (midazolam)",
     "url": "https://pubmed.ncbi.nlm.nih.gov/40058488/",
-    "datePublication": "2025-03-07", "dateAjout": "2026-07-24T08:36",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Dépression", "Suicidalité", "Pharmacothérapie", "Eskétamine"],
-    "typeSource": "RCT", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2025-03-07",
+    "dateAjout": "2026-07-24T08:36",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Dépression",
+      "Suicidalité",
+      "Pharmacothérapie",
+      "Eskétamine"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Essai de phase 2b en double aveugle et double placebo (Kosik-Gonzalez et al., Journal of the American Academy of Child & Adolescent Psychiatry, en ligne le 7 mars 2025 ; 65(1):42-55), financé par le laboratoire Janssen, randomisant 147 adolescents de 12 à moins de 18 ans, modérément à sévèrement déprimés et pour 95% d'entre eux à risque suicidaire modéré à extrême, vers de l'eskétamine intranasale (28, 56 ou 84 mg) ou du midazolam par voie orale, deux fois par semaine pendant 4 semaines, en complément d'une prise en charge standard complète (hospitalisation initiale, antidépresseur oral, psychothérapie fondée sur les preuves). Sur le critère principal (variation du score CDRS-R à 24 heures après la première dose), les doses d'eskétamine combinées (56 et 84 mg) sont supérieures au midazolam (différence de -5,8 points ; IC95% -11,19 à -0,35 ; p=0,037), mais aucune dose individuelle ne se distingue significativement seule. La sévérité de la suicidalité s'améliore dans tous les groupes, sans différence significative entre bras. Les effets indésirables fréquents incluent vertiges, nausées, dissociation et, notamment, des auto-mutilations intentionnelles.",
     "pertinence": "Premier essai randomisé de cette ampleur sur l'eskétamine chez l'adolescent en risque suicidaire imminent : signal d'efficacité rapide sur la dépression mais résultat fragile (significatif seulement en poolant deux doses, financement industriel, effets indésirables incluant des gestes auto-agressifs) — à interpréter avec prudence avant toute extrapolation clinique hors essai."
   },
   {
     "titre": "Résultats cliniquement significatifs de l'intervention comportementale intensive précoce (EIBI) dans le trouble du spectre de l'autisme : méta-analyse sur données individuelles des participants",
     "url": "https://onlinelibrary.wiley.com/doi/10.1002/aur.70169",
-    "datePublication": "2026-01-08", "dateAjout": "2026-07-24T08:36",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TSA", "Intervention comportementale intensive précoce", "ABA"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-01-08",
+    "dateAjout": "2026-07-24T08:36",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TSA",
+      "Intervention comportementale intensive précoce",
+      "ABA"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Méta-analyse sur données individuelles des participants (Eldevik, Strømgren, Eikeseth et al., Autism Research, 8 janvier 2026) regroupant 15 études (sur 17 identifiées), 341 enfants de 2 à 6 ans ayant reçu une intervention comportementale intensive précoce (EIBI) pendant au moins 12 mois et 280 enfants en groupe de comparaison. Les tailles d'effet rapportées sont importantes : 0,66 pour le comportement adaptatif, 0,87 pour le fonctionnement intellectuel et 1,36 pour la sévérité des symptômes autistiques, avec un nombre de sujets à traiter pour obtenir une amélioration cliniquement significative compris entre 4,1 et 6,9 ; l'intensité du traitement prédit significativement l'ampleur des améliorations. Les auteurs concluent que l'EIBI devrait être considérée comme le traitement de référence actuel du TSA chez l'enfant, tout en reconnaissant explicitement qu'aucune des études incluses n'était randomisée et que toutes présentent un risque de biais sérieux lié à l'absence d'assignation aléatoire.",
     "pertinence": "Apporte la synthèse la plus fine à ce jour sur les bénéfices individuels de l'EIBI, mais la conclusion forte des auteurs repose uniquement sur des études non randomisées à risque de biais sérieux : à mettre en balance avec les recommandations HAS déjà en place, sans y voir une preuve de niveau supérieur aux données existantes."
   },
   {
     "titre": "Écart de genre dans le diagnostic du TDAH : le diagnostic tardif chez les filles associé à de moins bons résultats de santé mentale et scolaires (étude galloise, données chaînées)",
     "url": "https://doi.org/10.1192/bjp.2026.10556",
-    "datePublication": "2026-03-10", "dateAjout": "2026-07-24T08:36",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TDAH", "Genre", "Diagnostic tardif", "Épidémiologie"],
-    "typeSource": "Étude observationnelle", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-03-10",
+    "dateAjout": "2026-07-24T08:36",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TDAH",
+      "Genre",
+      "Diagnostic tardif",
+      "Épidémiologie"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Étude de cohorte en population (Martin et al., British Journal of Psychiatry, 10 mars 2026) exploitant la base de données chaînées SAIL (Secure Anonymised Information Linkage), qui rassemble les données de santé primaire et secondaire, d'éducation et sociales du Pays de Galles, comparant les trajectoires d'enfants et d'adolescents diagnostiqués précocement ou tardivement pour un TDAH. Un diagnostic tardif est associé à une augmentation de l'anxiété, de la dépression, de l'automutilation, de la consommation d'alcool et de drogues, des diagnostics de trouble bipolaire et de schizophrénie, des grossesses précoces, de l'absentéisme scolaire et du recours aux soins (consultations, hospitalisations, urgences) ; ces associations sont plus marquées chez les filles que chez les garçons pour la dépression, l'automutilation, la consommation de drogues et la prescription de psychotropes.",
     "pertinence": "Renforce, par des données chaînées à grande échelle, l'argument en faveur d'un repérage plus précoce du TDAH chez les filles, dont les symptômes restent sous-diagnostiqués ; plaide pour une vigilance accrue face aux biais de genre dans l'orientation vers une évaluation diagnostique."
   },
   {
     "titre": "Taux de réponse imputés des traitements psychologiques de première intention du trouble de stress post-traumatique chez l'enfant et l'adolescent : revue systématique et méta-analyse",
     "url": "https://pubmed.ncbi.nlm.nih.gov/40024280/",
-    "datePublication": "2025-02-28", "dateAjout": "2026-07-24T08:36",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TSPT", "TCC centrée sur le trauma", "EMDR"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Élevé", "consensus": "Consensus établi", "source": "PubMed",
+    "datePublication": "2025-02-28",
+    "dateAjout": "2026-07-24T08:36",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TSPT",
+      "TCC centrée sur le trauma",
+      "EMDR"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Consensus établi",
+    "source": "PubMed",
     "synthese": "Revue systématique et méta-analyse (Lofthouse, Davies, Hodgekins & Meiser-Stedman, Journal of the American Academy of Child & Adolescent Psychiatry, en ligne le 28 février 2025 ; 65(2):187-205) incluant 60 essais randomisés (52 de TCC centrée sur le trauma [TF-CBT], 8 d'EMDR) et 5 113 participants, imputant des taux de réponse (réduction d'au moins 50% des symptômes) à partir des données continues habituellement rapportées. Le taux de réponse imputé est de 48% sous TF-CBT, 30% sous EMDR et 46% pour l'ensemble des thérapies psychologiques combinées, contre 20% dans les conditions contrôles ; le taux de détérioration est de 1% sous thérapie psychologique contre 13% dans les groupes contrôles.",
     "pertinence": "Fournit des taux de réponse concrets et facilement communicables aux familles (environ un jeune sur deux répond à la TF-CBT) et confirme un risque de détérioration très faible sous thérapie psychologique, tout en rappelant qu'environ la moitié des jeunes ne présentent pas de réponse à 50% et nécessitent un ajustement thérapeutique."
   },
   {
     "titre": "Efficacité et tolérance des antipsychotiques versus antiépileptiques ou lithium dans la manie aiguë de l'enfant et de l'adolescent : revue systématique et méta-analyse en réseau",
     "url": "https://doi.org/10.1016/j.jaac.2024.07.920",
-    "datePublication": "2024-10-06", "dateAjout": "2026-07-24T09:48",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Trouble bipolaire", "Manie aiguë", "Lithium", "Antipsychotiques", "Pharmacothérapie"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2024-10-06",
+    "dateAjout": "2026-07-24T09:48",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Trouble bipolaire",
+      "Manie aiguë",
+      "Lithium",
+      "Antipsychotiques",
+      "Pharmacothérapie"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Revue systématique et méta-analyse en réseau (Vita, Nöhles, Ostuzzi, Correll et al., Journal of the American Academy of Child & Adolescent Psychiatry, en ligne le 6 octobre 2024 ; 64(2):143-157) incluant 18 essais randomisés (2 844 participants, âge moyen 11,74 ans, 48% de filles, durée moyenne 5,4 semaines) comparant 6 antipsychotiques de seconde génération (aripiprazole, asénapine, olanzapine, quétiapine, rispéridone, ziprasidone) et 4 stabilisateurs de l'humeur (lithium, oxcarbazépine, topiramate, valproate) chez des jeunes de moins de 18 ans en épisode maniaque/mixte de trouble bipolaire de type I. Les six antipsychotiques réduisent davantage les symptômes maniaques que le placebo ; parmi les stabilisateurs de l'humeur, seul le lithium se distingue significativement du placebo sur le taux de réponse (RR=1,35 ; IC95% 1,00-1,83 ; p=0,049), mais avec un niveau de confiance jugé très faible par les auteurs, alors que l'oxcarbazépine, le topiramate et le valproate ne se différencient pas du placebo. Les antipsychotiques exposent en contrepartie à davantage de sédation, de prise de poids et d'effets métaboliques.",
     "pertinence": "Situe le lithium comme le seul stabilisateur de l'humeur montrant un signal d'efficacité (même ténu) sur la manie aiguë chez l'enfant/l'adolescent, contrairement aux autres antiépileptiques utilisés hors AMM ; à mettre en balance avec l'efficacité plus robuste mais moins bien tolérée des antipsychotiques de seconde génération."
   },
   {
     "titre": "Efficacité, effectivité et tolérance du lithium chez l'enfant et l'adolescent en dehors des troubles de l'humeur : revue de portée (scoping review)",
     "url": "https://doi.org/10.1016/j.neubiorev.2025.106402",
-    "datePublication": "2025-10-06", "dateAjout": "2026-07-24T09:48",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Lithium", "Trouble des conduites", "TSA", "Suicidalité", "Pharmacothérapie hors AMM"],
-    "typeSource": "Revue narrative", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2025-10-06",
+    "dateAjout": "2026-07-24T09:48",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Lithium",
+      "Trouble des conduites",
+      "TSA",
+      "Suicidalité",
+      "Pharmacothérapie hors AMM"
+    ],
+    "typeSource": "Revue narrative",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Revue de portée (Cortese et al., Neuroscience & Biobehavioral Reviews, vol. 179, en ligne le 6 octobre 2025) cartographiant 41 études (essais cliniques, études observationnelles, séries de cas) sur l'usage du lithium chez des enfants et adolescents jusqu'à 18 ans en dehors de son indication princeps de stabilisateur de l'humeur, réparties en six catégories psychiatriques (TDAH, TSA, trouble des conduites, déficience intellectuelle, psychose, suicidalité) et sept catégories neurologiques. Les auteurs concluent que les populations pouvant le plus raisonnablement bénéficier du lithium hors AMM sont celles présentant une dysrégulation comportementale sévère — en particulier l'agressivité et l'impulsivité dans le trouble des conduites, le TSA ou la déficience intellectuelle — tout en soulignant que les preuves disponibles restent limitées et ne permettent pas de recommandations fermes.",
     "pertinence": "Élargit la réflexion sur le lithium au-delà du trouble bipolaire : signal exploratoire d'intérêt pour l'agressivité sévère associée au trouble des conduites, au TSA ou à la déficience intellectuelle, mais preuves encore trop limitées (études majoritairement observationnelles) pour en faire une option de première ligne hors trouble de l'humeur."
   },
   {
     "titre": "Le lithium en add-on peut-il influencer la dysrégulation émotionnelle chez l'adolescent ? Étude rétrospective",
     "url": "https://doi.org/10.3390/jcm14134807",
-    "datePublication": "2025-07-07", "dateAjout": "2026-07-24T09:48",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Dysrégulation émotionnelle", "Lithium", "Pharmacothérapie", "Hospitalisation"],
-    "typeSource": "Étude observationnelle", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2025-07-07",
+    "dateAjout": "2026-07-24T09:48",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Dysrégulation émotionnelle",
+      "Lithium",
+      "Pharmacothérapie",
+      "Hospitalisation"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Étude rétrospective (Gigliotti, Cammisa, Riezzo & Terrinoni, Journal of Clinical Medicine, 7 juillet 2025 ; 14:4807) portant sur 35 adolescents hospitalisés (13-17 ans) présentant une dysrégulation émotionnelle sévère transdiagnostique, comparant un groupe recevant du lithium en add-on (n=17) à un groupe sous traitement standard seul (n=18), avec évaluation à l'admission, 6 et 12 mois (CGI-S, C-GAS). À 6 mois, le groupe lithium présente une réduction de la sévérité symptomatique significativement plus importante que le groupe contrôle (p=0,029) ; le fonctionnement global s'améliore dans les deux groupes sans différence significative entre eux. Les effets indésirables (principalement métaboliques et endocriniens) sont plus fréquents sous lithium mais n'affectent pas l'adhésion au traitement ; la lithiémie moyenne est de 0,75 mEq/L à 6 mois et 0,72 mEq/L à 12 mois.",
     "pertinence": "Signal positif préliminaire pour le lithium en add-on dans la dysrégulation émotionnelle sévère de l'adolescent hospitalisé, au-delà du seul trouble bipolaire ; devis rétrospectif et petit effectif imposant de le considérer comme une piste à confirmer par un essai prospectif plutôt qu'une pratique validée."
   },
   {
     "titre": "Optimiser le traitement pharmacologique de la dépression majeure de l'enfant et de l'adolescent : analyse sur données individuelles des participants",
     "url": "https://doi.org/10.1016/j.jaac.2026.05.010",
-    "datePublication": "2026-05-20", "dateAjout": "2026-08-18T12:19",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Dépression", "Pharmacothérapie", "Antidépresseurs", "Médecine de précision"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "AACAP",
+    "datePublication": "2026-05-20",
+    "dateAjout": "2026-08-18T12:19",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Dépression",
+      "Pharmacothérapie",
+      "Antidépresseurs",
+      "Médecine de précision"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "AACAP",
     "synthese": "Analyse sur données individuelles des participants (IPD), publiée en ligne le 20 mai 2026 dans le Journal of the American Academy of Child & Adolescent Psychiatry, sur l'efficacité et la tolérance des antidépresseurs en traitement aigu de la dépression majeure de l'enfant et de l'adolescent. Après examen de 14 554 références et identification de 40 essais randomisés en double aveugle contre placebo éligibles, seuls 10 essais (3 992 participants) ont fourni des données individuelles exploitables ; des modèles à effets mixtes ont recherché des modérateurs de l'efficacité (variation des symptômes dépressifs) et de la tolérance (arrêts pour effets indésirables). La fluoxétine se montre plus efficace chez les enfants, les filles, les participants blancs, de poids normal et présentant des symptômes sévères ; la paroxétine est efficace chez les adolescents et les participants de poids normal, mais moins bien tolérée chez les participants blancs, ceux ayant des symptômes légers à modérés et ceux avec des antécédents familiaux psychiatriques.",
     "pertinence": "Première tentative d'ajuster le choix de l'antidépresseur à des caractéristiques individuelles (âge, sexe, sévérité, antécédents) plutôt qu'un choix uniforme ; base préliminaire pour une psychiatrie de précision pédiatrique, à interpréter avec prudence puisque seuls 10 des 40 essais éligibles ont fourni leurs données (risque de biais de sélection)."
   },
   {
     "titre": "Stimulation magnétique transcrânienne (TMS) dans la dépression de l'adolescent : un tournant marqué par l'autorisation de la FDA",
     "url": "https://doi.org/10.1038/s41380-026-03455-0",
-    "datePublication": "2026-02-10", "dateAjout": "2026-08-18T12:19",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Dépression", "Neuromodulation", "TMS", "Politique de santé"],
-    "typeSource": "Revue narrative", "niveauPreuve": "Avis d'expert", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-02-10",
+    "dateAjout": "2026-08-18T12:19",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Dépression",
+      "Neuromodulation",
+      "TMS",
+      "Politique de santé"
+    ],
+    "typeSource": "Revue narrative",
+    "niveauPreuve": "Avis d'expert",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Commentaire publié le 10 février 2026 dans Molecular Psychiatry analysant les autorisations accordées par la FDA entre 2024 et 2025 à plusieurs dispositifs de stimulation magnétique transcrânienne (dont le Deep TMS de BrainsWay) comme traitement adjuvant de la dépression majeure chez l'adolescent de 15 à 21 ans. Ces autorisations reposent en partie sur des données de vraie vie issues d'un registre industriel (1 169 adolescents, 59,4% de répondeurs, 30,0% de rémission) plutôt que sur une démonstration d'efficacité indépendante propre à cette tranche d'âge, la voie réglementaire 510(k) permettant une entrée sur le marché par équivalence substantielle avec un dispositif existant. Les essais contrôlés disponibles donnent des résultats hétérogènes : la TMS en add-on d'un antidépresseur montre des taux de réponse élevés (89-98% contre 69-80% sous stimulation simulée), alors que la TMS standard en monothérapie ne se distingue pas nettement du placebo (42% contre 36%, non significatif) ; les protocoles accélérés en thêta-burst font mieux aux temps précoces. Les auteurs soulignent que les taux de réponse en vraie vie sont inférieurs à ceux des essais contrôlés et appellent à des essais supplémentaires contre stimulation simulée ainsi qu'à un suivi à long terme sur le cerveau en développement.",
     "pertinence": "Signale l'arrivée d'une option de neuromodulation pour la dépression de l'adolescent, mais avec une autorisation reposant surtout sur des données de registre industriel et des essais contrôlés hétérogènes : à considérer comme une piste émergente, pas comme un traitement validé par des essais dédiés à cette tranche d'âge."
   },
   {
     "titre": "Troubles borderline à l'adolescence : séance de l'Académie nationale de médecine sur un problème de santé publique",
     "url": "https://www.academie-medecine.fr/seance-du-23-juin-2026-troubles-borderline-a-ladolescence/",
-    "datePublication": "2026-06-23", "dateAjout": "2026-08-18T12:19",
-    "theme": "TCD-Adolescents (DBT-A)", "sousThemes": ["Trouble borderline", "Politique de santé", "Neurodéveloppement", "Prévention"],
-    "typeSource": "Revue narrative", "niveauPreuve": "Avis d'expert", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-06-23",
+    "dateAjout": "2026-08-18T12:19",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Trouble borderline",
+      "Politique de santé",
+      "Neurodéveloppement",
+      "Prévention"
+    ],
+    "typeSource": "Revue narrative",
+    "niveauPreuve": "Avis d'expert",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Séance de l'Académie nationale de médecine du 23 juin 2026 consacrée au trouble de personnalité borderline (TPB) à l'adolescence, organisée par Catherine Barthélémy et David Cohen. Mario Speranza (Université Paris-Saclay Versailles, Inserm U1018) présente le TPB comme un problème de santé publique : traits borderline présents chez 2 à 3% des adolescents en population générale (jusqu'à 20% en file active spécialisée), coût annuel visible de 31 130 € par patient (dont 22% seulement de soins directs, le reste correspondant à des coûts sociaux et de perte de productivité 16 fois supérieurs à la population générale) et risque de chômage à 20 ans multiplié par 22. Il insiste sur l'intérêt des interventions précoces structurées (TCD-A, thérapie basée sur la mentalisation MBT-A), la TCD-A étant associée à une économie estimée à 7 800 € par patient. David Cohen présente des données neurobiologiques sur l'impact de l'adversité précoce sur le développement des circuits de perception et de régulation des émotions ; Martin Debbané propose une approche clinique intégrative centrée sur la prévention en amont et la déstigmatisation. Aucune recommandation officielle écrite n'a été publiée à l'issue de cette séance ; la HAS a par ailleurs annoncé son intention de travailler sur le trouble borderline en 2026 dans le cadre de son programme pluriannuel santé mentale 2025-2030, sans calendrier ni contenu précisés à ce jour.",
     "pertinence": "Fournit un argumentaire médico-économique chiffré en faveur d'un accès précoce à la TCD-A pour les adolescents borderline (économie estimée de 7 800 €/patient) ; utile pour défendre le développement de l'offre de TCD-A auprès des tutelles, en anticipant une future recommandation HAS encore non publiée."
   },
   {
     "titre": "Rispéridone versus aripiprazole sur l'irritabilité dans le trouble du spectre de l'autisme de l'enfant : essai randomisé contrôlé",
     "url": "https://doi.org/10.1016/j.braindev.2025.104454",
-    "datePublication": "2025-09-25", "dateAjout": "2026-08-18T12:19",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TSA", "Irritabilité", "Antipsychotiques", "Pharmacothérapie"],
-    "typeSource": "RCT", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "PubMed",
+    "datePublication": "2025-09-25",
+    "dateAjout": "2026-08-18T12:19",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TSA",
+      "Irritabilité",
+      "Antipsychotiques",
+      "Pharmacothérapie"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
     "synthese": "Essai randomisé contrôlé (Panda, Sharawat, Gupta et al., Brain and Development, en ligne le 25 septembre 2025 ; 47(5):104454) comparant directement rispéridone et aripiprazole sur l'irritabilité d'enfants et d'adolescents de 6 à 18 ans avec trouble du spectre de l'autisme. Après exclusion des répondeurs au placebo, 72 participants ont été randomisés (36 par bras) et suivis 12 semaines, avec évaluation par l'Aberrant Behavior Checklist-Irritabilité (ABC-I) et des échelles de sévérité autistique et de traitement sensoriel. Les deux molécules produisent des améliorations comparables de l'irritabilité, de la sévérité autistique et des mesures de traitement sensoriel, sans différence significative entre groupes. Le profil endocrinien diffère en revanche nettement : à 12 semaines, l'aripiprazole abaisse la prolactinémie alors que la rispéridone l'augmente. Les auteurs concluent à une efficacité et une tolérance comparables des deux traitements sur l'irritabilité.",
     "pertinence": "Apporte une comparaison directe rare entre les deux antipsychotiques les plus utilisés dans l'irritabilité du TSA : à efficacité équivalente, le choix peut se fonder sur le profil d'effets indésirables, l'aripiprazole évitant l'hyperprolactinémie induite par la rispéridone."
   },
   {
     "titre": "Prédicteurs du devenir psychiatrique à l'âge adulte du TDAH de l'enfant : revue systématique et méta-analyse",
     "url": "https://doi.org/10.1016/j.jaac.2025.04.012",
-    "datePublication": "2025-04-24", "dateAjout": "2026-08-18T12:19",
-    "theme": "Pédopsychiatrie", "sousThemes": ["TDAH", "Trajectoires développementales", "Persistance", "Comorbidités"],
-    "typeSource": "Méta-analyse", "niveauPreuve": "Modéré", "consensus": "Émergent", "source": "AACAP",
+    "datePublication": "2025-04-24",
+    "dateAjout": "2026-08-18T12:19",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TDAH",
+      "Trajectoires développementales",
+      "Persistance",
+      "Comorbidités"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "AACAP",
     "synthese": "Revue systématique et méta-analyse (van der Plas, Noordermeer, Oosterlaan & Luman, Journal of the American Academy of Child & Adolescent Psychiatry, en ligne le 24 avril 2025 ; 65(2):231-249, numéro de février 2026) recherchant les facteurs de risque mesurés dans l'enfance qui prédisent les troubles psychiatriques à l'âge adulte chez les personnes ayant eu un TDAH dans l'enfance. Après recherche dans plusieurs bases jusqu'en juin 2024, 36 études fournissant 119 prédicteurs ont été retenues, dont 10 prédicteurs ont pu être méta-analysés. Un antécédent de traitement par psychostimulant est associé à un risque accru de persistance du TDAH à l'âge adulte (OR=1,88) et un QI plus élevé dans l'enfance à un risque moindre (OR=0,99) ; la persistance du TDAH est elle-même associée à un risque accru de trouble de l'usage de substances et de dépression majeure. Le TDAH de type combiné, les symptômes hyperactifs/impulsifs, les troubles anxieux, les problèmes externalisés, le dysfonctionnement social et le statut socio-économique ressortent comme prédicteurs potentiels. Les auteurs soulignent d'importantes limites méthodologiques et appellent à étudier les effets combinés des prédicteurs.",
     "pertinence": "Utile pour repérer les enfants avec TDAH à plus haut risque de trajectoire défavorable (type combiné, comorbidité anxieuse, difficultés sociales) et justifier un suivi prolongé. ⚠️ L'association entre antécédent de psychostimulant et persistance ne doit pas se lire comme un effet délétère du traitement : elle reflète très probablement un biais d'indication (les enfants traités étant les plus sévères), comme le rappellent les limites méthodologiques signalées par les auteurs."
   },
   {
     "titre": "Sevrage total de smartphone et de réseaux sociaux chez l'adolescent : essai randomisé pilote sur le sommeil, le bien-être et la cognition",
     "url": "https://doi.org/10.1111/camh.70118",
-    "datePublication": "2026-08-09", "dateAjout": "2026-08-18T12:19",
-    "theme": "Pédopsychiatrie", "sousThemes": ["Usage des écrans", "Sommeil", "Bien-être", "Prévention"],
-    "typeSource": "RCT", "niveauPreuve": "Faible", "consensus": "Émergent", "source": "Autre",
+    "datePublication": "2026-08-09",
+    "dateAjout": "2026-08-18T12:19",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Usage des écrans",
+      "Sommeil",
+      "Bien-être",
+      "Prévention"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "Autre",
     "synthese": "Essai randomisé contrôlé pilote préenregistré (Sullivan, Cairney & Henderson, Université de York ; Child and Adolescent Mental Health, 9 août 2026) portant sur 82 adolescents de 13 à 18 ans recrutés dans des établissements scolaires britanniques, randomisés en trois bras : sevrage total de smartphone et de réseaux sociaux pendant 21 jours (n=26), sevrage total avec accès à un téléphone basique sans internet (n=26), ou poursuite des habitudes (n=30). Le sommeil, le bien-être et la cognition ont été mesurés avant et après intervention par questionnaires, capteurs portés et tâches cognitives. À 21 jours, un ou les deux groupes de sevrage montrent des améliorations préliminaires de la durée de sommeil, de la somnolence diurne, des symptômes dépressifs, du stress perçu et de la mémoire de travail par rapport aux contrôles ; ces bénéfices ne sont toutefois pas maintenus au suivi à 2 mois. Les auteurs présentent ces résultats comme exploratoires, l'essai étant de faible effectif et à visée de faisabilité.",
     "pertinence": "Première donnée expérimentale sur un sevrage complet d'écrans chez l'adolescent : suggère un bénéfice réel mais transitoire sur le sommeil et l'humeur, ce qui plaide pour des stratégies d'usage durables plutôt que des « détox » ponctuelles — argument nuancé à opposer aux discours d'efficacité tranchée dans un sens comme dans l'autre."
+  },
+  {
+    "titre": "Devenir à l'âge adulte 12,4 ans après une TCD pour adolescents (DBT-A) : suivi à long terme d'un essai randomisé",
+    "url": "https://doi.org/10.1007/s00787-025-02856-w",
+    "datePublication": "2026-01-16",
+    "dateAjout": "2026-08-18T13:51",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Auto-mutilation",
+      "Suicidalité",
+      "Trouble borderline",
+      "Suivi à long terme"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Premier suivi à très long terme d'un essai randomisé de DBT-A (Mehlum et al., European Child & Adolescent Psychiatry, en ligne le 16 janvier 2026) : 61 des 77 adolescents inclus initialement (79%), présentant des conduites suicidaires et auto-agressives répétées avec traits borderline, ont été réévalués à 28 ans en moyenne, soit 12,4 ans après la randomisation entre DBT-A et soins usuels optimisés (EUC). La fréquence des gestes auto-agressifs reste plus faible dans le groupe DBT-A sur toute la période, avec une différence moyenne de 90 épisodes par personne entre le début et 12,4 ans (plus du double d'épisodes dans le groupe EUC), mais la différence n'est plus statistiquement significative au dernier point de mesure. La DBT-A était associée à des réductions significativement plus fortes des idées suicidaires et des symptômes dépressifs et borderline en fin de traitement, avantage qui s'estompe ensuite. Aucune différence significative de morbidité psychiatrique actuelle ni de fonctionnement global n'est retrouvée à 12,4 ans.",
+    "pertinence": "Argument majeur pour informer les familles : la trajectoire à long terme après DBT-A est plutôt favorable et la charge cumulée d'auto-agressions nettement réduite, mais l'avantage sur les soins usuels ne se maintient pas statistiquement — l'enjeu devient la continuité des soins au passage à l'âge adulte."
+  },
+  {
+    "titre": "La DBT-A modifie-t-elle les idées suicidaires et l'usage des compétences de coping à l'âge adulte ? Suivi à 12,4 ans par évaluation écologique momentanée (EMA)",
+    "url": "https://doi.org/10.1016/j.brat.2026.105091",
+    "datePublication": "2026-06-09",
+    "dateAjout": "2026-08-18T13:51",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Suicidalité",
+      "Compétences de régulation émotionnelle",
+      "Évaluation écologique momentanée",
+      "Suivi à long terme"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Sous-étude du même essai norvégien (Dibaj et al., Behaviour Research and Therapy, en ligne le 9 juin 2026) : 54 participants de l'essai DBT-A versus soins usuels optimisés (EUC) ont fourni, 12,4 ans après le traitement, des mesures en vie quotidienne toutes les deux heures (six fois par jour pendant sept jours) sur les affects, les idées suicidaires et l'usage de compétences de coping. Avoir reçu une DBT-A à l'adolescence est associé à une probabilité nettement plus faible de rapporter des idées suicidaires à l'âge adulte (OR = 0,16 ; IC95% 0,02-0,89), indépendamment d'un épisode dépressif majeur ou d'un trouble borderline concomitant. La relation entre affects négatifs et usage des compétences diffère selon le groupe : seuls les participants du groupe EUC rapportaient davantage d'affects négatifs après avoir mobilisé des stratégies de coping cognitives. L'effectif reste faible et l'analyse est secondaire.",
+    "pertinence": "Suggère que les compétences apprises en DBT-A restent fonctionnelles plus de dix ans après, en particulier sur les idées suicidaires en vie réelle : renforce l'intérêt d'un entraînement précoce aux compétences plutôt que d'une intervention de crise isolée."
+  },
+  {
+    "titre": "TCD associée à un programme structuré de soutien parental dans l'automutilation non suicidaire de l'adolescent : essai randomisé contrôlé",
+    "url": "https://doi.org/10.1186/s13034-026-01036-1",
+    "datePublication": "2026-01-30",
+    "dateAjout": "2026-08-18T13:51",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Automutilation non suicidaire",
+      "Implication parentale",
+      "Format court",
+      "Suicidalité"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Essai randomisé contrôlé chinois (Zhang et al., Child and Adolescent Psychiatry and Mental Health, 30 janvier 2026) incluant 100 adolescents souffrant de troubles dépressifs avec automutilation non suicidaire, répartis entre une TCD de 13 semaines seule (6 semaines en présentiel puis 7 en ligne) et la même TCD complétée par un programme parallèle de soutien parental structuré de 10 semaines. 91 participants ont terminé le protocole. Des interactions groupe × temps significatives sont observées pour tous les critères : réduction plus forte de la fréquence des automutilations dès la 6e semaine (p = 0,027) puis, à 13 semaines, des idées suicidaires, de la fréquence et des fonctions de l'automutilation, de la dysrégulation émotionnelle et des symptômes dépressifs (tous p < 0,01). Il s'agit d'un essai monocentrique en format condensé, sans insu ni suivi prolongé.",
+    "pertinence": "Converge avec d'autres essais récents : ajouter un module parental structuré à une TCD raccourcie améliore nettement les résultats sur l'automutilation — piste concrète pour des services contraints en temps thérapeutique."
+  },
+  {
+    "titre": "Stratégies séquentielles dans la dépression de l'adolescent (switch versus potentialisation, dont le lithium) : essai clinique pragmatique multicentrique",
+    "url": "https://doi.org/10.1016/j.jad.2026.121511",
+    "datePublication": "2026-02-25",
+    "dateAjout": "2026-08-18T13:51",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Dépression",
+      "Pharmacothérapie",
+      "Lithium",
+      "Potentialisation",
+      "Résistance au traitement"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Essai clinique pragmatique multicentrique à design partiellement randomisé (He et al., Journal of Affective Disorders, en ligne le 25 février 2026) sur la dépression caractérisée de l'adolescent, inspiré de la logique séquentielle de type STAR*D. À l'étape 1, les patients choisissaient entre fluoxétine seule et fluoxétine associée à une TCC ; à l'étape 2, les non-répondeurs étaient randomisés soit vers un changement de molécule (sertraline, vortioxétine ou duloxétine), soit vers une potentialisation de la fluoxétine par aripiprazole, olanzapine ou lithium. Aucune différence significative n'est observée entre stratégies sur le taux de réponse ni sur les effets indésirables. En analyse exploratoire, la potentialisation par olanzapine améliorait davantage la qualité du sommeil que le switch vers la duloxétine, et l'aripiprazole la qualité de vie. Les auteurs soulignent le faible effectif, l'absence de groupe contrôle et d'insu.",
+    "pertinence": "Premier cadre séquentiel formalisé pour la dépression résistante de l'adolescent : montre qu'il n'y a pas de supériorité démontrée entre switch et potentialisation (y compris par lithium), ce qui laisse la décision à la tolérance et aux symptômes cibles (sommeil, qualité de vie)."
+  },
+  {
+    "titre": "Système transdermique de d-amphétamine dans le TDAH de l'enfant et de l'adolescent : analyse des sous-échelles SKAMP et des sous-groupes d'un essai pivot",
+    "url": "https://doi.org/10.1177/10445463261434530",
+    "datePublication": "2026-04-02",
+    "dateAjout": "2026-08-18T13:51",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TDAH",
+      "Psychostimulants",
+      "Pharmacothérapie",
+      "Voie transdermique"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Consensus établi",
+    "source": "PubMed",
+    "synthese": "Analyse préplanifiée des sous-échelles et des sous-groupes de l'essai pivot du système transdermique de d-amphétamine (d-ATS), publiée par Cutler et al. dans le Journal of Child and Adolescent Psychopharmacology (en ligne le 2 avril 2026). Le protocole comportait 5 semaines d'optimisation de dose en ouvert suivies d'une phase croisée randomisée en double insu de 2 semaines ; 110 patients de 6 ans et plus ont été inclus, 106 randomisés. La différence de score SKAMP total entre d-ATS et placebo était de -5,9 (IC95% -6,8 à -5,0), avec des bénéfices sur les trois sous-échelles (attention, comportement, qualité du travail) et des tailles d'effet modélisées de 0,42 à 0,57. L'efficacité était retrouvée à chaque dose optimisée, chez les filles comme chez les garçons, chez les enfants comme chez les adolescents, et quels que soient le sous-type et la sévérité initiale du TDAH.",
+    "pertinence": "Confirme l'efficacité d'une voie transdermique de psychostimulant sur l'ensemble des profils de TDAH pédiatrique : option utile en cas de difficulté de prise orale ou de besoin de retrait rapide du traitement en cours de journée."
+  },
+  {
+    "titre": "Kétamine intraveineuse en dose unique pour les idées suicidaires de l'adolescent aux urgences : essai randomisé pilote contre placebo",
+    "url": "https://doi.org/10.1186/s12888-026-08042-9",
+    "datePublication": "2026-04-06",
+    "dateAjout": "2026-08-18T13:51",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Suicidalité",
+      "Kétamine",
+      "Urgences pédiatriques",
+      "Pharmacothérapie"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Essai pilote randomisé en double insu contre placebo (Schlegelmilch et al., BMC Psychiatry, 6 avril 2026) mené de janvier à mai 2024 chez 20 adolescents de 12 à 17 ans consultant aux urgences pour des idées suicidaires modérées à sévères, recevant en 40 minutes soit de la kétamine intraveineuse (0,5 mg/kg, max 50 mg) soit du sérum physiologique. Le critère principal était la faisabilité : tous les participants ont reçu la perfusion et complété le suivi à J1, 90% celui à J7, sans événement indésirable grave. La sévérité des idées suicidaires à 40 minutes ne différait pas significativement entre les groupes (SSI5 p = 0,06 ; MADRS item 10 p = 0,19 ; BDI item 9 p = 0,18). Moins de patients du groupe kétamine ont été hospitalisés lors de la visite initiale (différence de risque 40% ; IC95% 7 à 69%), résultat exploratoire sur un très petit effectif.",
+    "pertinence": "Établit la faisabilité et la sécurité à court terme d'un essai de kétamine IV aux urgences pédiatriques, mais ne démontre aucun bénéfice sur les idées suicidaires : à ce stade, pas d'indication en pratique courante, en attente d'un essai de puissance suffisante."
+  },
+  {
+    "titre": "Délivrances de lithium chez les jeunes aux Pays-Bas (2011-2022) : prévalence, incidence, posologies et durées de traitement",
+    "url": "https://doi.org/10.1111/bdi.70134",
+    "datePublication": "2026-06-17",
+    "dateAjout": "2026-08-18T13:51",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Trouble bipolaire",
+      "Lithium",
+      "Pratiques de prescription",
+      "Épidémiologie"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Modéré",
+    "consensus": "Consensus établi",
+    "source": "PubMed",
+    "synthese": "Étude de cohorte rétrospective (Gangapersad et al., Bipolar Disorders, publication en ligne le 17 juin 2026) fondée sur la base pharmaceutique néerlandaise IADB.nl et portant sur 567 jeunes de 6 à 25 ans ayant reçu du lithium entre 2011 et 2022. La prévalence annuelle de délivrance est restée stable, de 30,3 à 34,8 pour 100 000 (p = 0,40), la plus basse chez les 6-12 ans et la plus élevée chez les 20-25 ans, avec des taux supérieurs chez les filles. L'incidence chez les 13-19 ans a chuté de 10,7 à 4,2 pour 100 000 entre 2011 et 2022, alors qu'elle montait de 10,7 à 19,0 chez les 20-25 ans. Environ 55% des jeunes avaient reçu un autre psychotrope avant le lithium et 52% en recevaient un simultanément, le plus souvent un antipsychotique de seconde génération ou un antidépresseur. Les auteurs concluent à une sous-utilisation du lithium au regard de la prévalence du trouble bipolaire chez les jeunes (0,87%).",
+    "pertinence": "Documente chiffres en main le recul du lithium chez les adolescents au profit des antipsychotiques de seconde génération, alors qu'il reste le traitement de maintenance de première intention : plaide pour une formation des prescripteurs et un réexamen des réticences au lithium avant 18 ans."
+  },
+  {
+    "titre": "Perte d'efficacité de la fluoxétine dans la dépression pédiatrique : explications, absence de prise en compte et implications pour d'autres traitements",
+    "url": "https://doi.org/10.1016/j.jclinepi.2025.112016",
+    "datePublication": "2025-11-21",
+    "dateAjout": "2026-08-18T13:51",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Dépression",
+      "Antidépresseurs",
+      "Fluoxétine",
+      "Biais méthodologiques"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Modéré",
+    "consensus": "Controversé",
+    "source": "PubMed",
+    "synthese": "Analyse méta-analytique de Plöderl, Lyus et Horowitz (Journal of Clinical Epidemiology, en ligne le 21 novembre 2025) cherchant à expliquer l'écart entre la méta-analyse en réseau Cochrane de 2021, qui ne retrouvait plus d'effet cliniquement significatif de la fluoxétine dans la dépression de l'enfant et de l'adolescent, et les revues antérieures plus favorables. En agrégeant les résultats des essais par ordre chronologique, les auteurs montrent que l'efficacité estimée décline au fil du temps jusqu'à rejoindre la zone d'équivalence clinique avec le placebo lorsque les essais les plus récents sont inclus. Ils attribuent cette érosion à des biais de type « biais de nouveauté » et à des variations des effets d'attente plutôt qu'à une hétérogénéité clinique. Une recherche non systématique des recommandations récentes montre que ce constat n'est pas repris : plusieurs textes continuent de placer la fluoxétine en première intention pharmacologique.",
+    "pertinence": "Invite à une information plus prudente des familles sur l'ampleur réelle du bénéfice attendu de la fluoxétine, sans conclure à son abandon ; rappelle aussi que le déclin d'effet dans le temps concerne potentiellement tout traitement récemment introduit."
+  },
+  {
+    "titre": "Atomoxétine versus méthylphénidate sur la dysrégulation émotionnelle dans le TDAH de l'enfant : essai randomisé multicentrique avec IRM fonctionnelle",
+    "url": "https://doi.org/10.1111/jcpp.70217",
+    "datePublication": "2026-08-10",
+    "dateAjout": "2026-08-18T14:13",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TDAH",
+      "Pharmacologie",
+      "Dysrégulation émotionnelle",
+      "Atomoxétine"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Essai randomisé multicentrique chinois (Journal of Child Psychology and Psychiatry, en ligne le 10 août 2026) comparant l'atomoxétine (n = 76) au méthylphénidate (n = 76) chez 152 enfants avec TDAH, après titration individualisée puis 4 semaines à dose stable. Le critère principal était la labilité émotionnelle, qui diminue significativement dans les deux bras (β = -1,54 ; p < 0,001) sans différence statistiquement significative entre traitements (tailles d'effet d = -1,46 pour le méthylphénidate et d = -0,93 pour l'atomoxétine). L'amélioration persiste après ajustement sur la réduction des symptômes cardinaux de TDAH (β = -0,75 ; p < 0,001), ce qui suggère un effet propre sur la régulation émotionnelle et non un simple reflet de l'amélioration attentionnelle. En IRM fonctionnelle de repos, l'augmentation de la connectivité entre l'amygdale basolatérale droite et le gyrus frontal moyen orbitaire gauche, et entre l'amygdale superficielle gauche et le cortex cingulaire moyen gauche, est corrélée aux changements de labilité émotionnelle. Aucun changement significatif n'est observé sur les stratégies de régulation émotionnelle auto-rapportées.",
+    "pertinence": "Donne un argument pour ne pas réserver le traitement de la dysrégulation émotionnelle du TDAH aux seuls psychostimulants : l'atomoxétine obtient un bénéfice du même ordre, ce qui élargit les options en cas de contre-indication, de mésusage ou d'intolérance aux stimulants."
+  },
+  {
+    "titre": "Influence de l'âge et du sexe sur l'efficacité, l'acceptabilité et la tolérance à court terme des antipsychotiques dans la schizophrénie de l'adolescent : méta-analyse sur données individuelles",
+    "url": "https://doi.org/10.1016/j.jaac.2026.05.006",
+    "datePublication": "2026-05-18",
+    "dateAjout": "2026-08-18T14:13",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Schizophrénie précoce",
+      "Antipsychotiques",
+      "Pharmacologie",
+      "Tolérance"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Méta-analyse sur données individuelles de participants (JAACAP, en ligne le 18 mai 2026) regroupant les 4 essais d'enregistrement randomisés contre placebo d'antipsychotiques dans la schizophrénie à début précoce (2003-2015), soit 949 adolescents (61 % de garçons, âge moyen 15,4 ans). Ni l'âge (β = 0,251 ; IC95% -1,561 à 2,064) ni le sexe (β = 3,057 ; IC95% -0,206 à 8,175) ne modifient l'efficacité globale mesurée sur la PANSS ni le taux de réponse, et l'acceptabilité (arrêts toutes causes) n'est pas non plus affectée. En revanche, les adolescents les plus jeunes sous traitement actif présentent une incidence d'événements indésirables supérieure à celle du placebo, alors que chez les plus âgés les taux sont comparables entre bras (coefficient de corrélation = -0,272 ; p < 0,001). Le sexe n'influence pas l'incidence des effets indésirables, et l'âge n'a pas d'impact net sur les cinq grandes classes d'effets secondaires examinées (prise de poids, effets extrapyramidaux, allongement du QTc, élévation de la prolactine, sédation).",
+    "pertinence": "Justifie une posologie initiale et une surveillance modulées selon l'âge chez l'adolescent traité pour schizophrénie : à efficacité équivalente, les plus jeunes paient un prix plus élevé en effets indésirables."
+  },
+  {
+    "titre": "ISRS et IRSN dans les troubles anxieux de l'enfant et de l'adolescent : efficacité, suicidalité, tolérance et acceptabilité — revue systématique et méta-analyse",
+    "url": "https://doi.org/10.1097/YIC.0000000000000599",
+    "datePublication": "2026-03-01",
+    "dateAjout": "2026-08-18T14:13",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Anxiété",
+      "Antidépresseurs",
+      "Pharmacologie",
+      "Suicidalité"
+    ],
+    "typeSource": "Méta-analyse",
+    "niveauPreuve": "Élevé",
+    "consensus": "Consensus établi",
+    "source": "PubMed",
+    "synthese": "Méta-analyse de 15 essais randomisés contrôlés contre placebo (2 083 participants, âge médian 11,61 ans) portant sur cinq ISRS et deux IRSN dans les troubles anxieux de l'enfant et de l'adolescent (International Clinical Psychopharmacology, mars 2026 ; recherche documentaire arrêtée au 15 juillet 2024). L'efficacité antianxieuse est confirmée avec une différence moyenne standardisée de -0,49 (IC95% -0,65 à -0,33 ; I² = 60 %), sans différence significative entre les deux classes. L'acceptabilité est meilleure que sous placebo (RR = 0,86 ; IC95% 0,75-0,99) et la tolérance comparable (RR = 1,30 ; IC95% 0,68-2,46). En revanche, le risque d'idées suicidaires émergentes sous traitement est plus élevé que sous placebo sur 8 essais (RR = 3,51 ; IC95% 1,51-8,16 ; I² = 0 %). Les auteurs concluent à une efficacité réelle assortie d'une vigilance nécessaire sur la suicidalité.",
+    "pertinence": "Chiffre à la fois le bénéfice (effet modéré, homogène entre molécules) et le signal de suicidalité, ce qui donne une base concrète pour l'information de la famille et pour justifier une surveillance rapprochée des idées suicidaires en début de traitement."
+  },
+  {
+    "titre": "Centanafadine dans le TDAH de l'adolescent : essai randomisé contrôlé contre placebo (459 participants)",
+    "url": "https://doi.org/10.1016/j.jaac.2025.06.023",
+    "datePublication": "2025-07-04",
+    "dateAjout": "2026-08-18T14:13",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "TDAH",
+      "Nouvelles molécules",
+      "Pharmacologie",
+      "Non-stimulants"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Élevé",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Essai randomisé en double aveugle contre placebo (JAACAP, numéro de juin 2026 ; en ligne le 4 juillet 2025) évaluant la centanafadine, inhibiteur de la recapture de la noradrénaline, de la dopamine et de la sérotonine, chez 459 adolescents de 13 à 17 ans avec TDAH, sur 6 semaines et sans titration. À la semaine 6, la dose de 328,8 mg/jour fait significativement mieux que le placebo sur le score total de symptômes de l'ADHD-RS-5 (-18,50 versus -14,15 ; p = 0,0006), avec une séparation dès la semaine 1 maintenue jusqu'à la fin ; la dose de 164,4 mg/jour n'atteint pas le critère principal. Les événements indésirables émergents concernent 31,4 % (164,4 mg), 50,3 % (328,8 mg) et 23,8 % (placebo) des participants, les plus fréquents étant baisse d'appétit, nausées, céphalées et éruption cutanée. Trois événements seulement ont été sévères. Un erratum a été publié en juillet 2026.",
+    "pertinence": "Documente une molécule non stimulante supplémentaire pour le TDAH de l'adolescent, avec un effet dose-dépendant net : seule la dose haute est efficace, au prix d'une incidence d'effets indésirables environ doublée par rapport au placebo."
+  },
+  {
+    "titre": "Antidépresseurs et risque de conversion vers un trouble bipolaire chez l'enfant, l'adolescent et le jeune adulte déprimés : étude d'émulation d'essai cible",
+    "url": "https://doi.org/10.1016/j.euroneuro.2026.112862",
+    "datePublication": "2026-05-08",
+    "dateAjout": "2026-08-18T14:13",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "Dépression",
+      "Trouble bipolaire",
+      "Antidépresseurs",
+      "Pharmacologie"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Modéré",
+    "consensus": "Controversé",
+    "source": "PubMed",
+    "synthese": "Étude d'émulation d'essai cible (target trial emulation) sur la base de données médicales du système public de Hong-Kong, portant sur 10 801 sujets de 6 à 30 ans avec un premier épisode de dépression unipolaire diagnostiqué entre 2002 et 2022 (European Neuropsychopharmacology, octobre 2026 ; en ligne le 8 mai 2026). Les initiateurs d'antidépresseurs dans les 90 jours (84,7 % de la cohorte) ont été comparés aux non-traités avec pondération par probabilité inverse de traitement. À 12 semaines, le risque de conversion vers un trouble bipolaire n'est pas significativement augmenté (HR = 2,94 ; IC95% 0,89-9,69) ; à 52 semaines, l'augmentation est modeste mais significative (HR = 2,14 ; IC95% 1,31-3,51). La présence de caractéristiques psychotiques et un antécédent d'hospitalisation psychiatrique sont associés à la conversion. Les résultats sont stables après stratification par âge (6-17 ans et 18-30 ans), et les auteurs interprètent l'association à 52 semaines comme reflétant surtout ces facteurs de risque plutôt qu'un effet causal des antidépresseurs.",
+    "pertinence": "Ne justifie pas de renoncer aux antidépresseurs chez le jeune déprimé, mais désigne les profils à surveiller de près pour un virage (caractéristiques psychotiques, antécédent d'hospitalisation) ; l'absence de signal à court terme est rassurante."
+  },
+  {
+    "titre": "Thérapie familiale versus thérapie individuelle chez l'enfant avec trouble de l'alimentation sélective et évitante (ARFID) : essai randomisé contrôlé",
+    "url": "https://doi.org/10.1016/j.jaac.2026.04.007",
+    "datePublication": "2026-04-20",
+    "dateAjout": "2026-08-18T14:13",
+    "theme": "Pédopsychiatrie",
+    "sousThemes": [
+      "ARFID",
+      "Troubles alimentaires",
+      "Thérapie familiale",
+      "Télésanté"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Essai randomisé contrôlé de l'équipe de Stanford (JAACAP, en ligne le 20 avril 2026) comparant la thérapie familiale adaptée à l'ARFID (FBT-ARFID) à une thérapie individuelle psychoéducative et motivationnelle (PMT) chez 98 enfants de 6 à 12 ans en insuffisance pondérale, à raison de 14 séances en télésanté sur 4 mois. Le critère principal était l'évolution du pourcentage de poids corporel estimé entre l'inclusion et la fin du traitement, évalué en aveugle. La FBT-ARFID est supérieure à la PMT pour la reprise pondérale. En revanche, aucune différence entre groupes n'apparaît sur la sévérité globale des symptômes d'ARFID ni sur les autres symptômes associés. Des analyses exploratoires montrent que la sévérité initiale modère l'effet : les enfants les plus symptomatiques progressent significativement plus en FBT-ARFID.",
+    "pertinence": "Positionne la thérapie familiale comme premier choix pour la renutrition des enfants ARFID de faible poids, en particulier les formes les plus sévères, tout en rappelant qu'elle ne suffit pas à faire céder les symptômes alimentaires eux-mêmes ; format en télésanté transposable."
+  },
+  {
+    "titre": "Entraînement aux compétences TCD en groupes parallèles adolescents et parents versus adolescents seuls dans l'automutilation non suicidaire : essai randomisé pilote",
+    "url": "https://doi.org/10.1186/s12888-026-08199-3",
+    "datePublication": "2026-06-01",
+    "dateAjout": "2026-08-18T14:13",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Auto-mutilation",
+      "Compétences TCD",
+      "Implication parentale",
+      "Format de délivrance"
+    ],
+    "typeSource": "RCT",
+    "niveauPreuve": "Modéré",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Essai randomisé pilote (BMC Psychiatry, en ligne le 1er juin 2026) motivé par un constat pratique : l'implication familiale améliore les résultats de la TCD dans l'automutilation non suicidaire, mais de nombreux adolescents refusent les séances conjointes avec leurs parents. Trente-huit adolescents de 12 à 18 ans répondant aux critères DSM-5 de trouble d'automutilation non suicidaire ont été randomisés entre un format parallèle (groupes de compétences séparés et simultanés pour adolescents et pour parents, n = 19) et un format adolescents seuls (n = 19), à raison de séances hebdomadaires de 120 minutes pendant 12 semaines. La fréquence des automutilations diminue dans les deux groupes (effet temps p < 0,01) sans supériorité démontrée du format parallèle sur ce critère principal. Le groupe parallèle obtient en revanche de meilleures réductions des symptômes dépressifs (p = 0,03) et anxieux (p = 0,01), et les interactions parents-adolescent positives passent d'une médiane de 2 à 11 par semaine, contre une stabilité dans l'autre groupe (interaction p < 0,01). Il s'agit d'un pilote de faible effectif, non conçu pour conclure sur l'automutilation.",
+    "pertinence": "Propose une alternative concrète quand l'adolescent refuse le travail conjoint : faire travailler les parents en groupe séparé mais simultané, avec un gain sur la dépression, l'anxiété et le climat familial. À confirmer sur un essai de puissance suffisante."
+  },
+  {
+    "titre": "Résultats de la TCD chez des adolescents et jeunes adultes suicidaires selon les symptômes internalisés et externalisés : programme d'hôpital de jour intensif",
+    "url": "https://doi.org/10.1177/10445463261466535",
+    "datePublication": "2026-07-10",
+    "dateAjout": "2026-08-18T14:13",
+    "theme": "TCD-Adolescents (DBT-A)",
+    "sousThemes": [
+      "Suicidalité",
+      "Régulation émotionnelle",
+      "Transdiagnostique",
+      "Hôpital de jour"
+    ],
+    "typeSource": "Étude observationnelle",
+    "niveauPreuve": "Faible",
+    "consensus": "Émergent",
+    "source": "PubMed",
+    "synthese": "Étude de cohorte du McLean Hospital / Harvard Medical School (Journal of Child and Adolescent Psychopharmacology, numéro d'octobre 2026 ; en ligne le 10 juillet 2026) portant sur 117 adolescents et jeunes adultes suicidaires (âge moyen 17,8 ans) suivis dans un programme de TCD en hôpital de jour de courte durée. Des analyses de modération ont testé si le niveau de symptômes internalisés et externalisés influençait les gains sur la pleine conscience, la régulation émotionnelle, les stratégies de coping dysfonctionnelles, la compétence interpersonnelle et l'utilisation des compétences TCD. Tous les patients s'améliorent sur l'ensemble des cibles TCD, indépendamment du type et de la sévérité des symptômes. Les patients présentant des comportements externalisés cliniquement significatifs conservent un niveau élevé de dysrégulation émotionnelle après quatre semaines, mais progressent sur toutes les dimensions, avec les gains les plus importants en compétence interpersonnelle et en usage des compétences. Étude sans groupe contrôle.",
+    "pertinence": "Soutient l'usage transdiagnostique de la TCD sans sélectionner les adolescents sur leur profil symptomatique, et signale que les présentations externalisées demandent d'insister plus longtemps sur le module de régulation émotionnelle."
   }
 ];
 /* VEILLE_DATA_END */
@@ -1045,74 +1750,122 @@ const RESSOURCES = [
   {
     "titre": "Linehan — DBT Skills Training Manual (2e éd., Guilford, 2014)",
     "url": "https://www.guilford.com/books/DBT-Skills-Training-Manual/Marsha-Linehan/9781462516995",
-    "type": "Livre", "langue": "EN", "cout": "Payant",
+    "type": "Livre",
+    "langue": "EN",
+    "cout": "Payant",
     "note": "La référence clinique originale. Une traduction française de cette 2e édition existe (voir « Manuel d'entraînement aux compétences TCD » ci-dessous) ; garder l'édition anglaise en référence pour le suivi des mises à jour de Linehan."
   },
   {
     "titre": "Linehan — DBT Skills Training Handouts and Worksheets (2e éd., 2014)",
     "url": "https://www.guilford.com/books/DBT-Skills-Training-Handouts-and-Worksheets/Marsha-Linehan/9781572307810",
-    "type": "Livre", "langue": "EN", "cout": "Payant",
+    "type": "Livre",
+    "langue": "EN",
+    "cout": "Payant",
     "note": "Le volume compagnon : fiches et exercices officiels (photocopiables dans un cadre clinique). Pas de traduction française repérée comme volume séparé ; en français, les 225 fiches/tableaux sont fournis en supplément téléchargeable avec le manuel traduit (voir ci-dessous)."
   },
   {
     "titre": "Linehan (trad. Prada, Perroud, Nicastro) — Manuel d'entraînement aux compétences TCD (2e éd., Médecine & Hygiène, 2017)",
     "url": "https://boutique.revmed.ch/manuel-d-entrainement-aux-competences-tcd",
-    "type": "Livre", "langue": "FR", "cout": "Payant",
+    "type": "Livre",
+    "langue": "FR",
+    "cout": "Payant",
     "note": "Traduction française officielle du DBT Skills Training Manual de Linehan (2e éd.), réalisée par l'unité des troubles de la régulation émotionnelle des Hôpitaux universitaires de Genève. Contient le volume « Documents et fiches de travail » (handouts/worksheets officiels, ~225 fiches) fourni avec le manuel. ⚠️ Fiches protégées par le droit d'auteur : usage clinique/personnel uniquement, pas de rediffusion ni de mise en ligne. Rare traduction complète du manuel de référence en français."
   },
   {
     "titre": "McKay, Wood & Brantley — The DBT Skills Workbook",
     "url": "https://www.newharbinger.com/",
-    "type": "Livre", "langue": "EN", "cout": "Payant",
+    "type": "Livre",
+    "langue": "EN",
+    "cout": "Payant",
     "note": "Entrée self-help accessible, proche du matériel Linehan. Une traduction française existerait — vérifier le titre et l'éditeur exacts."
   },
   {
     "titre": "Behavioral Tech / Linehan Institute",
     "url": "https://behavioraltech.org/",
-    "type": "Formation", "langue": "EN", "cout": "Payant",
+    "type": "Formation",
+    "langue": "EN",
+    "cout": "Payant",
     "note": "Organisme officiel fondé par Linehan : formations et certification des praticiens TCD. Voie de référence pour un objectif clinique."
   },
   {
     "titre": "AFTCC — Association Française de Thérapie Comportementale et Cognitive",
     "url": "https://www.aftcc.org/",
-    "type": "Formation", "langue": "FR", "cout": "Payant",
+    "type": "Formation",
+    "langue": "FR",
+    "cout": "Payant",
     "note": "Formations TCC/TCD en France. Vérifier l'offre spécifiquement dédiée à la TCD et la DBT-A."
   },
   {
     "titre": "DBT Self Help",
     "url": "https://dbtselfhelp.com/",
-    "type": "Site", "langue": "EN", "cout": "Gratuit",
+    "type": "Site",
+    "langue": "EN",
+    "cout": "Gratuit",
     "note": "Ressource communautaire résumant les compétences des 4 modules. Utile pour réviser, à compléter par une source clinique."
   },
   {
     "titre": "Weiner, Weibel & McMain — Pratiquer la thérapie comportementale dialectique (Dunod, 2024)",
     "url": "https://www.dunod.com/sciences-humaines-et-sociales/pratiquer-therapie-comportementale-dialectique",
-    "type": "Livre", "langue": "FR", "cout": "Payant",
+    "type": "Livre",
+    "langue": "FR",
+    "cout": "Payant",
     "note": "Ouvrage francophone de référence (principes, modalités, applications) ; comprend un chapitre dédié à la TCD adaptée aux adolescents (TCD-A). Rare manuel clinique en français."
   },
   {
     "titre": "IFFORTHECC — Atelier « Thérapie Comportementale Dialectique (TCD-DBT) »",
     "url": "https://www.ifforthecc.org/les-ateliers/la-therapie-comportementale-dialectique-tcd-dbt-un-modele-de-prise-en-charge-des-dysregulations-emotionnelles-comportementales-cognitives-interpersonnelles-et-du-soi",
-    "type": "Formation", "langue": "FR", "cout": "Payant",
+    "type": "Formation",
+    "langue": "FR",
+    "cout": "Payant",
     "note": "Formation francophone à la TCD (dysrégulations émotionnelles et comportementales). Vérifier le calendrier et le volet spécifiquement dédié à la DBT-A adolescents."
   },
   {
     "titre": "Université de Strasbourg (Formation continue) — La Thérapie Comportementale Dialectique (TCD-DBT) : approfondissement et application (niveau 2)",
     "url": "https://sfc.unistra.fr/formations/sante-psychiatrie_-_psychiatrie-adultes_-_la-therapie-comportementale-dialectique-tcd-ou-dialectical-behavior-therapy-dbt-approfondissement-et-application-niveau-2_-_5747/",
-    "type": "Formation", "langue": "FR", "cout": "Payant",
+    "type": "Formation",
+    "langue": "FR",
+    "cout": "Payant",
     "note": "Stage inter-établissements de l'Université de Strasbourg, niveau 2 (21h en présentiel + 3h à distance), pour professionnels déjà formés aux bases de la TCD. Complète le niveau 1 de la même université (« Comment traiter les troubles de la régulation émotionnelle : la TCD », sfc.unistra.fr). Coût non précisé sur la page publique."
   },
   {
     "titre": "CAS Thérapie comportementale dialectique (TCD) — UNIL / EPFL / CHUV (Suisse)",
     "url": "https://www.formation-continue-unil-epfl.ch/formation/cas-tcd/",
-    "type": "Formation", "langue": "FR", "cout": "Payant",
+    "type": "Formation",
+    "langue": "FR",
+    "cout": "Payant",
     "note": "Certificate of Advanced Studies (13 crédits ECTS) porté conjointement par les universités de Lausanne, Genève et Fribourg avec le CHUV ; édition mai 2026 - octobre 2027, 7400 CHF. Comporte un module 3 spécifiquement dédié à l'application de la TCD aux familles et aux adolescents (TCD-A), directement pertinent pour cette veille."
   },
   {
     "titre": "Lane & Leduc — Entraînement aux compétences TCD pour adolescents (Éditions du CHU Sainte-Justine, 2025)",
     "url": "https://www.editions-chu-sainte-justine.org/livres/entrainement-aux-competences-tcd-pour-adolescents-418.html",
-    "type": "Livre", "langue": "FR", "cout": "Payant",
+    "type": "Livre",
+    "langue": "FR",
+    "cout": "Payant",
     "note": "Manuel francophone québécois (472 p., ISBN 9782898280306) spécifiquement dédié à la TCD adaptée aux adolescents : plans de séance, notes pédagogiques, points de discussion, exercices et fiches reproductibles pour les 5 modules, dont « Marcher sur le chemin du milieu » (module propre aux adolescents et à leurs parents). Présenté par l'éditeur comme une adaptation francophone de l'ouvrage de Rathus & Miller ; le statut exact (traduction officielle ou adaptation indépendante par Lane & Leduc) reste à vérifier auprès de l'éditeur. Rare ouvrage clinique complet en français centré spécifiquement sur la DBT-A, les manuels ci-dessus portant surtout sur la TCD adulte."
+  },
+  {
+    "titre": "Chiron — La thérapie comportementale dialectique : concepts, principes et applications (De Boeck Supérieur, 2025)",
+    "url": "https://www.deboecksuperieur.com/livre/9782807367203-la-therapie-comportementale-dialectique",
+    "type": "Livre",
+    "langue": "FR",
+    "cout": "Payant",
+    "note": "Ouvrage francophone original (Caroline Chiron, préface d'Ueli Kramer ; 336 p., octobre 2025, 32,90 €) : panorama théorique, structurel et clinique de la TCD, avec les champs d'application émergents (addictions, TSA, troubles des conduites alimentaires, TSPT) et les liens avec les autres psychothérapies. Complète les manuels de Linehan et l'ouvrage Dunod ; la place accordée spécifiquement à la DBT-A adolescents reste à vérifier au sommaire."
+  },
+  {
+    "titre": "Lynch (trad. Sylvia Martin) — La thérapie comportementale dialectique radicalement ouverte (De Boeck Supérieur, 2024)",
+    "url": "https://www.deboecksuperieur.com/livre/9782807357952-la-therapie-comportementale-dialectique-radicalement-ouverte",
+    "type": "Livre",
+    "langue": "FR",
+    "cout": "Payant",
+    "note": "Traduction française (novembre 2024, 42,90 €) de l'ouvrage de référence de Thomas R. Lynch sur la RO-DBT (Radically Open DBT), approche transdiagnostique ciblant les troubles de l'excès de contrôle : dépression chronique, anorexie mentale, personnalité obsessionnelle-compulsive. ⚠️ La RO-DBT est une approche distincte de la TCD standard de Linehan et de la DBT-A adolescents ; validée essentiellement chez l'adulte, son usage à l'adolescence n'est pas établi. Lien vers l'édition française ; original anglais « Radically Open Dialectical Behavior Therapy » (Context Press/New Harbinger, 2018)."
+  },
+  {
+    "titre": "Psychwire — DBT Skills for Adolescents and Families (Linehan, Miller & Rathus)",
+    "url": "https://psychwire.com/linehan/dbt-adolescents-and-families",
+    "type": "Formation",
+    "langue": "EN",
+    "cout": "Payant",
+    "note": "Cours en ligne de 6 semaines (12 h de contenu vidéo, accès 12 mois, 650 USD) animé par Marsha Linehan avec Alec Miller et Jill Rathus, les deux concepteurs de la DBT-A. Couvre les cinq modules de la version adolescents, dont « Walking the Middle Path » (marcher sur la voie du milieu), spécifiquement créé pour les conflits parents-adolescent et absent de la TCD standard adulte. Ouvre droit à 12 crédits de formation continue (APA, ASWB, AMA, ANCC). ⚠️ Uniquement en anglais, sans sous-titres français annoncés ; lien vers la plateforme originale. Aucune équivalence francophone repérée pour un cours en ligne directement animé par les concepteurs de la DBT-A."
   }
 ];
 /* FORMATION_RESSOURCES_END */
@@ -1376,6 +2129,23 @@ const PHARMA_REF = [
   { indication: "Usage d'opioïdes (adolescent)", classe: "Agoniste opioïde partiel", exemples: "Buprénorphine", amm: "partiel", ammLabel: "Cadre spécialisé", note: "Traitement de durée prolongée avec sevrage progressif, dans un cadre spécialisé (reco AACAP 2025)." }
 ];
 
+/* Molécules et indications explorées HORS AMM pédiatrique. `statut` décrit le cadre
+   réglementaire (France/UE) ; `preuve` le niveau de preuve des données disponibles.
+   Hors AMM n'est pas synonyme d'interdit : cadre légal art. L5121-12-1 du CSP. */
+/* PHARMA_HORS_AMM_START */
+const PHARMA_HORS_AMM = [
+  { molecule: "Lithium", classe: "Thymorégulateur", indication: "Dysrégulation émotionnelle en add-on ; potentialisation dans la dépression résistante ; agressivité et indications hors troubles de l'humeur", statut: "Hors AMM — « déconseillé chez l'enfant » (RCP Téralithe, sans limite d'âge chiffrée)", preuve: "Faible", donnees: "L'AMM française du lithium se limite à la prévention des rechutes des troubles bipolaires et des états schizo-affectifs intermittents et au traitement curatif des états d'excitation maniaque ou hypomaniaque, sans population pédiatrique : le RCP indique que l'utilisation « est déconseillée chez l'enfant ». Une revue de portée recense néanmoins des usages hors troubles de l'humeur (agressivité, automutilation) avec des données éparses. Une étude rétrospective suggère un effet du lithium en add-on sur la dysrégulation émotionnelle de l'adolescent, et un essai pragmatique le retient parmi les stratégies de potentialisation dans la dépression résistante. Les données de délivrance néerlandaises confirment un usage réel chez les mineurs malgré l'absence d'AMM.", src: "https://doi.org/10.1016/j.neubiorev.2025.106402", srcLabel: null },
+  { molecule: "Kétamine (IV)", classe: "Antagoniste NMDA (anesthésique)", indication: "Idées suicidaires aiguës aux urgences pédiatriques", statut: "Hors AMM — aucune indication psychiatrique (AMM = anesthésie)", preuve: "Faible (essai pilote)", donnees: "Un essai randomisé pilote contre placebo a testé une dose unique de kétamine intraveineuse chez des adolescents consultant aux urgences pour idées suicidaires. Le format pilote ne permet pas de conclure sur l'efficacité : il documente la faisabilité et la tolérance immédiate. La kétamine n'a aucune AMM psychiatrique, ni chez l'adulte ni chez le mineur ; son usage en crise suicidaire relève strictement de la recherche ou de protocoles hospitaliers encadrés.", src: "https://doi.org/10.1186/s12888-026-08042-9", srcLabel: null },
+  { molecule: "Eskétamine intranasale", classe: "Antagoniste NMDA", indication: "Symptômes dépressifs de l'adolescent en risque suicidaire imminent", statut: "Hors AMM — Spravato réservé à l'adulte (AMM européenne, dépression résistante)", preuve: "Modéré", donnees: "L'AMM européenne de l'eskétamine intranasale (Spravato) couvre uniquement l'adulte présentant une dépression caractérisée résistante, en association à un ISRS ou un IRSN. Chez l'adolescent en risque suicidaire imminent, un essai randomisé contrôlé contre comparateur psychoactif (midazolam) a évalué son effet sur les symptômes dépressifs. Tout usage avant 18 ans est donc hors AMM et suppose un cadre hospitalier avec surveillance post-administration.", src: "https://pubmed.ncbi.nlm.nih.gov/40058488/", srcLabel: null },
+  { molecule: "ISRS et IRSN", classe: "Antidépresseurs", indication: "Troubles anxieux de l'enfant et de l'adolescent (hors TOC)", statut: "Hors AMM — aucune molécule autorisée dans l'anxiété avant 18 ans en France", preuve: "Élevé", donnees: "En France, seule la fluoxétine dispose d'une AMM pédiatrique dans la dépression (dès 8 ans), et la sertraline et la fluvoxamine dans le TOC de l'enfant et de l'adolescent : aucune molécule n'est autorisée dans les troubles anxieux avant 18 ans. Or une méta-analyse de 15 essais randomisés (2 083 participants) montre une efficacité antianxieuse réelle (différence moyenne standardisée -0,49 ; IC95% -0,65 à -0,33), une acceptabilité meilleure que le placebo et une tolérance comparable. Le même travail retrouve un risque accru d'idées suicidaires émergentes (RR = 3,51 ; IC95% 1,51-8,16). C'est l'un des écarts les plus marqués entre le niveau de preuve disponible et le cadre réglementaire français.", src: "https://doi.org/10.1097/YIC.0000000000000599", srcLabel: null },
+  { molecule: "Rispéridone et aripiprazole", classe: "Antipsychotiques 2e génération", indication: "Irritabilité et agressivité dans le trouble du spectre de l'autisme", statut: "Hors AMM en France — rispéridone limitée au trouble des conduites dès 5 ans, 6 semaines maximum", preuve: "Modéré", donnees: "En France, l'AMM pédiatrique de la rispéridone se limite au traitement symptomatique de courte durée (jusqu'à 6 semaines) de l'agressivité persistante dans le trouble des conduites chez l'enfant dès 5 ans avec fonctionnement intellectuel inférieur à la moyenne. L'aripiprazole n'a d'AMM européenne que dans la schizophrénie dès 15 ans et les épisodes maniaques dès 13 ans. L'usage dans le TSA est donc hors AMM, et l'ANSM a alerté sur cette pratique en signalant des effets indésirables au moins deux fois plus fréquents que chez l'adulte. Un essai randomisé a comparé directement les deux molécules sur l'irritabilité dans le TSA de l'enfant.", src: "https://doi.org/10.1016/j.braindev.2025.104454", srcLabel: null },
+  { molecule: "Valproate et divalproate", classe: "Antiépileptique thymorégulateur", indication: "Manie aiguë de l'enfant et de l'adolescent", statut: "Hors AMM chez le mineur ; programme de prévention des grossesses chez les filles et femmes en âge de procréer", preuve: "Modéré", donnees: "Une méta-analyse en réseau a comparé antipsychotiques, antiépileptiques et lithium dans la manie aiguë de l'enfant et de l'adolescent : les antipsychotiques ressortent supérieurs aux antiépileptiques et au lithium sur la réduction des symptômes maniaques. Le valproate garde donc une place de recours et non de première ligne. En France, son usage chez la mineure est soumis aux conditions strictes du programme de prévention des grossesses en raison du risque tératogène et de troubles neuro-développementaux, ce qui restreint fortement l'option chez les filles.", src: "https://doi.org/10.1016/j.jaac.2024.07.920", srcLabel: null },
+  { molecule: "Centanafadine", classe: "Inhibiteur triple de recapture (NDSRI)", indication: "TDAH de l'enfant et de l'adolescent", statut: "Pas d'AMM européenne — approuvée par la FDA le 24 juillet 2026 (Simtriyo, dès 6 ans et 20 kg)", preuve: "Élevé", donnees: "Essai randomisé en double aveugle contre placebo chez 459 adolescents de 13 à 17 ans : la dose de 328,8 mg/jour fait significativement mieux que le placebo sur l'ADHD-RS-5 (-18,50 versus -14,15 ; p = 0,0006), avec séparation dès la semaine 1, alors que la dose de 164,4 mg/jour échoue sur le critère principal. Les événements indésirables émergents touchent 50,3 % des participants à dose haute contre 23,8 % sous placebo. La molécule a été approuvée par la FDA en juillet 2026 dès 6 ans, mais reste sans autorisation européenne : elle n'est donc pas accessible en pratique courante en France.", src: "https://doi.org/10.1016/j.jaac.2025.06.023", srcLabel: null },
+  { molecule: "d-amphétamine transdermique", classe: "Psychostimulant (patch)", indication: "TDAH de l'enfant et de l'adolescent", statut: "Pas d'AMM européenne (forme autorisée aux États-Unis)", preuve: "Modéré", donnees: "L'analyse des sous-échelles SKAMP et des sous-groupes d'un essai pivot documente l'efficacité du système transdermique de d-amphétamine sur les symptômes de TDAH en conditions de classe simulée. Cette forme galénique, autorisée aux États-Unis, n'a pas d'AMM européenne. L'intérêt théorique est l'observance et le contrôle de la durée d'exposition par le retrait du patch ; les effets indésirables cutanés au site d'application sont propres à cette voie.", src: "https://doi.org/10.1177/10445463261434530", srcLabel: null },
+  { molecule: "Metformine", classe: "Antidiabétique (biguanide)", indication: "Prise de poids sous antipsychotique de 2e génération", statut: "Hors AMM en psychiatrie (AMM = diabète de type 2)", preuve: "Élevé", donnees: "L'essai pragmatique MOBILITY (Lancet Psychiatry, décembre 2025) a randomisé 1 565 jeunes de 8 à 19 ans en surpoids ou obèses, porteurs d'un trouble du spectre bipolaire et traités par antipsychotique de 2e génération, sur 64 sites américains et jusqu'à 24 mois : metformine plus intervention hygiéno-diététique versus intervention seule. La metformine freine modestement la prise de poids liée aux antipsychotiques. Les effets indésirables digestifs sont 2 à 4 fois plus fréquents sous metformine. Les auteurs concluent que le bénéfice dépasse le risque et qu'il faut envisager la metformine chez ces jeunes. ⚠️ Cette entrée ne figure pas encore dans la veille.", src: "https://doi.org/10.1016/S2215-0366(25)00273-1", srcLabel: "Lancet Psychiatry · RCT pragmatique" }
+];
+/* PHARMA_HORS_AMM_END */
+
 /* ============================================================
    RENDU VEILLE
    ============================================================ */
@@ -1576,10 +2346,11 @@ function renderFormationTCC() { renderModulesTCC(); renderResourcesTCC(); render
 
 /* --- Rendu Traitements --- */
 const KIND_LABEL = { psycho: "Non médicamenteux", pharma: "Médicamenteux", autre: "Autre" };
-function srcLink(url) {
+function srcLink(url, customLabel) {
   if (!url) return "";
   const e = VEILLE_DATA.find(v => v.url === url);
-  const label = e ? `${esc(e.source)} · ${esc(e.typeSource)}` : "Source";
+  const label = customLabel ? esc(customLabel)
+    : (e ? `${esc(e.source)} · ${esc(e.typeSource)}` : "Source");
   return `<span class="src">↪ <a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${label}</a></span>`;
 }
 function renderTraitementsSynthese() {
@@ -1608,7 +2379,23 @@ function renderTraitementsPharma() {
     </table>
   </div>`;
 }
-function renderTraitements() { renderTraitementsSynthese(); renderTraitementsPharma(); }
+const PREUVE_CLASS = { "Élevé": "amm-oui", "Modéré": "amm-partiel" };
+function renderTraitementsHorsAmm() {
+  const rows = PHARMA_HORS_AMM.map(p => `<tr>
+    <td class="mol">${esc(p.molecule)}<small>${esc(p.classe)}</small></td>
+    <td>${esc(p.indication)}</td>
+    <td class="amm-hors">${esc(p.statut)}</td>
+    <td class="${PREUVE_CLASS[p.preuve] ?? "amm-hors"}">${esc(p.preuve)}</td>
+    <td>${esc(p.donnees)}${p.src ? "<br>" + srcLink(p.src, p.srcLabel) : ""}</td>
+  </tr>`).join("");
+  document.getElementById("traitements-hors-amm").innerHTML = `<div class="pharma-table-wrap">
+    <table class="pharma">
+      <thead><tr><th>Molécule</th><th>Indication étudiée</th><th>Statut réglementaire</th><th>Niveau de preuve</th><th>Ce que montrent les données</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+  </div>`;
+}
+function renderTraitements() { renderTraitementsSynthese(); renderTraitementsPharma(); renderTraitementsHorsAmm(); }
 
 /* Gestion du statut d'une compétence, partagée TCD + TCC.
    Les ids étant uniques (préfixe "tcc-"), les deux progressions se calculent sans collision. */
