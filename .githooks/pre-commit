@@ -1,0 +1,16 @@
+#!/bin/sh
+# Bloque tout commit qui casserait index.html (JSON invalide, énumération
+# inconnue, tag hors vocabulaire, doublon, syntaxe JS).
+# Installé via : git config core.hooksPath .githooks
+# Contournement exceptionnel : git commit --no-verify
+
+if git diff --cached --name-only | grep -qx "index.html"; then
+  echo "→ pre-commit : validation d'index.html"
+  if ! python3 "$(git rev-parse --show-toplevel)/automation/validate.py"; then
+    echo ""
+    echo "✗ Commit interrompu : corrigez les erreurs ci-dessus,"
+    echo "  ou restaurez veille-pedopsy-tcd.backup.html."
+    exit 1
+  fi
+fi
+exit 0

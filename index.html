@@ -94,6 +94,15 @@
     border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px;
     background: var(--card); color: var(--ink);
   }
+  .sort-label { font: 600 12px "Source Sans 3", sans-serif; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .sort {
+    font: 600 13px "Source Sans 3", sans-serif;
+    border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+    background: var(--card); color: var(--ink); cursor: pointer;
+  }
+  .chip-action { border-style: dashed; color: var(--muted); }
+  .chip-action:hover { color: var(--ink); border-color: var(--muted); }
+  .chip-action[data-done="1"] { background: var(--teal); border-color: var(--teal); border-style: solid; color: #fff; }
   .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--muted); margin-bottom: 20px; }
   .legend span { display: inline-flex; align-items: center; gap: 6px; }
   .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
@@ -126,11 +135,6 @@
   .tag.consensus-emergent { background: var(--amber-soft); color: var(--amber); }
   .tag.consensus-controverse { background: var(--red-soft); color: var(--red); }
   .empty { text-align: center; color: var(--muted); padding: 48px 0; font-size: 15px; }
-  .demo-banner {
-    background: var(--amber-soft); border: 1px solid var(--amber); color: var(--amber);
-    border-radius: 8px; padding: 10px 14px; font-size: 13.5px; margin-bottom: 24px;
-  }
-
   /* ---------- Formation : progression globale ---------- */
   .progress-head {
     background: var(--card); border: 1px solid var(--line); border-radius: 10px;
@@ -339,7 +343,7 @@
 
   /* ---------- Impression (sortir une fiche proprement) ---------- */
   @media print {
-    .tabs, .filters, .legend, .status-btns, .chip-reset, .demo-banner { display: none !important; }
+    .tabs, .filters, .legend, .status-btns, .chip-reset { display: none !important; }
     body { max-width: none; margin: 0; padding: 0; color: #000; }
     html, body { background: #fff; }
     .panel[hidden] { display: none !important; }
@@ -366,10 +370,6 @@
 <section class="panel" id="panel-veille" role="tabpanel" aria-labelledby="tab-veille">
   <p class="panel-stats" id="veille-stats"></p>
 
-  <div class="demo-banner" id="demoBanner">
-    ⚠️ Données de démonstration — entrées fictives à remplacer par la première exécution de la routine.
-  </div>
-
   <div class="filters" role="toolbar" aria-label="Filtres de veille">
     <span class="group-label">Thème</span>
     <button class="chip" data-filter="theme" data-value="Pédopsychiatrie" aria-pressed="false">Pédopsychiatrie</button>
@@ -384,7 +384,19 @@
     <button class="chip" data-filter="niveau" data-value="Faible" aria-pressed="false">Faible</button>
     <button class="chip" data-filter="niveau" data-value="Avis d'expert" aria-pressed="false">Avis d'expert</button>
     <span class="sep" aria-hidden="true"></span>
+    <span class="group-label">Période</span>
+    <button class="chip" data-filter="periode" data-value="12" aria-pressed="false">12 mois</button>
+    <button class="chip" data-filter="periode" data-value="24" aria-pressed="false">24 mois</button>
+    <span class="sep" aria-hidden="true"></span>
+    <label class="sort-label" for="sort">Tri</label>
+    <select class="sort" id="sort" aria-label="Critère de tri des entrées">
+      <option value="ajout">Ajout récent</option>
+      <option value="publication">Publication récente</option>
+    </select>
+    <span class="sep" aria-hidden="true"></span>
     <input class="search" id="search" type="search" placeholder="Rechercher…" aria-label="Rechercher dans la veille">
+    <button class="chip chip-action" id="export-md" type="button" title="Copier les entrées affichées au format Markdown">Copier (MD)</button>
+    <button class="chip chip-action" id="export-csv" type="button" title="Télécharger les entrées affichées au format CSV">CSV</button>
     <button class="chip chip-reset" id="reset-filters" type="button" hidden>Réinitialiser</button>
   </div>
 
@@ -684,7 +696,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "Auto-mutilation",
       "Suicidalité",
-      "Régulation émotionnelle"
+      "Dysrégulation émotionnelle"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -718,8 +730,7 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-20T14:30",
     "theme": "Pédopsychiatrie",
     "sousThemes": [
-      "Addictions",
-      "Usage de substances"
+      "Addictions"
     ],
     "typeSource": "Recommandation officielle",
     "niveauPreuve": "Modéré",
@@ -736,7 +747,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Suicidalité",
-      "Automutilation",
+      "Auto-mutilation",
       "Épidémiologie"
     ],
     "typeSource": "Étude observationnelle",
@@ -753,7 +764,7 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-20T14:30",
     "theme": "Transversal",
     "sousThemes": [
-      "Urgences pédiatriques",
+      "Urgences et crise",
       "Suicidalité",
       "Auto-mutilation"
     ],
@@ -791,8 +802,8 @@ const VEILLE_DATA = [
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
       "Trouble borderline",
-      "Régulation émotionnelle",
-      "Comparaison de thérapies"
+      "Dysrégulation émotionnelle",
+      "Interventions psychosociales"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -808,9 +819,9 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-20T15:08",
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
-      "Automutilation non suicidaire",
-      "Prévention scolaire",
-      "Compétences TCD"
+      "Auto-mutilation",
+      "Prévention",
+      "Entraînement aux compétences TCD"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Modéré",
@@ -827,10 +838,10 @@ const VEILLE_DATA = [
     "theme": "TCC",
     "sousThemes": [
       "Dépression",
-      "Troubles anxieux",
+      "Anxiété",
       "TOC",
       "TSPT",
-      "Efficacité comparée"
+      "Interventions psychosociales"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Élevé",
@@ -847,7 +858,6 @@ const VEILLE_DATA = [
     "theme": "TCC",
     "sousThemes": [
       "Anxiété",
-      "Enfant/Adolescent",
       "Prévention",
       "Implication parentale"
     ],
@@ -865,10 +875,10 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-21T20:22",
     "theme": "TCC",
     "sousThemes": [
-      "Prévention scolaire",
+      "Prévention",
       "Dépression",
       "Anxiété",
-      "Santé publique"
+      "Politique de santé"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Faible",
@@ -885,9 +895,8 @@ const VEILLE_DATA = [
     "theme": "TCC",
     "sousThemes": [
       "Dépression",
-      "iCBT",
-      "Adolescents",
-      "Choix du traitement"
+      "Interventions numériques",
+      "Pharmacothérapie"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Modéré",
@@ -905,7 +914,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "TDAH",
       "Interventions numériques",
-      "Neurofeedback"
+      "Neuromodulation"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -922,7 +931,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "TOC",
-      "Thérapie d'exposition",
+      "TCC",
       "Pharmacothérapie"
     ],
     "typeSource": "Méta-analyse",
@@ -940,8 +949,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "TSA",
-      "Intervention précoce",
-      "Nourrisson"
+      "Intervention précoce"
     ],
     "typeSource": "Revue narrative",
     "niveauPreuve": "Faible",
@@ -957,9 +965,9 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-21T21:38",
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
-      "Revue systématique",
-      "Multi-cadres cliniques",
-      "Troubles externalisés"
+      "Qualité des preuves",
+      "Implémentation",
+      "Trouble des conduites"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -993,9 +1001,9 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-22T09:15",
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
-      "Compétences TCD",
-      "Groupe transdiagnostique",
-      "Faisabilité"
+      "Entraînement aux compétences TCD",
+      "Comorbidités",
+      "Assiduité et engagement"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Faible",
@@ -1012,8 +1020,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Anxiété",
-      "TAG",
-      "Méthodologie de revue"
+      "Qualité des preuves"
     ],
     "typeSource": "Revue narrative",
     "niveauPreuve": "Faible",
@@ -1030,8 +1037,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Anxiété",
-      "TAG",
-      "Thérapie métacognitive"
+      "TCC"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Faible",
@@ -1047,9 +1053,9 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-22T09:15",
     "theme": "TCD",
     "sousThemes": [
-      "Trouble borderline (adulte)",
+      "Trouble borderline",
       "Dépression",
-      "Régulation de la colère"
+      "Dysrégulation émotionnelle"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -1102,7 +1108,6 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Troubles des conduites alimentaires",
-      "Anorexie mentale",
       "Thérapie familiale"
     ],
     "typeSource": "Méta-analyse",
@@ -1119,9 +1124,7 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-22T16:35",
     "theme": "Transversal",
     "sousThemes": [
-      "Suicidalité",
-      "Prévention du suicide",
-      "Plan de sécurité"
+      "Suicidalité"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -1156,8 +1159,7 @@ const VEILLE_DATA = [
     "theme": "Transversal",
     "sousThemes": [
       "Psychiatrie de transition",
-      "Parcours de soins",
-      "Coordination des soins"
+      "Parcours de soins"
     ],
     "typeSource": "Recommandation officielle",
     "niveauPreuve": "Avis d'expert",
@@ -1173,8 +1175,8 @@ const VEILLE_DATA = [
     "dateAjout": "2026-07-24T08:36",
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
-      "Hospitalisation résidentielle",
-      "Implémentation clinique",
+      "Hospitalisation",
+      "Implémentation",
       "Fonctionnement global"
     ],
     "typeSource": "Étude observationnelle",
@@ -1194,7 +1196,7 @@ const VEILLE_DATA = [
       "Dépression",
       "Suicidalité",
       "Pharmacothérapie",
-      "Eskétamine"
+      "Kétamine et eskétamine"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Modéré",
@@ -1211,8 +1213,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "TSA",
-      "Intervention comportementale intensive précoce",
-      "ABA"
+      "Intervention précoce"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -1230,7 +1231,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "TDAH",
       "Genre",
-      "Diagnostic tardif",
+      "Dépistage et repérage",
       "Épidémiologie"
     ],
     "typeSource": "Étude observationnelle",
@@ -1248,7 +1249,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "TSPT",
-      "TCC centrée sur le trauma",
+      "TCC",
       "EMDR"
     ],
     "typeSource": "Méta-analyse",
@@ -1266,7 +1267,6 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Trouble bipolaire",
-      "Manie aiguë",
       "Lithium",
       "Antipsychotiques",
       "Pharmacothérapie"
@@ -1289,7 +1289,7 @@ const VEILLE_DATA = [
       "Trouble des conduites",
       "TSA",
       "Suicidalité",
-      "Pharmacothérapie hors AMM"
+      "Usage hors AMM"
     ],
     "typeSource": "Revue narrative",
     "niveauPreuve": "Faible",
@@ -1345,7 +1345,6 @@ const VEILLE_DATA = [
     "sousThemes": [
       "Dépression",
       "Neuromodulation",
-      "TMS",
       "Politique de santé"
     ],
     "typeSource": "Revue narrative",
@@ -1382,7 +1381,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "TSA",
-      "Irritabilité",
+      "Dysrégulation émotionnelle",
       "Antipsychotiques",
       "Pharmacothérapie"
     ],
@@ -1401,8 +1400,8 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "TDAH",
-      "Trajectoires développementales",
-      "Persistance",
+      "Suivi à long terme",
+      "Assiduité et engagement",
       "Comorbidités"
     ],
     "typeSource": "Méta-analyse",
@@ -1421,7 +1420,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "Usage des écrans",
       "Sommeil",
-      "Bien-être",
+      "Fonctionnement global",
       "Prévention"
     ],
     "typeSource": "RCT",
@@ -1458,7 +1457,7 @@ const VEILLE_DATA = [
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
       "Suicidalité",
-      "Compétences de régulation émotionnelle",
+      "Dysrégulation émotionnelle",
       "Évaluation écologique momentanée",
       "Suivi à long terme"
     ],
@@ -1476,9 +1475,9 @@ const VEILLE_DATA = [
     "dateAjout": "2026-08-18T13:51",
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
-      "Automutilation non suicidaire",
+      "Auto-mutilation",
       "Implication parentale",
-      "Format court",
+      "Implémentation",
       "Suicidalité"
     ],
     "typeSource": "RCT",
@@ -1499,7 +1498,7 @@ const VEILLE_DATA = [
       "Pharmacothérapie",
       "Lithium",
       "Potentialisation",
-      "Résistance au traitement"
+      "Dépression résistante"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Faible",
@@ -1518,7 +1517,7 @@ const VEILLE_DATA = [
       "TDAH",
       "Psychostimulants",
       "Pharmacothérapie",
-      "Voie transdermique"
+      "Posologie"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Modéré",
@@ -1535,8 +1534,8 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Suicidalité",
-      "Kétamine",
-      "Urgences pédiatriques",
+      "Kétamine et eskétamine",
+      "Urgences et crise",
       "Pharmacothérapie"
     ],
     "typeSource": "RCT",
@@ -1574,8 +1573,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "Dépression",
       "Antidépresseurs",
-      "Fluoxétine",
-      "Biais méthodologiques"
+      "Qualité des preuves"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -1592,9 +1590,9 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "TDAH",
-      "Pharmacologie",
+      "Pharmacothérapie",
       "Dysrégulation émotionnelle",
-      "Atomoxétine"
+      "Non-stimulants"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Modéré",
@@ -1610,10 +1608,10 @@ const VEILLE_DATA = [
     "dateAjout": "2026-08-18T14:13",
     "theme": "Pédopsychiatrie",
     "sousThemes": [
-      "Schizophrénie précoce",
+      "Schizophrénie et psychoses",
       "Antipsychotiques",
-      "Pharmacologie",
-      "Tolérance"
+      "Pharmacothérapie",
+      "Effets indésirables"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Élevé",
@@ -1631,7 +1629,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "Anxiété",
       "Antidépresseurs",
-      "Pharmacologie",
+      "Pharmacothérapie",
       "Suicidalité"
     ],
     "typeSource": "Méta-analyse",
@@ -1650,7 +1648,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "TDAH",
       "Nouvelles molécules",
-      "Pharmacologie",
+      "Pharmacothérapie",
       "Non-stimulants"
     ],
     "typeSource": "RCT",
@@ -1670,7 +1668,7 @@ const VEILLE_DATA = [
       "Dépression",
       "Trouble bipolaire",
       "Antidépresseurs",
-      "Pharmacologie"
+      "Pharmacothérapie"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Modéré",
@@ -1686,10 +1684,9 @@ const VEILLE_DATA = [
     "dateAjout": "2026-08-18T14:13",
     "theme": "Pédopsychiatrie",
     "sousThemes": [
-      "ARFID",
-      "Troubles alimentaires",
+      "Troubles des conduites alimentaires",
       "Thérapie familiale",
-      "Télésanté"
+      "Téléconsultation"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Modéré",
@@ -1706,9 +1703,9 @@ const VEILLE_DATA = [
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
       "Auto-mutilation",
-      "Compétences TCD",
+      "Entraînement aux compétences TCD",
       "Implication parentale",
-      "Format de délivrance"
+      "Implémentation"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Modéré",
@@ -1725,9 +1722,9 @@ const VEILLE_DATA = [
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
       "Suicidalité",
-      "Régulation émotionnelle",
-      "Transdiagnostique",
-      "Hôpital de jour"
+      "Dysrégulation émotionnelle",
+      "Comorbidités",
+      "Hospitalisation"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Faible",
@@ -1744,10 +1741,10 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Trouble bipolaire",
-      "Psychopharmacologie",
+      "Pharmacothérapie",
       "Lithium",
       "Antipsychotiques",
-      "Aide à la décision partagée"
+      "Médecine de précision"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Élevé",
@@ -1763,8 +1760,8 @@ const VEILLE_DATA = [
     "dateAjout": "2026-08-21T15:32",
     "theme": "Pédopsychiatrie",
     "sousThemes": [
-      "Automutilation non suicidaire",
-      "Psychopharmacologie",
+      "Auto-mutilation",
+      "Pharmacothérapie",
       "Lithium",
       "Thymorégulateurs",
       "Dépression"
@@ -1785,9 +1782,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "TDAH",
       "Psychostimulants",
-      "Méthylphénidate",
-      "Croissance",
-      "Surveillance des effets indésirables"
+      "Effets indésirables"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -1805,9 +1800,8 @@ const VEILLE_DATA = [
     "sousThemes": [
       "TDAH",
       "Psychostimulants",
-      "Guidance parentale",
-      "Télésanté",
-      "Parentalité"
+      "Implication parentale",
+      "Téléconsultation"
     ],
     "typeSource": "RCT",
     "niveauPreuve": "Modéré",
@@ -1824,11 +1818,11 @@ const VEILLE_DATA = [
     "theme": "Transversal",
     "sousThemes": [
       "Suicidalité",
-      "Automutilation non suicidaire",
+      "Auto-mutilation",
       "DBT-A",
-      "Fluoxétine",
+      "Antidépresseurs",
       "TCC",
-      "Niveau de preuve"
+      "Qualité des preuves"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -1844,10 +1838,9 @@ const VEILLE_DATA = [
     "dateAjout": "2026-08-21T15:32",
     "theme": "Pédopsychiatrie",
     "sousThemes": [
-      "Transition 15-25",
-      "Organisation des soins",
-      "Continuité des soins",
-      "Recommandation européenne"
+      "Psychiatrie de transition",
+      "Parcours de soins",
+      "Politique de santé"
     ],
     "typeSource": "Recommandation officielle",
     "niveauPreuve": "Avis d'expert",
@@ -1863,8 +1856,8 @@ const VEILLE_DATA = [
     "dateAjout": "2026-08-21T15:32",
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
-      "Automutilation non suicidaire",
-      "Régulation émotionnelle",
+      "Auto-mutilation",
+      "Dysrégulation émotionnelle",
       "Dépression",
       "Anxiété",
       "STEPPS"
@@ -1885,9 +1878,9 @@ const VEILLE_DATA = [
     "sousThemes": [
       "TSA",
       "Épidémiologie",
-      "Repérage chez les filles",
-      "Déficience intellectuelle",
-      "Planification des besoins"
+      "Dépistage et repérage",
+      "Neurodéveloppement",
+      "Accès aux soins"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Modéré",
@@ -1907,7 +1900,7 @@ const VEILLE_DATA = [
       "Suicidalité",
       "Implémentation",
       "Fidélité au modèle",
-      "Recours aux services de crise"
+      "Urgences et crise"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Modéré",
@@ -1927,7 +1920,7 @@ const VEILLE_DATA = [
       "Formation des thérapeutes",
       "Implémentation",
       "Fidélité au modèle",
-      "Prévention du suicide"
+      "Suicidalité"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Faible",
@@ -1944,8 +1937,8 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Dépression",
-      "Activation comportementale",
-      "Santé numérique",
+      "TCC",
+      "Interventions numériques",
       "Coût-efficacité",
       "Accès aux soins"
     ],
@@ -1964,10 +1957,9 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Anxiété",
-      "TCC par internet",
-      "Dépistage scolaire",
-      "Suivi à long terme",
-      "Anxiété sociale"
+      "Interventions numériques",
+      "Dépistage et repérage",
+      "Suivi à long terme"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Modéré",
@@ -1984,10 +1976,9 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Trouble bipolaire",
-      "Manie aiguë",
       "Antipsychotiques",
       "Lithium",
-      "Posologies"
+      "Posologie"
     ],
     "typeSource": "Méta-analyse",
     "niveauPreuve": "Élevé",
@@ -2004,10 +1995,10 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Antipsychotiques",
-      "Schizophrénie de l'adolescent",
-      "Manie bipolaire",
-      "Pharmacocinétique",
-      "Statut réglementaire"
+      "Schizophrénie et psychoses",
+      "Trouble bipolaire",
+      "Posologie",
+      "Usage hors AMM"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Faible",
@@ -2024,7 +2015,6 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "Antipsychotiques",
-      "Quétiapine",
       "Suivi thérapeutique pharmacologique",
       "Usage hors AMM",
       "Pharmacovigilance"
@@ -2046,7 +2036,7 @@ const VEILLE_DATA = [
       "Dépression résistante",
       "Antipsychotiques",
       "Suicidalité",
-      "Recours aux urgences",
+      "Urgences et crise",
       "Usage hors AMM"
     ],
     "typeSource": "Étude observationnelle",
@@ -2065,7 +2055,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "Auto-mutilation",
       "Dépression",
-      "Entraînement aux compétences",
+      "Entraînement aux compétences TCD",
       "Neuro-imagerie"
     ],
     "typeSource": "RCT",
@@ -2083,9 +2073,9 @@ const VEILLE_DATA = [
     "theme": "TCD",
     "sousThemes": [
       "Téléconsultation",
-      "Assiduité",
+      "Assiduité et engagement",
       "Fidélité au modèle",
-      "Organisation des soins"
+      "Parcours de soins"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Faible",
@@ -2102,9 +2092,8 @@ const VEILLE_DATA = [
     "theme": "TCD-Adolescents (DBT-A)",
     "sousThemes": [
       "Neurodéveloppement",
-      "TSAF",
       "Dysrégulation émotionnelle",
-      "Accessibilité des outils"
+      "Adaptation de l'intervention"
     ],
     "typeSource": "Étude observationnelle",
     "niveauPreuve": "Faible",
@@ -2160,9 +2149,7 @@ const VEILLE_DATA = [
     "sousThemes": [
       "Déprescription",
       "Antidépresseurs",
-      "Psychostimulants",
-      "Sevrage",
-      "Bon usage du médicament"
+      "Psychostimulants"
     ],
     "typeSource": "Revue narrative",
     "niveauPreuve": "Avis d'expert",
@@ -2180,8 +2167,6 @@ const VEILLE_DATA = [
     "sousThemes": [
       "Antipsychotiques",
       "Effets indésirables",
-      "Hyperprolactinémie",
-      "Surveillance métabolique",
       "Pharmacovigilance"
     ],
     "typeSource": "Étude observationnelle",
@@ -2199,7 +2184,7 @@ const VEILLE_DATA = [
     "theme": "Pédopsychiatrie",
     "sousThemes": [
       "TDAH",
-      "Thérapeutiques numériques",
+      "Interventions numériques",
       "Fonctions exécutives",
       "Remédiation cognitive"
     ],
@@ -2658,7 +2643,8 @@ const PHARMA_HORS_AMM = [
 const LEVELS = { "Élevé": 4, "Modéré": 3, "Faible": 2, "Avis d'expert": 1 };
 const LEVEL_COLORS = { "Élevé": "var(--teal)", "Modéré": "var(--amber)", "Faible": "var(--red)", "Avis d'expert": "var(--grey)" };
 const CONSENSUS_CLASS = { "Consensus établi": "consensus-etabli", "Émergent": "consensus-emergent", "Controversé": "consensus-controverse" };
-const state = { theme: null, niveau: null, q: "" };
+const state = { theme: null, niveau: null, periode: null, q: "", sort: "ajout" };
+let visibleEntries = [];   // entrées actuellement affichées — base des exports
 
 function esc(s) {
   return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -2702,9 +2688,18 @@ function themeMatches(entryTheme, filterValue) {
   if (filterValue === "TCD") return entryTheme === "TCD" || entryTheme === "TCD-Adolescents (DBT-A)";
   return entryTheme === filterValue;
 }
+// Filtre « période » : fenêtre glissante en mois, appliquée à la date de PUBLICATION.
+function withinMonths(iso, months) {
+  const d = new Date(String(iso ?? "").slice(0, 10) + "T00:00:00");
+  if (Number.isNaN(d.getTime())) return true;   // date illisible : ne pas masquer l'entrée
+  const cut = new Date();
+  cut.setMonth(cut.getMonth() - Number(months));
+  return d >= cut;
+}
 function veilleMatches(e) {
   if (state.theme && !themeMatches(e.theme, state.theme)) return false;
   if (state.niveau && e.niveauPreuve !== state.niveau) return false;
+  if (state.periode && !withinMonths(e.datePublication, state.periode)) return false;
   if (state.q) {
     const hay = [e.titre, e.synthese, e.pertinence, e.source, e.theme, ...(e.sousThemes ?? [])].join(" ").toLowerCase();
     if (!hay.includes(state.q)) return false;
@@ -2712,19 +2707,24 @@ function veilleMatches(e) {
   return true;
 }
 function renderVeille() {
-  const sorted = [...VEILLE_DATA].sort((a, b) => (b.dateAjout + b.datePublication).localeCompare(a.dateAjout + a.datePublication));
+  const key = state.sort === "publication"
+    ? e => e.datePublication + e.dateAjout
+    : e => e.dateAjout + e.datePublication;
+  const sorted = [...VEILLE_DATA].sort((a, b) => key(b).localeCompare(key(a)));
   const visible = sorted.filter(veilleMatches);
+  visibleEntries = visible;
   document.getElementById("veille-list").innerHTML = visible.map(veilleCard).join("");
   document.getElementById("veille-empty").hidden = visible.length > 0;
-  const last = sorted.length ? fmtDateTime(sorted[0].dateAjout) : "—";
+  const parAjout = [...VEILLE_DATA].sort((a, b) => b.dateAjout.localeCompare(a.dateAjout));
+  const last = parAjout.length ? fmtDateTime(parAjout[0].dateAjout) : "—";
   document.getElementById("veille-stats").textContent =
     `${VEILLE_DATA.length} entrée${VEILLE_DATA.length > 1 ? "s" : ""} · ${visible.length} affichée${visible.length > 1 ? "s" : ""} · dernière mise à jour : ${last}`;
-  document.getElementById("demoBanner").hidden = !VEILLE_DATA.some(e => e.titre.includes("[EXEMPLE FICTIF]"));
-  document.getElementById("reset-filters").hidden = !(state.theme || state.niveau || state.q);
+  document.getElementById("reset-filters").hidden = !(state.theme || state.niveau || state.periode || state.q);
 }
 // Compteurs par filtre (calculés sur l'ensemble des entrées)
 function chipCount(filter, value) {
   if (filter === "theme") return VEILLE_DATA.filter(e => themeMatches(e.theme, value)).length;
+  if (filter === "periode") return VEILLE_DATA.filter(e => withinMonths(e.datePublication, value)).length;
   return VEILLE_DATA.filter(e => e.niveauPreuve === value).length;
 }
 document.querySelectorAll(".chip[data-filter]").forEach(btn => {
@@ -2742,8 +2742,57 @@ document.querySelectorAll(".chip[data-filter]").forEach(btn => {
   });
 });
 document.getElementById("search").addEventListener("input", ev => { state.q = ev.target.value.trim().toLowerCase(); renderVeille(); });
+document.getElementById("sort").addEventListener("change", ev => { state.sort = ev.target.value; renderVeille(); });
+
+/* ---------- Export des entrées affichées ---------- */
+function flashDone(btn, label) {
+  const initial = btn.textContent;
+  btn.textContent = label; btn.dataset.done = "1";
+  setTimeout(() => { btn.textContent = initial; delete btn.dataset.done; }, 1800);
+}
+function toMarkdown(entries) {
+  const stamp = new Date().toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+  const lignes = entries.map(e =>
+    `- **${e.titre}**  \n  ${e.source} · ${e.typeSource} · niveau de preuve ${e.niveauPreuve} · publié le ${fmtDate(e.datePublication)}  \n  <${e.url}>  \n  ${e.synthese}  \n  *En pratique —* ${e.pertinence}`);
+  return `# Veille pédopsychiatrie & TCD — extrait du ${stamp}\n\n${entries.length} entrée(s)\n\n${lignes.join("\n\n")}\n`;
+}
+const CSV_COLS = ["titre", "url", "datePublication", "dateAjout", "theme", "sousThemes",
+                  "typeSource", "niveauPreuve", "consensus", "source", "synthese", "pertinence"];
+function toCSV(entries) {
+  const cell = val => {
+    const t = Array.isArray(val) ? val.join(" ; ") : String(val ?? "");
+    return `"${t.replace(/"/g, '""')}"`;
+  };
+  const lines = [CSV_COLS.join(";"), ...entries.map(e => CSV_COLS.map(c => cell(e[c])).join(";"))];
+  return "\uFEFF" + lines.join("\r\n");   // BOM : Excel FR ouvre l'UTF-8 correctement
+}
+document.getElementById("export-md").addEventListener("click", async ev => {
+  const txt = toMarkdown(visibleEntries);
+  try {
+    await navigator.clipboard.writeText(txt);
+    flashDone(ev.currentTarget, `✓ ${visibleEntries.length} copiées`);
+  } catch {
+    // Presse-papiers indisponible (file:// sans autorisation, navigateur ancien) : repli manuel.
+    const ta = document.createElement("textarea");
+    ta.value = txt; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    const ok = document.execCommand && document.execCommand("copy");
+    ta.remove();
+    flashDone(ev.currentTarget, ok ? `✓ ${visibleEntries.length} copiées` : "✗ échec");
+  }
+});
+document.getElementById("export-csv").addEventListener("click", ev => {
+  const blob = new Blob([toCSV(visibleEntries)], { type: "text/csv;charset=utf-8" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `veille-pedopsy-tcd-${new Date().toISOString().slice(0, 10)}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  flashDone(ev.currentTarget, `✓ ${visibleEntries.length} lignes`);
+});
 document.getElementById("reset-filters").addEventListener("click", () => {
-  state.theme = null; state.niveau = null; state.q = "";
+  state.theme = null; state.niveau = null; state.periode = null; state.q = "";
   document.querySelectorAll(".chip[data-filter]").forEach(b => b.setAttribute("aria-pressed", "false"));
   document.getElementById("search").value = "";
   renderVeille();
