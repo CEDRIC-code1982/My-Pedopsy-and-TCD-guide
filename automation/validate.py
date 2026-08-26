@@ -19,16 +19,12 @@ from pathlib import Path
 
 RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE / "automation"))
-from vocabulaire import ALIAS, VOCABULAIRE  # noqa: E402
+from vocabulaire import (ALIAS, CONSENSUS, NIVEAUX, SOURCES,  # noqa: E402
+                         THEMES, TYPES_SOURCE, VOCABULAIRE)
 
 CHAMPS = ["titre", "url", "datePublication", "dateAjout", "theme", "sousThemes",
           "typeSource", "niveauPreuve", "consensus", "source", "synthese", "pertinence"]
-THEMES = {"Pédopsychiatrie", "TCD", "TCD-Adolescents (DBT-A)", "TCC", "Transversal"}
-TYPES = {"Méta-analyse", "RCT", "Étude observationnelle", "Recommandation officielle",
-         "Revue narrative", "Article de presse spécialisée"}
-NIVEAUX = {"Élevé", "Modéré", "Faible", "Avis d'expert"}
-CONSENSUS = {"Consensus établi", "Émergent", "Controversé"}
-SOURCES = {"PubMed", "HAS", "Cochrane", "NICE", "SFPEADA", "AACAP", "Autre"}
+# Les énumérations vivent dans automation/vocabulaire.py — un seul point d'évolution.
 
 CHAMPS_RES = ["titre", "url", "type", "langue", "cout", "note"]
 TYPES_RES = {"Livre", "Site", "Vidéo", "Formation", "Article"}
@@ -45,9 +41,17 @@ def err(msg):
     erreurs.append(msg)
 
 
-def bornes_tableau(src, declaration):
-    """Renvoie (début, fin) du littéral tableau qui suit `declaration`."""
-    depart = src.index(declaration) + len(declaration) - 1
+def bornes_tableau(src, nom):
+    """Renvoie (début, fin) du littéral tableau affecté à `nom`.
+
+    L'espacement autour du `=` est libre : on repère la déclaration par
+    expression régulière plutôt que par chaîne littérale, pour qu'un
+    reformatage anodin ne fasse pas échouer la validation.
+    """
+    m = re.search(rf"const\s+{re.escape(nom)}\s*=\s*\[", src)
+    if m is None:
+        raise ValueError(f"déclaration de {nom} introuvable")
+    depart = m.end() - 1
     profondeur = 0
     for i in range(depart, len(src)):
         if src[i] == "[":
@@ -56,7 +60,7 @@ def bornes_tableau(src, declaration):
             profondeur -= 1
             if profondeur == 0:
                 return depart, i + 1
-    raise ValueError(f"fin de tableau introuvable pour {declaration!r}")
+    raise ValueError(f"fin de tableau introuvable pour {nom}")
 
 
 def norme(txt):
@@ -75,7 +79,7 @@ def valide_veille(entrees):
             err(f"{ref} : champs inattendus {superflus}")
         if e.get("theme") not in THEMES:
             err(f"{ref} : theme invalide {e.get('theme')!r}")
-        if e.get("typeSource") not in TYPES:
+        if e.get("typeSource") not in TYPES_SOURCE:
             err(f"{ref} : typeSource invalide {e.get('typeSource')!r}")
         if e.get("niveauPreuve") not in NIVEAUX:
             err(f"{ref} : niveauPreuve invalide {e.get('niveauPreuve')!r}")
@@ -161,14 +165,14 @@ def main():
         return 1
 
     try:
-        vs, ve = bornes_tableau(src, "const VEILLE_DATA = [")
+        vs, ve = bornes_tableau(src, "VEILLE_DATA")
         veille = json.loads(src[vs:ve])
     except (ValueError, json.JSONDecodeError) as exc:
         err(f"VEILLE_DATA illisible : {exc}")
         rapport(cible)
         return 1
     try:
-        rs, re_ = bornes_tableau(src, "const RESSOURCES = [")
+        rs, re_ = bornes_tableau(src, "RESSOURCES")
         ressources = json.loads(src[rs:re_])
     except (ValueError, json.JSONDecodeError) as exc:
         err(f"RESSOURCES illisible : {exc}")

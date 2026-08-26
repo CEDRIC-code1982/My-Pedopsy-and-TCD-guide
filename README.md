@@ -29,13 +29,18 @@ elle est donc **locale à la machine et au navigateur**, et n'est pas versionné
 Depuis l'onglet Veille, les boutons **Copier (MD)** et **CSV** exportent les
 entrées *actuellement filtrées*, pour réutilisation en bibliographie.
 
+La puce **Expérimental** isole la veille exploratoire : essais de phase précoce,
+preuves de concept, études pilotes. Ces entrées ne portent volontairement aucune
+implication de pratique — elles servent à voir venir une évolution avant qu'elle
+n'arrive en consultation.
+
 ## Structure du dépôt
 
 ```
 index.html                        le dashboard complet (HTML + CSS + JS + données)
 automation/
   pedopsy-tcd.SKILL.md            la routine de veille (voir ci-dessous)
-  vocabulaire.py                  vocabulaire contrôlé des tags `sousThemes`
+  vocabulaire.py                  listes contrôlées : tags, thèmes, sources, types
   validate.py                     validation d'index.html avant commit
 .githooks/pre-commit              rejoue validate.py, bloque un commit invalide
 ```
@@ -78,6 +83,14 @@ Le hook `pre-commit` le rejoue automatiquement. Il est versionné dans
 ```bash
 git config core.hooksPath .githooks
 ```
+
+## Champ `source` : aucun fourre-tout
+
+`source` désigne **qui produit** la référence, pas qui héberge le lien : un
+article indexé dans PubMed prend `PubMed` même si l'url est un DOI Elsevier.
+Il n'existe volontairement **pas** de valeur « Autre » — un fourre-tout n'informe
+de rien. La liste autorisée est `SOURCES` dans `automation/vocabulaire.py` ; une
+source légitime absente s'y ajoute, dans le même commit que l'entrée.
 
 ## Faire évoluer le vocabulaire des tags
 

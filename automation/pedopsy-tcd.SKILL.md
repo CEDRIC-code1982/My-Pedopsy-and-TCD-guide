@@ -76,8 +76,34 @@ manuellement si besoin. Ne jamais le passer sous silence.
 
 1. Recherche web sur les sources prioritaires : PubMed, Cochrane, HAS,
    NICE, SFPEADA, AACAP, presse scientifique de qualité.
-2. Ne retenir que des sources de moins de [12-24 mois]. Vérifier chaque date.
-3. Maximum 8 entrées par exécution ; qualité avant quantité. Écarter
+
+2. **Couverture mondiale, sans biais anglo-américain.** Interroger PubMed
+   SANS restriction de langue, et aller chercher explicitement les travaux
+   hors de l'axe américano-britannique : Europe continentale, Asie de l'Est
+   (Chine, Japon, Corée), Asie du Sud, Moyen-Orient (Iran, Turquie, Israël),
+   Amérique latine, Afrique, Océanie. Registres utiles au-delà de PubMed :
+   SciELO et LILACS (Amérique latine), J-STAGE (Japon), KoreaMed, CNKI (Chine).
+   Registres d'essais pour repérer ce qui n'est pas encore publié :
+   ClinicalTrials.gov, ISRCTN, EU CTR, ANZCTR, ChiCTR, IRCT (Iran), CTRI (Inde),
+   jRCT (Japon).
+   - Pour une source non anglophone et non francophone, conserver le lien
+     original dans `url` et indiquer la langue et le pays dans la `synthese`.
+   - Signaler explicitement les limites de transposabilité quand elles existent
+     (système de soins, pratiques de prescription, ascendance de la population
+     pour les travaux génétiques).
+
+3. **Veille exploratoire : inclure les travaux expérimentaux.** Ne pas se
+   limiter à ce qui est déjà transposable en consultation. Les essais de phase
+   précoce, preuves de concept, études pilotes ou de faisabilité, protocoles
+   innovants et travaux translationnels ont leur place — c'est ainsi qu'on voit
+   venir une évolution deux ou trois ans à l'avance. Ils prennent
+   `typeSource: "Étude expérimentale"`, presque toujours
+   `niveauPreuve: "Faible"`, et la `pertinence` doit dire franchement que rien
+   n'en découle pour la pratique immédiate. Compter environ 1 à 2 entrées
+   expérimentales par run — pas davantage, la veille reste avant tout clinique.
+
+4. Ne retenir que des sources de moins de [12-24 mois]. Vérifier chaque date.
+5. Maximum 8 entrées par exécution ; qualité avant quantité. Écarter
    blogs personnels et communiqués sans étude sous-jacente.
 
 ## MISE À JOUR DU FICHIER HTML — RÈGLES STRICTES
@@ -116,12 +142,13 @@ et `/* FORMATION_RESSOURCES_END */`)
               "TCC" | "Transversal",
      "sousThemes": ["…", "…"],   // 2 à 5 tags, VOCABULAIRE CONTRÔLÉ — voir ci-dessous
      "typeSource": "Méta-analyse" | "RCT" | "Étude observationnelle" |
-                   "Recommandation officielle" | "Revue narrative" |
-                   "Article de presse spécialisée",
+                   "Étude expérimentale" | "Recommandation officielle" |
+                   "Revue narrative" | "Article de presse spécialisée",
      "niveauPreuve": "Élevé" | "Modéré" | "Faible" | "Avis d'expert",
      "consensus": "Consensus établi" | "Émergent" | "Controversé",
-     "source": "PubMed" | "HAS" | "Cochrane" | "NICE" | "SFPEADA" |
-               "AACAP" | "Autre",
+     "source": voir la liste SOURCES dans automation/vocabulaire.py
+               (PubMed, Cochrane, HAS, ANSM, DREES, Santé publique France,
+                SFPEADA, Académie de médecine, NICE, AACAP, ESCAP, OMS),
      "synthese": "3 à 5 phrases factuelles en français.",
      "pertinence": "1 à 2 phrases : qu'est-ce que ça change en pratique ?"
    }
@@ -136,10 +163,15 @@ et `/* FORMATION_RESSOURCES_END */`)
 
 7. **`source` = l'organisme ou le registre d'origine, PAS l'hébergeur du
    lien.** Un article de revue indexé dans PubMed prend `"PubMed"` même si
-   l'`url` est un DOI Elsevier, Springer ou Frontiers. `"Autre"` est réservé
-   aux sources qui ne relèvent d'aucun registre de la liste (DREES, société
-   savante non listée, presse spécialisée). Une recommandation émise par la
-   SFPEADA prend `"SFPEADA"`, quel que soit son hébergeur.
+   l'`url` est un DOI Elsevier, Springer ou Frontiers — le vérifier au besoin
+   par `esearch` sur le DOI :
+   `curl -s ".../esearch.fcgi?db=pubmed&term=<DOI>[AID]"`.
+   Une recommandation émise par la SFPEADA prend `"SFPEADA"`, quel que soit
+   son hébergeur.
+   ⚠️ **Il n'existe PAS de valeur « Autre ».** Un fourre-tout n'informe de rien
+   et prête à confusion : 23 entrées y avaient été rangées à tort, presque
+   toutes indexées PubMed. Si la source légitime manque, l'AJOUTER à `SOURCES`
+   dans `automation/vocabulaire.py`, dans le même commit.
 
 8. Après modification, vérifier que le JSON est syntaxiquement valide
    (virgules, guillemets échappés dans les titres). Un JSON cassé rend

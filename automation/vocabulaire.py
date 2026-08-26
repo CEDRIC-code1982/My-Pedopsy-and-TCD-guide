@@ -116,3 +116,34 @@ ALIAS = {
     # Sans valeur informative (le champ `theme` porte déjà l'information)
     "Adolescents": None, "Enfant/Adolescent": None,
 }
+
+# ---------------------------------------------------------------------------
+# Registres et organismes autorisés dans le champ `source`.
+# Le champ désigne QUI PRODUIT la référence, pas qui héberge le lien : un
+# article indexé dans PubMed prend "PubMed" même si l'url est un DOI Elsevier.
+# Il n'existe volontairement PAS de valeur « Autre » — un fourre-tout n'informe
+# de rien. Une source légitime absente de la liste s'ajoute ici, dans le même
+# commit que l'entrée qui l'introduit.
+# ---------------------------------------------------------------------------
+SOURCES = [
+    "PubMed", "Cochrane",                       # registres bibliographiques
+    "HAS", "ANSM", "DREES", "Santé publique France", "SFPEADA",
+    "Académie de médecine",                     # France
+    "NICE", "AACAP", "ESCAP", "OMS",            # international
+]
+
+# ---------------------------------------------------------------------------
+# Nature de la source. « Étude expérimentale » couvre la recherche en amont de
+# la pratique : essais de phase précoce, preuves de concept, études pilotes,
+# protocoles innovants, travaux translationnels à visée clinique. Elle est
+# volontairement distincte de « RCT » : on la veille pour anticiper, pas pour
+# prescrire. Le niveau de preuve associé est presque toujours Faible.
+# ---------------------------------------------------------------------------
+TYPES_SOURCE = [
+    "Méta-analyse", "RCT", "Étude observationnelle", "Étude expérimentale",
+    "Recommandation officielle", "Revue narrative", "Article de presse spécialisée",
+]
+
+THEMES = ["Pédopsychiatrie", "TCD", "TCD-Adolescents (DBT-A)", "TCC", "Transversal"]
+NIVEAUX = ["Élevé", "Modéré", "Faible", "Avis d'expert"]
+CONSENSUS = ["Consensus établi", "Émergent", "Controversé"]
