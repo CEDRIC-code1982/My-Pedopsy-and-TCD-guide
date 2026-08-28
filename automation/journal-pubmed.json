@@ -1,0 +1,639 @@
+{
+ "derniere_recherche": null,
+ "pmids": {
+  "39128561": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Efficacité et tolérance des antipsychotiques versus antiépileptiques ou lithium dans la manie aiguë de l'enfan"
+  },
+  "39565348": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Programmes de thérapie comportementale dialectique pour adolescents : revue systématique et méta-analyse des r"
+  },
+  "39639456": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Traitement du trouble obsessionnel compulsif chez l'enfant et l'adolescent : méta-analyse en réseau (American "
+  },
+  "39799802": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Modérateurs de l'efficacité des TCC pour l'anxiété de l'enfant et de l'adolescent : revue systématique et méta"
+  },
+  "40024280": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Taux de réponse imputés des traitements psychologiques de première intention du trouble de stress post-traumat"
+  },
+  "40056173": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Traitement antidépresseur de la dépression de l'enfant et de l'adolescent : revue systématique et méta-analyse"
+  },
+  "40058488": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Effet de l'eskétamine intranasale sur les symptômes dépressifs d'adolescents en risque suicidaire imminent : e"
+  },
+  "40186641": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions contre l'auto-agression et la suicidalité aux urgences pédiatriques : méta-revue"
+  },
+  "40238104": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "TCC des troubles mentaux de l'adulte : série unifiée de méta-analyses (375 essais)"
+  },
+  "40287009": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Prédicteurs du devenir psychiatrique à l'âge adulte du TDAH de l'enfant : revue systématique et méta-analyse"
+  },
+  "40619095": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Centanafadine dans le TDAH de l'adolescent : essai randomisé contrôlé contre placebo (459 participants)"
+  },
+  "40649183": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Le lithium en add-on peut-il influencer la dysrégulation émotionnelle chez l'adolescent ? Étude rétrospective"
+  },
+  "40662504": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "ISRS et IRSN dans les troubles anxieux de l'enfant et de l'adolescent : efficacité, suicidalité, tolérance et "
+  },
+  "40975435": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Modérateurs de la réponse aux psychostimulants dans le TDAH préscolaire : méta-analyse sur données individuell"
+  },
+  "41004875": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Rispéridone versus aripiprazole sur l'irritabilité dans le trouble du spectre de l'autisme de l'enfant : essai"
+  },
+  "41014367": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Efficacité des interventions contre l'auto-agression chez l'enfant et l'adolescent : revue systématique et mét"
+  },
+  "41061944": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Efficacité, effectivité et tolérance du lithium chez l'enfant et l'adolescent en dehors des troubles de l'hume"
+  },
+  "41233082": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Metformine chez le jeune en surpoids traité par antipsychotique de 2e génération pour un trouble du spectre bi"
+  },
+  "41277494": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Effets à long terme des TCC scolaires universelles chez des enfants et adolescents à bas risque : méta-analyse"
+  },
+  "41469959": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Prévention de l'automutilation non suicidaire en milieu scolaire par un programme fondé sur la TCD : essai ran"
+  },
+  "41543545": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Devenir à l'âge adulte 12,4 ans après une TCD pour adolescents (DBT-A) : suivi à long terme d'un essai randomi"
+  },
+  "41548966": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Perte d'efficacité de la fluoxétine dans la dépression pédiatrique : explications, absence de prise en compte "
+  },
+  "41618307": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "TCD associée à un programme structuré de soutien parental dans l'automutilation non suicidaire de l'adolescent"
+  },
+  "41665195": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Antipsychotiques atypiques et stéatose hépatique associée à un dysfonctionnement métabolique (MASLD) chez l'en"
+  },
+  "41667837": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Stimulation magnétique transcrânienne (TMS) dans la dépression de l'adolescent : un tournant marqué par l'auto"
+  },
+  "41725071": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Efficacité de la thérapie comportementale dialectique chez des adolescents en hospitalisation résidentielle ps"
+  },
+  "41740751": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Marqueurs inflammatoires périphériques chez des adolescents déprimés traités par perfusions répétées d'eskétam"
+  },
+  "41759676": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Stratégies séquentielles dans la dépression de l'adolescent (switch versus potentialisation, dont le lithium) "
+  },
+  "41804225": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Écart de genre dans le diagnostic du TDAH : le diagnostic tardif chez les filles associé à de moins bons résul"
+  },
+  "41831018": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Transition de la pédopsychiatrie vers la psychiatrie adulte : guidance clinique pratique de l'ESCAP (European "
+  },
+  "41865798": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Parcours de soins de la catatonie pédiatrique en milieu hospitalier aigu : consensus Delphi d'experts nord-amé"
+  },
+  "41928428": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Système transdermique de d-amphétamine dans le TDAH de l'enfant et de l'adolescent : analyse des sous-échelles"
+  },
+  "41937124": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Kétamine intraveineuse en dose unique pour les idées suicidaires de l'adolescent aux urgences : essai randomis"
+  },
+  "42019720": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Thérapie familiale versus thérapie individuelle chez l'enfant avec trouble de l'alimentation sélective et évit"
+  },
+  "42047814": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions psychologiques, sociales et pharmacologiques chez le jeune présentant un trouble de la personnal"
+  },
+  "42052530": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions précoces médiées par les parents chez les nourrissons à risque élevé de TSA : revue systématique"
+  },
+  "42105579": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Antidépresseurs et risque de conversion vers un trouble bipolaire chez l'enfant, l'adolescent et le jeune adul"
+  },
+  "42134365": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions pharmacologiques du TDAH : revue systématique et méta-analyse en réseau dose-effet (Lancet Psych"
+  },
+  "42155624": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Influence de l'âge et du sexe sur l'efficacité, l'acceptabilité et la tolérance à court terme des antipsychoti"
+  },
+  "42159376": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Thymorégulateurs dans le traitement de l'automutilation non suicidaire de l'adolescent : revue systématique et"
+  },
+  "42159408": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Efficacité et tolérance de l'aripiprazole sur l'irritabilité du trouble du spectre de l'autisme de l'enfant et"
+  },
+  "42163998": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Prédiction par apprentissage automatique de l'atteinte de la cible thérapeutique du lithium chez l'adolescent "
+  },
+  "42167647": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Optimiser le traitement pharmacologique de la dépression majeure de l'enfant et de l'adolescent : analyse sur "
+  },
+  "42179998": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Trouble borderline à l'adolescence en Asie de l'Est : revue de la littérature sur l'évaluation, l'étiologie et"
+  },
+  "42189204": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions efficaces contre l'anxiété et la dépression chez l'enfant et l'adolescent : revue parapluie de m"
+  },
+  "42199906": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Méthylphénidate et croissance physique chez l'enfant et l'adolescent avec TDAH : revue systématique et méta-an"
+  },
+  "42223086": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "rTMS dans la dépression de l'adolescent : méta-analyse de 19 études où l'effet disparaît quand on se limite au"
+  },
+  "42226193": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Entraînement aux compétences TCD en groupes parallèles adolescents et parents versus adolescents seuls dans l'"
+  },
+  "42243789": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Entraînement aux compétences TCD dans la dépression avec auto-mutilation : essai randomisé multicentrique avec"
+  },
+  "42251356": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions thérapeutiques dans la suicidalité et l'automutilation de l'adolescent : revue parapluie prépara"
+  },
+  "42271462": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Accompagnement parental inspiré de la TCD adapté culturellement pour des familles chinoises d'adolescents suiv"
+  },
+  "42275028": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Entraînement aux compétences TCD délivré seul dans le trouble borderline : revue systématique et méta-analyse"
+  },
+  "42286717": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Entraînement aux compétences TCD combiné à l'EMDR dans le trouble borderline avec psychotraumatisme : essai ra"
+  },
+  "42288925": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Entraînement aux compétences TCD pour les proches de personnes ayant fait une tentative de suicide : essai ran"
+  },
+  "42307044": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Délivrances de lithium chez les jeunes aux Pays-Bas (2011-2022) : prévalence, incidence, posologies et durées "
+  },
+  "42308592": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "La DBT-A modifie-t-elle les idées suicidaires et l'usage des compétences de coping à l'âge adulte ? Suivi à 12"
+  },
+  "42326958": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "TCD associée au programme STEPPS dans l'automutilation non suicidaire de l'adolescent : essai randomisé à troi"
+  },
+  "42335294": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Prédicteurs et modérateurs des thérapies délivrées par internet pour la dépression de l'adolescent : essai de "
+  },
+  "42345447": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Thérapie comportementale dialectique radicalement ouverte (RO-DBT) dans l'anorexie mentale : suivi à six mois"
+  },
+  "42348925": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Formation à la désescalade inspirée de la TCD pour les enseignants du primaire : étude pilote sur la dysrégula"
+  },
+  "42352750": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Thérapie par le jeu de sable versus intervention brève inspirée de la TCD chez des adolescents suicidaires ou "
+  },
+  "42358407": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions numériques dans le TDAH de l'enfant et de l'adolescent : méta-analyse en réseau"
+  },
+  "42368806": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Efficacité des interventions psychologiques (dont la TCD-A) chez les adolescents avec trouble de la personnali"
+  },
+  "42370900": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Programme scolaire combinant littératie en santé mentale et compétences TCD délivré par les enseignants : essa"
+  },
+  "42398677": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Implémentation de la TCD pour adolescents avec trouble bipolaire en clinique communautaire : procédures de for"
+  },
+  "42416199": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Consensus d'experts asiatiques sur la lurasidone dans la dépression bipolaire de type I, incluant une fourchet"
+  },
+  "42433072": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Résultats de la TCD chez des adolescents et jeunes adultes suicidaires selon les symptômes internalisés et ext"
+  },
+  "42449452": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Trajectoires d'implantation de la TCD dans cinq pays européens (Royaume-Uni, Allemagne, Norvège, Pologne, Tché"
+  },
+  "42453083": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Extrapolation pédiatrique de l'efficacité de la cariprazine (schizophrénie, manie bipolaire) par pharmacocinét"
+  },
+  "42477112": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Trouble de la personnalité borderline : la plus grande méta-analyse d'association pangénomique identifie 11 lo"
+  },
+  "42484049": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Dexméthylphénidate trimodal CTx-1301 dans le TDAH de l'enfant et de l'adolescent : essai de phase 3 randomisé "
+  },
+  "42494108": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Clozapine dans les comportements perturbateurs résistants du jeune avec trouble du spectre de l'autisme : essa"
+  },
+  "42496669": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Déprescription des psychotropes chez l'enfant et l'adolescent : revue systématique des recommandations et algo"
+  },
+  "42504295": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Persistance des traitements antidépresseurs chez l'enfant et l'adolescent déprimé au Japon : étude nationale s"
+  },
+  "42526603": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions pharmacologiques de la manie aiguë du trouble bipolaire : méta-analyse en réseau dose-dépendante"
+  },
+  "42527049": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Entraînement aux compétences TCD chez de jeunes adultes ambulatoires présentant des troubles concomitants : ét"
+  },
+  "42529844": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "TCD en présentiel versus téléconsultation dans les programmes certifiés DBT-LBC : comparaison de l'assiduité e"
+  },
+  "42541715": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Efficacité de la thérapie comportementale dialectique sur la violence auto-dirigée et la suicidalité en condit"
+  },
+  "42552234": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "TCD dans les troubles des conduites alimentaires avec trouble borderline comorbide : revue systématique de hui"
+  },
+  "42562403": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Adapter la TCD aux adolescents neurodivergents : besoins et stratégies d'adaptation rapportés par les clinicie"
+  },
+  "42572187": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Sevrage total de smartphone et de réseaux sociaux chez l'adolescent : essai randomisé pilote sur le sommeil, l"
+  },
+  "42576119": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Atomoxétine versus méthylphénidate sur la dysrégulation émotionnelle dans le TDAH de l'enfant : essai randomis"
+  },
+  "42580772": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Interventions fondées sur les preuves dans le trouble bipolaire selon la phase et le groupe d'âge : revue para"
+  },
+  "42580811": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Traitements pharmacologiques du TDAH chez les jeunes avec autisme associé : trajectoires réelles et devenir cl"
+  },
+  "42599708": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "TCC par internet avec accompagnement téléphonique dans l'anxiété de l'enfant : maintien et amplification des e"
+  },
+  "42600790": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Antipsychotiques atypiques versus second antidépresseur dans la dépression de l'adolescent difficile à traiter"
+  },
+  "42606740": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Suivi thérapeutique pharmacologique de la quétiapine chez l'enfant et l'adolescent : intervalles de référence "
+  },
+  "42611696": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Traiter le TDAH du parent pour améliorer celui de l'enfant (essai TPAC) : titration d'un psychostimulant paren"
+  },
+  "42613816": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Hausse continue de l'identification de l'autisme en Angleterre (2016-2024) : données du recensement scolaire n"
+  },
+  "42614105": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Thérapeutiques numériques dans le TDAH de l'enfant et de l'adolescent : méta-analyse en réseau de 32 essais ra"
+  },
+  "42618279": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Activation comportementale par internet, guidée ou auto-administrée, versus soins habituels dans la dépression"
+  },
+  "42628148": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Antipsychotiques atypiques en pédiatrie : hétérogénéité des profils d'effets indésirables selon la molécule et"
+  },
+  "42632169": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Yoga nidra co-conçu pour l'anxiété de l'enfant autiste : étude de faisabilité en méthodes mixtes"
+  },
+  "42635101": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Entraînement à la pleine conscience enfant-parent versus méthylphénidate dans le TDAH de l'enfant : évaluation"
+  },
+  "42639129": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Biofeedback de variabilité cardiaque et stimulation vagale auriculaire transcutanée en milieu scolaire : étude"
+  },
+  "42640474": {
+   "date": "2026-08-28",
+   "raison": "présent dans le corpus",
+   "statut": "retenu",
+   "titre": "Ropinirole en association au méthylphénidate dans le TDAH de l'enfant : essai randomisé contrôlé en double ave"
+  }
+ },
+ "sans_pmid": [
+  {
+   "titre": "TSA : nouvelles recommandations HAS sur les interventions et le parcours de vie du nourrisson, de l'enfant et de l'adolescent",
+   "url": "https://www.has-sante.fr/jcms/p_3859897/fr/autisme-les-nouvelles-recommandations-pour-le-nourrisson-l-enfant-et-l-adolescent"
+  },
+  {
+   "titre": "Recommandation AACAP : évaluation et traitement des troubles liés à l'usage de substances chez l'adolescent et le jeune adulte",
+   "url": "https://www.jaacap.org/article/S0890-8567(25)01424-8/fulltext"
+  },
+  {
+   "titre": "Hospitalisations pour tentatives de suicide et automutilations : la hausse se poursuit chez les adolescentes et jeunes femmes en 2025 (DREES)",
+   "url": "https://drees.solidarites-sante.gouv.fr/communique-de-presse-jeux-de-donnees/jeux-de-donnees/250511_hospitalisations-pour-tentatives-de-suicide"
+  },
+  {
+   "titre": "Coordination entre protection de l'enfance et psychiatrie de l'enfant et de l'adolescent : nouvelle recommandation de bonne pratique HAS",
+   "url": "https://www.has-sante.fr/jcms/p_3261731/fr/coordination-entre-protection-de-l-enfance-et-psychiatrie-de-l-enfant-et-de-l-adolescent"
+  },
+  {
+   "titre": "DBT-K : faisabilité et résultats préliminaires d'un groupe de compétences TCD transdiagnostique créatif de 8 semaines chez l'adolescent",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12939821/"
+  },
+  {
+   "titre": "Efficacité des thérapies psychologiques pour le trouble d'anxiété généralisée isolé chez l'enfant et l'adolescent : revue systématique et synthèse narrative",
+   "url": "https://acamh.onlinelibrary.wiley.com/doi/full/10.1002/jcv2.70056"
+  },
+  {
+   "titre": "Thérapie métacognitive dans le trouble d'anxiété généralisée de l'adolescent : essai ouvert avec suivi à 3 et 6 mois",
+   "url": "https://www.frontiersin.org/journals/psychiatry/articles/10.3389/fpsyt.2026.1765814/full"
+  },
+  {
+   "titre": "Effet de la thérapie comportementale dialectique sur la dépression et l'expression de la colère dans le trouble borderline (adulte) : revue systématique et méta-analyse",
+   "url": "https://www.sciencedirect.com/science/article/abs/pii/S0165178126001162"
+  },
+  {
+   "titre": "Thérapie familiale centrée sur les troubles alimentaires pour l'anorexie mentale de l'adolescent : revue systématique et méta-analyse",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11754536/"
+  },
+  {
+   "titre": "Interventions de plan de sécurité pour la prévention du suicide chez l'enfant et l'adolescent : revue systématique et méta-analyse (JAMA Pediatrics)",
+   "url": "https://jamanetwork.com/journals/jamapediatrics/fullarticle/2834286"
+  },
+  {
+   "titre": "Mortalité de l'adolescent après intervention thérapeutique pour auto-agression : revue systématique et méta-analyse",
+   "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7617579/"
+  },
+  {
+   "titre": "Recommandations du groupe transitions du Conseil scientifique de la SFPEADA pour une psychiatrie de transition 15-25 ans",
+   "url": "https://www.em-consulte.com/article/1824019/recommandations-de-la-sfpeada-pour-une-psychiatrie"
+  },
+  {
+   "titre": "Résultats cliniquement significatifs de l'intervention comportementale intensive précoce (EIBI) dans le trouble du spectre de l'autisme : méta-analyse sur données individuelles des participants",
+   "url": "https://onlinelibrary.wiley.com/doi/10.1002/aur.70169"
+  },
+  {
+   "titre": "Troubles borderline à l'adolescence : séance de l'Académie nationale de médecine sur un problème de santé publique",
+   "url": "https://www.academie-medecine.fr/seance-du-23-juin-2026-troubles-borderline-a-ladolescence/"
+  }
+ ]
+}

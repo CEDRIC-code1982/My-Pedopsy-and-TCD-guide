@@ -74,8 +74,35 @@ manuellement si besoin. Ne jamais le passer sous silence.
 
 ## MÉTHODE
 
-1. Recherche web sur les sources prioritaires : PubMed, Cochrane, HAS,
-   NICE, SFPEADA, AACAP, presse scientifique de qualité.
+1. **Commencer par `automation/recherche.py`, pas par une requête improvisée.**
+
+   ```bash
+   python3 automation/recherche.py chercher          # inédits depuis la dernière fois
+   python3 automation/recherche.py stats --ecartes   # ce qui a déjà été jugé
+   ```
+
+   Les équations canoniques vivent dans `automation/requetes.py`, un axe par
+   domaine, interrogées sur le champ **EDAT** (entrée dans PubMed) et non PDAT.
+   Le journal `automation/journal-pubmed.json` mémorise les PMID retenus ET
+   écartés : sans lui, chaque run rejuge les mêmes articles — le run du
+   26 août 2026 est retombé six fois sur des travaux déjà indexés.
+
+   **Journaliser chaque décision, y compris les rejets :**
+   ```bash
+   python3 automation/recherche.py noter <PMID> retenu "…"
+   python3 automation/recherche.py noter <PMID> ecarte "hors sujet : anesthésie"
+   ```
+
+   Si une équation laisse passer trop de bruit ou rate une cible, **la corriger
+   dans `requetes.py` et committer la correction** : c'est le seul moyen que
+   l'amélioration serve aux runs suivants. Après toute modification d'une
+   équation, refaire les deux contrôles : le bruit (part de résultats hors
+   sujet) et surtout le **rappel** — l'équation retrouve-t-elle les travaux
+   déjà retenus au corpus ? C'est ce contrôle qui a révélé que la psychiatrie
+   aiguë et de liaison n'était couverte par aucun axe.
+
+   Compléter ensuite par les sources non indexées dans PubMed, qu'aucune
+   équation ne couvre : HAS, SFPEADA, NICE, AACAP, Cochrane, ANSM.
 
 2. **Couverture mondiale, sans biais anglo-américain.** Interroger PubMed
    SANS restriction de langue, et aller chercher explicitement les travaux

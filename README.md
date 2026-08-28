@@ -22,6 +22,8 @@ ligne (seules les polices Google sont distantes, avec repli système).
 | **Formation TCD** | Les 4 modules de compétences, suivi de progression, bibliothèque de ressources |
 | **Formation TCC** | Même principe pour les TCC |
 | **Traitements** | Synthèse pharmacologique, dont le volet hors AMM |
+| **Essais en cours** | Travaux enregistrés dans les registres, résultats non publiés — sans niveau de preuve, par construction |
+| **Glossaire** | Sigles, jargon clinique et notions de lecture critique employés dans la veille |
 
 La progression de formation est stockée dans le `localStorage` du navigateur —
 elle est donc **locale à la machine et au navigateur**, et n'est pas versionnée.
@@ -40,14 +42,41 @@ n'arrive en consultation.
 index.html                        le dashboard complet (HTML + CSS + JS + données)
 automation/
   pedopsy-tcd.SKILL.md            la routine de veille (voir ci-dessous)
-  vocabulaire.py                  listes contrôlées : tags, thèmes, sources, types
+  vocabulaire.py                  listes contrôlées : tags, thèmes, sources, relations
+  requetes.py                     équations PubMed canoniques, un axe par domaine
+  recherche.py                    recherche PubMed + journal des travaux examinés
+  journal-pubmed.json             mémoire des PMID retenus ET écartés, avec la raison
   validate.py                     validation d'index.html avant commit
+  check-liens.py                  contrôle des liens morts (hors pre-commit : réseau)
 .githooks/pre-commit              rejoue validate.py, bloque un commit invalide
 ```
 
-Deux blocs de `index.html` seulement sont éditables par la routine, délimités par
-des marqueurs : `VEILLE_DATA` (les entrées) et `RESSOURCES` (la bibliothèque de
-formation). Tout le reste — HTML, CSS, JS, curriculum des modules — est stable.
+Quatre blocs de `index.html` sont éditables par la routine, délimités par des
+marqueurs : `VEILLE_DATA` (les entrées), `RESSOURCES` (bibliothèque de
+formation), `GLOSSAIRE` (définitions) et `ESSAIS_A_SUIVRE` (essais enregistrés
+non publiés). Tout le reste — HTML, CSS, JS, curriculum des modules — est stable.
+
+## Chercher sans repasser sur ses pas
+
+```bash
+python3 automation/recherche.py chercher                   # depuis la dernière fois
+python3 automation/recherche.py chercher --axe tcd --axe tcd-ado
+python3 automation/recherche.py noter 42275028 retenu "méta-analyse DBT-ST"
+python3 automation/recherche.py noter 42555471 ecarte "cas clinique isolé"
+python3 automation/recherche.py stats --ecartes
+```
+
+Les équations vivent dans `requetes.py`, une par axe (TCD, pharmacologie de
+l'humeur, urgences et liaison…). Elles interrogent le champ **EDAT** — date
+d'entrée dans PubMed — et non la date de publication : c'est l'indexation qui
+dit ce qui est nouveau pour nous.
+
+Le journal retient les PMID **écartés** autant que les retenus, avec la raison :
+sans cela, chaque run rejuge les mêmes articles. Deux contrôles valent d'être
+refaits après toute modification d'une équation — mesurer le bruit (proportion
+de résultats hors sujet) et le **rappel** (l'équation retrouve-t-elle les
+travaux déjà retenus ?). C'est ce second contrôle qui a révélé que la
+psychiatrie aiguë et de liaison n'était couverte par aucun axe.
 
 ## La routine de veille
 
@@ -71,11 +100,23 @@ Après toute modification manuelle d'`index.html` :
 python3 automation/validate.py
 ```
 
-Le script contrôle les marqueurs, le reparse JSON des deux blocs, les champs et
-énumérations, le format des dates, la conformité des `sousThemes` au vocabulaire
-contrôlé, l'absence de doublons d'URL ou de titre, et la syntaxe du bloc
-`<script>`. Un JSON cassé rend la page blanche : c'est la panne que ce garde-fou
-existe pour empêcher.
+Le script contrôle les marqueurs, le reparse JSON des quatre blocs, les champs
+et énumérations, le format des dates, la conformité des `sousThemes` au
+vocabulaire contrôlé, l'absence de doublons d'URL ou de titre, la validité des
+relations entre entrées, l'unicité des graphies du glossaire, la fraîcheur des
+essais suivis, l'intégrité des renvois de l'onglet Traitements vers la veille,
+et la syntaxe du bloc `<script>`. Un JSON cassé rend la page blanche : c'est la
+panne que ce garde-fou existe pour empêcher.
+
+Le contrôle des liens sortants est séparé, car il dépend du réseau :
+
+```bash
+python3 automation/check-liens.py
+```
+
+Il distingue les 404 — cible disparue, à corriger — des 403 d'éditeurs qui
+refusent les automates, et ne compte pas la redirection d'un DOI vers son
+éditeur comme un déménagement.
 
 Le hook `pre-commit` le rejoue automatiquement. Il est versionné dans
 `.githooks/`, donc à réactiver après un clone frais :
