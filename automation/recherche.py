@@ -10,14 +10,21 @@ ce qui évite de rejuger deux fois la même chose.
 Sous-commandes
   amorcer            initialise le journal depuis les entrées du corpus
   chercher           liste les travaux entrés dans PubMed depuis la dernière fois
-  noter PMID STATUT  journalise une décision (retenu | ecarte), avec sa raison
+  noter PMID STATUT  journalise une décision (retenu | ecarte | reporte)
   stats              état du journal
+
+Trois statuts, parce que deux ne suffisaient pas. `chercher` ne montre que ce
+qui n'a jamais été jugé : un travail solide mais laissé de côté faute de place
+dans les huit entrées du run disparaissait donc définitivement, la fenêtre de
+recherche avançant. `reporte` le garde en vue : il est reproposé à chaque run,
+en tête de liste, jusqu'à ce qu'il soit retenu ou écarté pour de bon.
 
 Exemples
   python3 automation/recherche.py chercher --depuis 2026/08/01
   python3 automation/recherche.py chercher --axe tcd --axe tcd-ado
   python3 automation/recherche.py noter 42275028 retenu "méta-analyse DBT-ST"
   python3 automation/recherche.py noter 42555471 ecarte "cas clinique isolé"
+  python3 automation/recherche.py noter 42558898 reporte "quota atteint, à reprendre"
 """
 import argparse
 import json
@@ -36,7 +43,9 @@ from requetes import AXES, PAR_NOM                       # noqa: E402
 JOURNAL = RACINE / "automation" / "journal-pubmed.json"
 EUTILS = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils"
 PAUSE = 0.4          # NCBI tolère 3 requêtes/seconde sans clé d'API
-STATUTS = ("retenu", "ecarte")
+STATUTS = ("retenu", "ecarte", "reporte")
+# Seuls « retenu » et « ecarte » closent le dossier ; « reporte » revient.
+CLOS = ("retenu", "ecarte")
 
 
 # --------------------------------------------------------------------------- io
@@ -128,11 +137,19 @@ def cmd_amorcer(args):
 
 def cmd_chercher(args):
     j = charge()
-    connus = set(j["pmids"])
+    connus = {p for p, v in j["pmids"].items() if v["statut"] in CLOS}
+    reportes = {p: v for p, v in j["pmids"].items() if v["statut"] == "reporte"}
     depuis = args.depuis or j.get("derniere_recherche") or "2025/01/01"
     axes = [PAR_NOM[n] for n in args.axe] if args.axe else AXES
     print(f"Recherche des travaux entrés dans PubMed depuis le {depuis} "
-          f"({len(axes)} axe(s), {len(connus)} PMID déjà examinés)\n")
+          f"({len(axes)} axe(s), {len(connus)} PMID déjà tranchés, "
+          f"{len(reportes)} reportés)\n")
+
+    if reportes:
+        print("Reportés d'un run précédent, à trancher en priorité :")
+        for p, v in sorted(reportes.items(), key=lambda kv: kv[1]["date"]):
+            print(f"  {p} · reporté le {v['date']} · {v['raison']}\n      {v.get('titre','')[:96]}")
+        print()
 
     nouveaux = {}
     for a in axes:
@@ -192,7 +209,8 @@ def cmd_stats(args):
     from collections import Counter
     c = Counter(v["statut"] for v in j["pmids"].values())
     print(f"Journal : {len(j['pmids'])} PMID · "
-          f"{c.get('retenu', 0)} retenus · {c.get('ecarte', 0)} écartés")
+          f"{c.get('retenu', 0)} retenus · {c.get('ecarte', 0)} écartés · "
+          f"{c.get('reporte', 0)} reportés")
     print(f"Entrées hors PubMed : {len(j.get('sans_pmid', []))}")
     print(f"Dernière recherche : {j.get('derniere_recherche') or 'jamais'}")
     if args.ecartes:
@@ -200,6 +218,12 @@ def cmd_stats(args):
         for pmid, v in sorted(j["pmids"].items()):
             if v["statut"] == "ecarte":
                 print(f"  {pmid} · {v['raison']}\n      {v.get('titre','')[:96]}")
+    if args.reportes:
+        print("\nReportés (reproposés à chaque run) :")
+        for pmid, v in sorted(j["pmids"].items(), key=lambda kv: kv[1]["date"]):
+            if v["statut"] == "reporte":
+                print(f"  {pmid} · reporté le {v['date']} · {v['raison']}"
+                      f"\n      {v.get('titre','')[:96]}")
     return 0
 
 
@@ -221,6 +245,7 @@ def main():
     n.set_defaults(f=cmd_noter)
     s = sub.add_parser("stats")
     s.add_argument("--ecartes", action="store_true", help="détailler les travaux écartés")
+    s.add_argument("--reportes", action="store_true", help="détailler les travaux reportés")
     s.set_defaults(f=cmd_stats)
     a = p.parse_args()
     return a.f(a)

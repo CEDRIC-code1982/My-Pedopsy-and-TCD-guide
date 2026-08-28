@@ -35,6 +35,7 @@ VOCABULAIRE = [
     "Épidémiologie", "Dépistage et repérage", "Prévention", "Intervention précoce",
     "Suivi à long terme", "Génétique", "Neuro-imagerie", "Fonctions exécutives",
     "Fonctionnement global", "Mortalité", "Genre", "Coût-efficacité",
+    "Biomarqueurs",
     "Médecine de précision", "Qualité des preuves", "Évaluation écologique momentanée",
 ]
 

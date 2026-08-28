@@ -1,5 +1,5 @@
 {
- "derniere_recherche": null,
+ "derniere_recherche": "2026/08/28",
  "pmids": {
   "39128561": {
    "date": "2026-08-28",
@@ -385,6 +385,12 @@
    "statut": "retenu",
    "titre": "Programme scolaire combinant littératie en santé mentale et compétences TCD délivré par les enseignants : essa"
   },
+  "42394598": {
+   "date": "2026-08-28",
+   "raison": "revue de portée sur les thérapies de groupe du jeune suicidaire (Israël) : travail récupéré par la correction de l'axe tcd, à juger au prochain run",
+   "statut": "reporte",
+   "titre": "Group Therapy for Adolescents at Risk of Suicide: A Scoping Review."
+  },
   "42398677": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -414,6 +420,12 @@
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Extrapolation pédiatrique de l'efficacité de la cariprazine (schizophrénie, manie bipolaire) par pharmacocinét"
+  },
+  "42461812": {
+   "date": "2026-08-28",
+   "raison": "protocole DBT-A (PLoS One) : à verser au bloc D si un identifiant de registre est disponible",
+   "statut": "reporte",
+   "titre": "Unraveling dynamic factors in Dialectic Behavioural Treatment for Adolescents (DBT-A): A study protocol."
   },
   "42477112": {
    "date": "2026-08-28",
@@ -469,17 +481,59 @@
    "statut": "retenu",
    "titre": "Efficacité de la thérapie comportementale dialectique sur la violence auto-dirigée et la suicidalité en condit"
   },
+  "42550018": {
+   "date": "2026-08-28",
+   "raison": "tomosynthèse mammaire numérique : homonymie du sigle DBT, hors sujet",
+   "statut": "ecarte",
+   "titre": "DBT-DINO: Toward Foundation Model-Based Analysis of Digital Breast Tomosynthesis."
+  },
   "42552234": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "TCD dans les troubles des conduites alimentaires avec trouble borderline comorbide : revue systématique de hui"
   },
+  "42555471": {
+   "date": "2026-08-28",
+   "raison": "cas clinique unique (une adolescente, 14 séances) : aucune inférence possible",
+   "statut": "ecarte",
+   "titre": "Effect of Dialectical Behaviour Therapy on Deviant Eating Attitudes and Mental Health of Adolescents: A Case R"
+  },
+  "42557576": {
+   "date": "2026-08-28",
+   "raison": "méga-analyse sur données individuelles de l'intervention précoce dans le TSA (ESDM), 5 pays",
+   "statut": "retenu",
+   "titre": "Predicting early intervention outcomes in autism via individual participant data mega-analysis."
+  },
+  "42558898": {
+   "date": "2026-08-28",
+   "raison": "topiramate adjuvant contre la prise de poids en hospitalisation pédopsychiatrique (Turquie, rétrospectif n=285) : cliniquement utile, quota du run atteint",
+   "statut": "reporte",
+   "titre": "Weight mitigation and tolerability of adjunctive topiramate in acute pediatric psychiatry: a retrospective rea"
+  },
+  "42560087": {
+   "date": "2026-08-28",
+   "raison": "physique médicale, mammographie : homonymie du sigle DBT, hors sujet",
+   "statut": "ecarte",
+   "titre": "Impact of dopants on X‑ray attenuation of 3D‑printed polymers for mammography and tomosynthesis spectra."
+  },
+  "42562219": {
+   "date": "2026-08-28",
+   "raison": "prédiction de la première TS chez l'idéateur préadolescent, cohorte ABCD, validation externe",
+   "statut": "retenu",
+   "titre": "Machine Learning Prediction of First Suicide Attempts in Early Adolescence Among Child Ideators."
+  },
   "42562403": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Adapter la TCD aux adolescents neurodivergents : besoins et stratégies d'adaptation rapportés par les clinicie"
+  },
+  "42564177": {
+   "date": "2026-08-28",
+   "raison": "ISRS/IRSN et COVID long chez l'enfant (Nature Mental Health) : à lire sur texte intégral",
+   "statut": "reporte",
+   "titre": "SSRI/SNRI and long COVID in children and adolescents with neuropsychiatric conditions: a cohort study from the"
   },
   "42572187": {
    "date": "2026-08-28",
@@ -493,6 +547,24 @@
    "statut": "retenu",
    "titre": "Atomoxétine versus méthylphénidate sur la dysrégulation émotionnelle dans le TDAH de l'enfant : essai randomis"
   },
+  "42577859": {
+   "date": "2026-08-28",
+   "raison": "chimie du dibenzyltoluène : homonymie du sigle DBT, hors sujet",
+   "statut": "ecarte",
+   "titre": "A closer look into transfer hydrogenation between perhydro-dibenzyltoluene (H(18)-DBT) and acetone for safe hy"
+  },
+  "42578475": {
+   "date": "2026-08-28",
+   "raison": "description d'un programme résidentiel adulte (Gunderson) où la TCD n'est qu'un ingrédient parmi trois",
+   "statut": "ecarte",
+   "titre": "Integrative Residential Treatment of Co-Occurring Borderline and Narcissistic Personality Dysfunction: Perspec"
+  },
+  "42578778": {
+   "date": "2026-08-28",
+   "raison": "revue systématique tunisienne sur le méthylphénidate : intérêt de transposabilité Maghreb, méthode faible, quota atteint",
+   "statut": "reporte",
+   "titre": "Efficacy and tolerability of Methylphenidate in children and adolescents with ADHD : A Systematic Review."
+  },
   "42580772": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -504,6 +576,24 @@
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Traitements pharmacologiques du TDAH chez les jeunes avec autisme associé : trajectoires réelles et devenir cl"
+  },
+  "42584912": {
+   "date": "2026-08-28",
+   "raison": "prédiction du suicide chez le soldat américain adulte : hors champ enfant/adolescent",
+   "statut": "ecarte",
+   "titre": "Predicting US Army Soldier Suicide-Related Behaviors at the Time of Periodic Health Assessments."
+  },
+  "42590803": {
+   "date": "2026-08-28",
+   "raison": "ECR iTBS versus sham sur l'insomnie du TSA (Chine, n=70) : effet clinique non chiffré dans le résumé, à vérifier sur texte intégral",
+   "statut": "reporte",
+   "titre": "Intermittent Theta Burst Stimulation Improves Sleep in Autism Spectrum Disorder by Reorganizing Overlapping Br"
+  },
+  "42596557": {
+   "date": "2026-08-28",
+   "raison": "communication inspirée de la TCD en soins palliatifs oncologiques adultes : hors champ pédopsychiatrique",
+   "statut": "ecarte",
+   "titre": "Distress Intolerance: Dialectical Behavior Therapy Informed Communication for Serious Illness Care."
   },
   "42599708": {
    "date": "2026-08-28",
@@ -517,17 +607,41 @@
    "statut": "retenu",
    "titre": "Antipsychotiques atypiques versus second antidépresseur dans la dépression de l'adolescent difficile à traiter"
   },
+  "42602975": {
+   "date": "2026-08-28",
+   "raison": "encéphalite à anticorps anti-NMDA pédiatrique : évolution symptomatique et prise en charge médicamenteuse",
+   "statut": "reporte",
+   "titre": "Symptom evolution, persistence, and pharmacological management in paediatric NMDA receptor antibody encephalit"
+  },
+  "42606557": {
+   "date": "2026-08-28",
+   "raison": "AKuT Mannheim : filière de crise intersectorielle fondée sur la TCD, Allemagne",
+   "statut": "retenu",
+   "titre": "[AKuT outpatient clinic: cross-sectoral crisis intervention for borderline personality disorder and trauma-rel"
+  },
   "42606740": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Suivi thérapeutique pharmacologique de la quétiapine chez l'enfant et l'adolescent : intervalles de référence "
   },
+  "42610640": {
+   "date": "2026-08-28",
+   "raison": "prévalence et prédicteurs de la catatonie chez l'adolescent avec TSA : corpus déjà fourni en catatonie ce mois-ci",
+   "statut": "reporte",
+   "titre": "Prevalence, Phenotypic Correlates and Predictive Factors of Catatonia in Adolescents With Autism Spectrum Diso"
+  },
   "42611696": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Traiter le TDAH du parent pour améliorer celui de l'enfant (essai TPAC) : titration d'un psychostimulant paren"
+  },
+  "42612475": {
+   "date": "2026-08-28",
+   "raison": "étude corrélationnelle transversale sur des facettes de pleine conscience : pas de portée clinique",
+   "statut": "ecarte",
+   "titre": "Facets of mindfulness, emotion regulation, distress tolerance, and eating disorder symptoms: A network analysi"
   },
   "42613816": {
    "date": "2026-08-28",
@@ -541,11 +655,35 @@
    "statut": "retenu",
    "titre": "Thérapeutiques numériques dans le TDAH de l'enfant et de l'adolescent : méta-analyse en réseau de 32 essais ra"
   },
+  "42617146": {
+   "date": "2026-08-28",
+   "raison": "valproate paternel et TND : cohorte de 2,58 M de naissances à Taïwan, comparaison entre germains",
+   "statut": "retenu",
+   "titre": "Paternal Valproate Exposure and Offspring Neurodevelopmental Outcomes."
+  },
+  "42617371": {
+   "date": "2026-08-28",
+   "raison": "analyse secondaire d'un ECR DBT-PTSD vs CPT : l'impulsivité prédit la réponse au CPT, pas à la TCD",
+   "statut": "retenu",
+   "titre": "Does impulsivity predict treatment outcomes in PTSD with borderline personality disorder features? Results fro"
+  },
+  "42617372": {
+   "date": "2026-08-28",
+   "raison": "méta-régression : ni les sites, ni l'âge, ni la sévérité n'expliquent la perte d'efficacité de la fluoxétine",
+   "statut": "retenu",
+   "titre": "Can fluoxetine's diminished efficacy in pediatric depression be explained by study sites, baseline severity, a"
+  },
   "42618279": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Activation comportementale par internet, guidée ou auto-administrée, versus soins habituels dans la dépression"
+  },
+  "42621873": {
+   "date": "2026-08-28",
+   "raison": "revue narrative sans évaluation du risque de biais ; n'apporte rien de neuf sur la TCD au corpus",
+   "statut": "ecarte",
+   "titre": "Psychological, social, and neurobiological correlates of non-suicidal self-injury and suicidal behavior in ado"
   },
   "42628148": {
    "date": "2026-08-28",
@@ -565,6 +703,18 @@
    "statut": "retenu",
    "titre": "Entraînement à la pleine conscience enfant-parent versus méthylphénidate dans le TDAH de l'enfant : évaluation"
   },
+  "42636073": {
+   "date": "2026-08-28",
+   "raison": "implantation d'un groupe de compétences TCD en VHA et épuisement des soignants",
+   "statut": "retenu",
+   "titre": "Implementing evidence-based group psychotherapy in Veterans Health Administration (VHA): Implications for burn"
+  },
+  "42638544": {
+   "date": "2026-08-28",
+   "raison": "analyse intra-individuelle du sens de la vie, population adulte, sans lien avec un protocole TCD",
+   "statut": "ecarte",
+   "titre": "Daily Meaning in Life Buffers the Within-Person Relationships Between Perceived Burdensomeness and Thwarted Be"
+  },
   "42639129": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -576,6 +726,12 @@
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Ropinirole en association au méthylphénidate dans le TDAH de l'enfant : essai randomisé contrôlé en double ave"
+  },
+  "42649149": {
+   "date": "2026-08-28",
+   "raison": "NfL et GFAP sériques chez 412 adolescents : signal expérimental, anorexie mentale",
+   "statut": "retenu",
+   "titre": "Exploring serum biomarkers in paediatric psychiatry: the impact of NfL and GFAP."
   }
  },
  "sans_pmid": [

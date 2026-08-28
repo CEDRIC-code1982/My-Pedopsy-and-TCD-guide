@@ -27,16 +27,23 @@ AXES = [
         "nom": "tcd",
         "description": "TCD / DBT, toutes populations et tous formats",
         "theme": "TCD",
-        "requete": '("dialectical behavior therapy"[tiab] OR "dialectical behaviour therapy"[tiab] '
-                   'OR "dialectical behavioral therapy"[tiab] OR "DBT skills"[tiab] '
+        # Troncature plutôt que phrases explicites : les trois graphies listées
+        # auparavant laissaient passer « dialectical behavioural therapy », ce
+        # qu'un contrôle de rappel a révélé (revue de portée sur les thérapies
+        # de groupe du jeune suicidaire, manquée par l'axe).
+        # ⚠️ Ne PAS ajouter DBT[ti] : en radiologie le sigle désigne la
+        # tomosynthèse mammaire numérique, et en chimie le dibenzyltoluène.
+        # Ni "DBT-A"[tiab] : PubMed ignore le trait d'union et le terme dégénère
+        # en « DBT A », qui ramène de la physique médicale. La troncature
+        # suffit — elle capte « Dialectic Behavioural Treatment for Adolescents ».
+        "requete": '("dialectical behavio*"[tiab] OR "DBT skills"[tiab] '
                    'OR "radically open dialectical"[tiab])',
     },
     {
         "nom": "tcd-ado",
         "description": "TCD chez l'enfant et l'adolescent (DBT-A)",
         "theme": "TCD-Adolescents (DBT-A)",
-        "requete": '("dialectical behavior therapy"[tiab] OR "dialectical behaviour therapy"[tiab] '
-                   'OR "dialectical behavioral therapy"[tiab] OR "DBT-A"[tiab]) AND ' + ENFANT,
+        "requete": '("dialectical behavio*"[tiab] OR "DBT skills"[tiab]) AND ' + ENFANT,
     },
     {
         "nom": "borderline-jeune",
