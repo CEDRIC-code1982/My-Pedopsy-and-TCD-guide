@@ -12,7 +12,7 @@ VOCABULAIRE = [
     # — Troubles et tableaux cliniques —
     "TDAH", "TSA", "Neurodéveloppement", "Dépression", "Dépression résistante",
     "Anxiété", "TOC", "TSPT", "Trouble bipolaire", "Trouble borderline",
-    "Schizophrénie et psychoses", "Troubles des conduites alimentaires",
+    "Schizophrénie et psychoses", "Catatonie", "Troubles des conduites alimentaires",
     "Trouble des conduites", "Addictions", "Auto-mutilation", "Suicidalité",
     "Dysrégulation émotionnelle", "Sommeil", "Comorbidités",
     # — Pharmacologie —
