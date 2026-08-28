@@ -40,7 +40,7 @@
   }
   /* Seul l'onglet Veille passe en pleine largeur : les onglets de formation
      contiennent du texte suivi, illisible au-delà de ~75 caractères par ligne. */
-  body[data-tab="veille"] { max-width: var(--wide); }
+  body[data-tab="veille"], body[data-tab="glossaire"] { max-width: var(--wide); }
   a { color: var(--teal); }
   a:focus-visible, button:focus-visible, input:focus-visible {
     outline: 2px solid var(--teal);
@@ -396,6 +396,54 @@
   .chip-reset { margin-left: auto; color: var(--muted); border-style: dashed; }
   .chip-reset:hover { color: var(--ink); border-color: var(--muted); }
 
+  /* ---------- Glossaire ---------- */
+  /* Terme annoté dans une synthèse : reste du texte courant, souligné en
+     pointillé, cliquable. Le bouton « Définitions » neutralise le repérage. */
+  .gloss {
+    font: inherit; color: inherit; background: none; border: none; padding: 0;
+    border-bottom: 1px dotted var(--teal); cursor: help;
+  }
+  .gloss:hover { color: var(--teal); }
+  #veille-list[data-gloss="off"] .gloss {
+    border-bottom: none; pointer-events: none; cursor: inherit;
+  }
+  #gloss-pop {
+    position: fixed; z-index: 60; max-width: min(380px, calc(100vw - 24px));
+    background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+    padding: 14px 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    font-size: 14px; line-height: 1.5;
+  }
+  #gloss-pop[hidden] { display: none; }
+  #gloss-pop .pop-terme { font: 700 15px "Source Sans 3", sans-serif; color: var(--teal); }
+  #gloss-pop .pop-lib { color: var(--muted); font-size: 13px; margin-bottom: 8px; }
+  #gloss-pop .pop-def { margin-bottom: 10px; }
+  #gloss-pop .pop-foot { display: flex; justify-content: space-between; gap: 10px; align-items: center; }
+  #gloss-pop button {
+    font: 600 12px "Source Sans 3", sans-serif; background: none;
+    border: 1px solid var(--line); border-radius: 999px; color: var(--muted);
+    padding: 3px 10px; cursor: pointer;
+  }
+  #gloss-pop button:hover { color: var(--ink); border-color: var(--muted); }
+  .gloss-intro { font-size: 14.5px; color: var(--muted); margin-bottom: 4px; max-width: 70ch; }
+  .gloss-cat { margin-bottom: 28px; }
+  .gloss-cat > h3 {
+    font-family: "Spectral", Georgia, serif; font-weight: 700; font-size: 20px;
+    margin-bottom: 12px; padding-bottom: 6px; border-bottom: 1px solid var(--line);
+  }
+  .gloss-grid {
+    display: grid; gap: 12px; align-items: start;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+  }
+  .gloss-entry {
+    background: var(--card); border: 1px solid var(--line);
+    border-left: 3px solid var(--teal); border-radius: 8px; padding: 12px 14px;
+  }
+  .gloss-entry h4 { font: 700 15px "Source Sans 3", sans-serif; color: var(--teal); }
+  .gloss-entry .g-lib { display: block; font-weight: 400; font-size: 13px; color: var(--muted); margin-top: 1px; }
+  .gloss-entry p { font-size: 13.5px; margin-top: 7px; }
+  .gloss-entry .g-var { font-size: 12px; color: var(--muted); font-style: italic; }
+  .gloss-entry.gloss-hit { border-left-color: var(--amber); background: var(--amber-soft); }
+
   /* ---------- Mode sombre (automatique) ---------- */
   @media (prefers-color-scheme: dark) {
     :root {
@@ -415,7 +463,9 @@
     html, body { background: #fff; }
     .panel[hidden] { display: none !important; }
     .card, .skill, .res, .theory-block, .goal, .progress-head, .step { break-inside: avoid; }
-    #veille-list, #resources, #resources-tcc { display: block !important; }
+    #veille-list, #resources, #resources-tcc, .gloss-grid { display: block !important; }
+    #gloss-pop { display: none !important; }
+    .gloss { border-bottom: none !important; }
     #veille-list .card-body { display: block !important; }
     #veille-list .meta-add { display: inline !important; }
     .card-toggle { display: none !important; }
@@ -436,6 +486,7 @@
   <button class="tab" role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false" tabindex="-1">Formation TCD</button>
   <button class="tab" role="tab" id="tab-formation-tcc" aria-controls="panel-formation-tcc" aria-selected="false" tabindex="-1">Formation TCC</button>
   <button class="tab" role="tab" id="tab-traitements" aria-controls="panel-traitements" aria-selected="false" tabindex="-1">Traitements</button>
+  <button class="tab" role="tab" id="tab-glossaire" aria-controls="panel-glossaire" aria-selected="false" tabindex="-1">Glossaire</button>
 </div>
 
 <!-- ==================== PANEL VEILLE ==================== -->
@@ -476,6 +527,7 @@
     <span class="sep" aria-hidden="true"></span>
     <input class="search" id="search" type="search" placeholder="Rechercher…" aria-label="Rechercher dans la veille">
     <button class="chip" id="density-toggle" type="button" aria-pressed="false" title="Afficher la synthèse et « En pratique » de toutes les cartes">Détaillé</button>
+    <button class="chip" id="gloss-toggle" type="button" aria-pressed="true" title="Souligner les sigles définis au glossaire et les rendre cliquables">Définitions</button>
     <button class="chip chip-action" id="export-md" type="button" title="Copier les entrées affichées au format Markdown">Copier (MD)</button>
     <button class="chip chip-action" id="export-csv" type="button" title="Télécharger les entrées affichées au format CSV">CSV</button>
     <button class="chip chip-reset" id="reset-filters" type="button" hidden>Réinitialiser</button>
@@ -490,6 +542,22 @@
 
   <div id="veille-list"></div>
   <p class="empty" id="veille-empty" hidden>Aucune entrée ne correspond aux filtres.</p>
+</section>
+
+<!-- ==================== PANEL GLOSSAIRE ==================== -->
+<section class="panel" id="panel-glossaire" role="tabpanel" aria-labelledby="tab-glossaire" hidden>
+  <p class="panel-stats" id="glossaire-stats"></p>
+  <p class="gloss-intro">Sigles, jargon clinique et notions de lecture critique employés dans la veille.
+  Dans l'onglet Veille, les termes de ce glossaire sont soulignés en pointillé et cliquables ;
+  le bouton <em>Définitions</em> permet de désactiver ce repérage.</p>
+  <div class="filters" role="toolbar" aria-label="Recherche dans le glossaire">
+    <input class="search" id="gloss-search" type="search" placeholder="Rechercher un terme, un sigle, une définition…" aria-label="Rechercher dans le glossaire">
+    <span class="sep" aria-hidden="true"></span>
+    <span class="group-label">Catégorie</span>
+    <span id="gloss-cats"></span>
+  </div>
+  <div id="glossaire-list"></div>
+  <p class="empty" id="glossaire-empty" hidden>Aucun terme ne correspond à cette recherche.</p>
 </section>
 
 <!-- ==================== PANEL FORMATION ==================== -->
@@ -2982,6 +3050,114 @@ const RESSOURCES = [
 /* FORMATION_RESSOURCES_END */
 
 /* ============================================================
+   2ter) GLOSSAIRE — jargon, sigles et notions de lecture critique
+   `auto` : le terme est repéré automatiquement dans les synthèses de veille
+   et devient cliquable (première occurrence par carte seulement). Le mettre
+   à false pour les expressions courantes, qui seraient annotées à l'excès.
+   `variantes` : autres graphies rencontrées dans le corpus (« DME » pour
+   « DMS », « IC 95 % » pour « IC95% »…).
+   Repérage sensible à la casse : « ACT » est annoté, « act » ne l'est pas.
+   ============================================================ */
+/* GLOSSAIRE_START */
+const GLOSSAIRE = [
+  {"terme": "AMM", "libelle": "Autorisation de mise sur le marché", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Autorisation de commercialiser un médicament, délivrée par l'ANSM en France, l'EMA au niveau européen ou la FDA aux États-Unis. Elle n'est jamais générale : elle borne une indication, une tranche d'âge et une posologie précises. Beaucoup de psychotropes utilisés en pédopsychiatrie n'ont d'AMM que chez l'adulte."},
+  {"terme": "Hors AMM", "libelle": "Prescription hors autorisation de mise sur le marché", "categorie": "Réglementation et institutions", "auto": true, "variantes": ["hors AMM"], "definition": "Prescription en dehors de l'indication, de l'âge ou de la posologie couverts par l'AMM. Légale en France sous conditions (article L5121-12-1 du code de la santé publique) : absence d'alternative appropriée, information du patient, mention « prescription hors AMM » sur l'ordonnance et justification dans le dossier. Hors AMM ne veut pas dire interdit, ni dépourvu de preuves."},
+  {"terme": "RCP", "libelle": "Résumé des caractéristiques du produit", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Document réglementaire opposable joint à chaque AMM : indications, posologies, contre-indications, mises en garde, effets indésirables. C'est le texte de référence en cas de litige sur une prescription."},
+  {"terme": "ANSM", "libelle": "Agence nationale de sécurité du médicament et des produits de santé", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Autorité française du médicament : AMM nationales, pharmacovigilance, recommandations temporaires d'utilisation et alertes de sécurité."},
+  {"terme": "EMA", "libelle": "European Medicines Agency", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Agence européenne du médicament. Délivre les AMM centralisées valables dans toute l'Union européenne."},
+  {"terme": "FDA", "libelle": "Food and Drug Administration", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Agence américaine du médicament. Une approbation FDA ne vaut pas autorisation en Europe : plusieurs molécules approuvées aux États-Unis restent inaccessibles en France."},
+  {"terme": "HAS", "libelle": "Haute Autorité de santé", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Autorité publique indépendante française. Produit les recommandations de bonne pratique et évalue les technologies de santé."},
+  {"terme": "NICE", "libelle": "National Institute for Health and Care Excellence", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Équivalent britannique de la HAS, référence internationale pour la qualité méthodologique de ses recommandations."},
+  {"terme": "AACAP", "libelle": "American Academy of Child and Adolescent Psychiatry", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Société savante américaine de pédopsychiatrie. Publie des recommandations de pratique (practice parameters) largement citées."},
+  {"terme": "ESCAP", "libelle": "European Society for Child and Adolescent Psychiatry", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Société européenne de pédopsychiatrie. Publie des guidances cliniques à adapter aux contextes nationaux."},
+  {"terme": "SFPEADA", "libelle": "Société française de psychiatrie de l'enfant et de l'adolescent et disciplines associées", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Principale société savante française de pédopsychiatrie."},
+  {"terme": "DREES", "libelle": "Direction de la recherche, des études, de l'évaluation et des statistiques", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Service statistique des ministères sociaux français. Source des données de démographie médicale et de recours aux soins."},
+  {"terme": "CSP", "libelle": "Code de la santé publique", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Corpus législatif et réglementaire français de la santé. L'article L5121-12-1 encadre la prescription hors AMM."},
+  {"terme": "TDAH", "libelle": "Trouble déficit de l'attention avec ou sans hyperactivité", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Trouble du neurodéveloppement associant inattention, hyperactivité et impulsivité à un degré handicapant. Diagnostic clinique, sans marqueur biologique."},
+  {"terme": "TSA", "libelle": "Trouble du spectre de l'autisme", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Trouble du neurodéveloppement caractérisé par des particularités de la communication et des interactions sociales, et par des intérêts restreints et comportements répétitifs."},
+  {"terme": "TND", "libelle": "Trouble du neurodéveloppement", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Catégorie regroupant TSA, TDAH, troubles des apprentissages, du langage, du développement intellectuel et de la coordination motrice. Leur association est fréquente."},
+  {"terme": "TOC", "libelle": "Trouble obsessionnel compulsif", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Obsessions (pensées intrusives anxiogènes) et compulsions (rituels visant à les neutraliser). Traitement de référence : exposition avec prévention de la réponse, associée ou non à un ISRS."},
+  {"terme": "TSPT", "libelle": "Trouble de stress post-traumatique", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Reviviscences, évitement, hypervigilance et altérations cognitives et émotionnelles persistant après un événement traumatique."},
+  {"terme": "TAG", "libelle": "Trouble anxieux généralisé", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Inquiétude excessive, diffuse et difficilement contrôlable, portant sur des sujets multiples, associée à des symptômes physiques."},
+  {"terme": "TPB", "libelle": "Trouble de la personnalité borderline", "categorie": "Troubles et diagnostics", "auto": true, "variantes": ["trouble borderline"], "definition": "Instabilité de l'humeur, des relations et de l'image de soi, impulsivité et conduites auto-agressives. Le diagnostic est possible et légitime à l'adolescence : le différer retarde l'accès aux soins spécifiques."},
+  {"terme": "NSSI", "libelle": "Non-suicidal self-injury (automutilation non suicidaire)", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Lésions auto-infligées sans intention de mourir (scarifications, brûlures, coups). À distinguer de la tentative de suicide, même si les deux coexistent souvent chez un même adolescent et que l'automutilation est un facteur de risque suicidaire majeur."},
+  {"terme": "ARFID", "libelle": "Avoidant/Restrictive Food Intake Disorder", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Trouble de l'alimentation par évitement ou restriction, sans préoccupation concernant le poids ou l'image du corps — ce qui le distingue de l'anorexie mentale."},
+  {"terme": "TSAF", "libelle": "Troubles du spectre de l'alcoolisation fœtale", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Conséquences neurodéveloppementales d'une exposition prénatale à l'alcool, de l'atteinte complète aux formes partielles sans dysmorphie."},
+  {"terme": "Catatonie", "libelle": "Syndrome catatonique", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Syndrome psychomoteur associant immobilité, mutisme, négativisme, catalepsie ou, à l'inverse, agitation stéréotypée. Survient dans des contextes psychiatriques, neurologiques ou somatiques (dont les encéphalites auto-immunes). Urgence diagnostique : risque de complications vitales."},
+  {"terme": "MASLD", "libelle": "Metabolic dysfunction-associated steatotic liver disease", "categorie": "Troubles et diagnostics", "auto": true, "variantes": [], "definition": "Stéatose hépatique associée à un dysfonctionnement métabolique, anciennement NAFLD. Première maladie hépatique de l'enfant, liée au surpoids et au syndrome métabolique."},
+  {"terme": "Comorbidité", "libelle": "Comorbidité", "categorie": "Troubles et diagnostics", "auto": false, "variantes": [], "definition": "Présence simultanée de plusieurs troubles chez le même patient. En pédopsychiatrie, c'est la règle plus que l'exception, ce qui limite la portée des essais menés sur des populations sélectionnées sans comorbidité."},
+  {"terme": "TCD", "libelle": "Thérapie comportementale dialectique", "categorie": "Psychothérapies", "auto": true, "variantes": ["DBT"], "definition": "Psychothérapie développée par Marsha Linehan pour le trouble borderline, articulant acceptation et changement. Quatre modules de compétences : pleine conscience, tolérance à la détresse, régulation émotionnelle, efficacité interpersonnelle. Le format complet associe thérapie individuelle, groupe de compétences, coaching téléphonique et groupe de consultation entre thérapeutes."},
+  {"terme": "DBT-A", "libelle": "Dialectical Behavior Therapy for Adolescents", "categorie": "Psychothérapies", "auto": true, "variantes": ["TCD-A"], "definition": "Adaptation de la TCD à l'adolescent : durée raccourcie, participation des parents au groupe de compétences et module supplémentaire dit du « cheminement médian » (walking the middle path) sur les dilemmes dialectiques familiaux."},
+  {"terme": "DBT-ST", "libelle": "DBT Skills Training", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Entraînement aux compétences TCD délivré seul, sans thérapie individuelle associée. Format allégé fréquemment retenu faute de moyens, dont l'équivalence avec la TCD complète n'est pas démontrée."},
+  {"terme": "RO-DBT", "libelle": "Radically Open Dialectical Behavior Therapy", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Variante de la TCD ciblant le surcontrôle émotionnel — rigidité, inhibition, perfectionnisme — et non la dysrégulation. Développée pour l'anorexie mentale, la dépression résistante et certains troubles de la personnalité."},
+  {"terme": "DBT-LBC", "libelle": "DBT Linehan Board of Certification", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Certification américaine attestant qu'un praticien ou un programme applique la TCD avec fidélité au modèle. Sert de critère d'inclusion dans les études d'implémentation."},
+  {"terme": "TCC", "libelle": "Thérapies cognitivo-comportementales", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Famille de psychothérapies agissant sur les comportements, les pensées et les émotions. À ne pas confondre avec la TCD, qui en constitue une forme spécialisée de troisième vague."},
+  {"terme": "TF-CBT", "libelle": "Trauma-Focused Cognitive Behavioral Therapy", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "TCC centrée sur le trauma, traitement de référence du psychotraumatisme de l'enfant et de l'adolescent, avec implication d'une figure parentale protectrice."},
+  {"terme": "TERP", "libelle": "Thérapie d'exposition avec prévention de la réponse", "categorie": "Psychothérapies", "auto": true, "variantes": ["EPR"], "definition": "Traitement de référence du TOC : exposition graduée au déclencheur obsessionnel en s'abstenant du rituel, jusqu'à extinction de l'anxiété."},
+  {"terme": "EMDR", "libelle": "Eye Movement Desensitization and Reprocessing", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Désensibilisation et retraitement par mouvements oculaires, indiquée dans le trouble de stress post-traumatique."},
+  {"terme": "ACT", "libelle": "Acceptance and Commitment Therapy", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Thérapie d'acceptation et d'engagement : troisième vague des TCC, centrée sur la flexibilité psychologique et l'action orientée par les valeurs plutôt que sur le contenu des pensées."},
+  {"terme": "STEPPS", "libelle": "Systems Training for Emotional Predictability and Problem Solving", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Programme de groupe structuré et court pour le trouble borderline, conçu comme complément d'un suivi individuel et non comme traitement autonome."},
+  {"terme": "MBT-A", "libelle": "Mentalization-Based Treatment for Adolescents", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Thérapie basée sur la mentalisation, alternative à la TCD dans le trouble borderline de l'adolescent. Vise la capacité à se représenter ses propres états mentaux et ceux d'autrui."},
+  {"terme": "EIBI", "libelle": "Early Intensive Behavioral Intervention", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Intervention comportementale intensive précoce dans le TSA, fondée sur l'analyse appliquée du comportement (ABA)."},
+  {"terme": "ECT", "libelle": "Électroconvulsivothérapie", "categorie": "Psychothérapies", "auto": true, "variantes": [], "definition": "Sismothérapie : convulsion provoquée sous anesthésie générale. Indications pédiatriques rares mais établies — catatonie résistante au lorazépam, dépression sévère avec risque vital. Son accès chez le mineur reste limité en France pour des raisons organisationnelles."},
+  {"terme": "rTMS", "libelle": "Stimulation magnétique transcrânienne répétitive", "categorie": "Psychothérapies", "auto": true, "variantes": ["TMS"], "definition": "Neuromodulation non invasive par impulsions magnétiques focales. Évaluée dans la dépression de l'adolescent, avec des résultats qui s'atténuent quand les essais sont bien contrôlés."},
+  {"terme": "Fidélité au modèle", "libelle": "Fidélité au modèle", "categorie": "Psychothérapies", "auto": false, "variantes": [], "definition": "Degré auquel une intervention est délivrée conformément au protocole validé. Point critique en TCD : un résultat obtenu avec une thérapie « inspirée de » la TCD ne se transpose pas au modèle complet."},
+  {"terme": "ISRS", "libelle": "Inhibiteurs sélectifs de la recapture de la sérotonine", "categorie": "Pharmacologie", "auto": true, "variantes": [], "definition": "Classe antidépressive de référence chez l'enfant (fluoxétine, sertraline, fluvoxamine…). En France, seule la fluoxétine a une AMM pédiatrique dans la dépression, dès 8 ans ; sertraline et fluvoxamine en ont une dans le TOC. Aucune n'est autorisée avant 18 ans dans les troubles anxieux."},
+  {"terme": "IRSN", "libelle": "Inhibiteurs de la recapture de la sérotonine et de la noradrénaline", "categorie": "Pharmacologie", "auto": true, "variantes": [], "definition": "Antidépresseurs à double action (venlafaxine, duloxétine). Aucune AMM pédiatrique en psychiatrie en France."},
+  {"terme": "Psychostimulant", "libelle": "Psychostimulant", "categorie": "Pharmacologie", "auto": true, "variantes": ["psychostimulants"], "definition": "Classe du méthylphénidate et des amphétamines, traitement médicamenteux de référence du TDAH. En France, l'instauration est réservée au spécialiste."},
+  {"terme": "Thymorégulateur", "libelle": "Thymorégulateur (stabilisateur de l'humeur)", "categorie": "Pharmacologie", "auto": true, "variantes": ["thymorégulateurs"], "definition": "Médicament prévenant les récurrences thymiques : lithium, certains antiépileptiques (valproate, lamotrigine) et certains antipsychotiques de 2e génération."},
+  {"terme": "Antipsychotique de 2e génération", "libelle": "Antipsychotique de deuxième génération", "categorie": "Pharmacologie", "auto": false, "variantes": [], "definition": "Dits « atypiques » : rispéridone, aripiprazole, olanzapine, quétiapine… Moins d'effets extrapyramidaux que la 1re génération, mais risque métabolique marqué chez l'enfant (prise de poids, dyslipidémie, insulinorésistance), qui impose une surveillance dédiée."},
+  {"terme": "NMDA", "libelle": "Récepteur N-méthyl-D-aspartate", "categorie": "Pharmacologie", "auto": true, "variantes": [], "definition": "Récepteur du glutamate, cible de la kétamine et de l'eskétamine. Son blocage sous-tend leur effet antidépresseur rapide."},
+  {"terme": "TDM", "libelle": "Therapeutic Drug Monitoring", "categorie": "Pharmacologie", "auto": true, "variantes": [], "definition": "Suivi thérapeutique pharmacologique : dosage plasmatique du médicament pour ajuster la posologie, particulièrement utile chez l'enfant où la pharmacocinétique varie fortement avec l'âge et le poids."},
+  {"terme": "Symptômes extrapyramidaux", "libelle": "Symptômes extrapyramidaux", "categorie": "Pharmacologie", "auto": false, "variantes": [], "definition": "Effets indésirables moteurs des antipsychotiques : tremblement, rigidité, akathisie (impatience motrice), dyskinésies. Plus fréquents et plus précoces chez l'enfant que chez l'adulte."},
+  {"terme": "Titration", "libelle": "Titration", "categorie": "Pharmacologie", "auto": false, "variantes": [], "definition": "Montée progressive de la posologie jusqu'à la dose efficace la mieux tolérée, par paliers avec évaluation à chaque étape."},
+  {"terme": "Pharmacovigilance", "libelle": "Pharmacovigilance", "categorie": "Pharmacologie", "auto": false, "variantes": [], "definition": "Surveillance des effets indésirables après commercialisation. Essentielle en pédiatrie, où les AMM reposent souvent sur des essais courts et de faible effectif."},
+  {"terme": "RCT", "libelle": "Randomized Controlled Trial (essai contrôlé randomisé)", "categorie": "Méthodologie", "auto": true, "variantes": [], "definition": "Essai où l'attribution du traitement est tirée au sort. La randomisation équilibre les caractéristiques connues et inconnues entre les groupes : c'est le seul dispositif qui permet de conclure à une causalité."},
+  {"terme": "Méta-analyse", "libelle": "Méta-analyse", "categorie": "Méthodologie", "auto": false, "variantes": [], "definition": "Synthèse statistique combinant les résultats de plusieurs études sur une même question. Sa valeur dépend entièrement de celle des études incluses : une méta-analyse d'essais faibles reste une preuve faible."},
+  {"terme": "Méta-analyse en réseau", "libelle": "Méta-analyse en réseau", "categorie": "Méthodologie", "auto": false, "variantes": [], "definition": "Compare des traitements qui n'ont jamais été confrontés directement, en passant par leurs comparateurs communs. Permet de classer plusieurs options, au prix d'hypothèses fortes (notamment la transitivité entre études)."},
+  {"terme": "IPD", "libelle": "Individual Participant Data", "categorie": "Méthodologie", "auto": true, "variantes": [], "definition": "Méta-analyse sur données individuelles plutôt que sur résultats agrégés. Plus puissante, en particulier pour rechercher des sous-groupes de répondeurs, mais tributaire de l'accès aux données brutes."},
+  {"terme": "Revue parapluie", "libelle": "Revue parapluie (umbrella review)", "categorie": "Méthodologie", "auto": false, "variantes": [], "definition": "Synthèse de revues systématiques et de méta-analyses déjà publiées. Donne une vue d'ensemble large mais hérite des faiblesses des travaux inclus et de leurs chevauchements."},
+  {"terme": "Revue de portée", "libelle": "Revue de portée (scoping review)", "categorie": "Méthodologie", "auto": false, "variantes": [], "definition": "Cartographie ce qui existe sur un sujet — volume, nature et lacunes de la littérature — sans évaluer la force des preuves ni conclure sur l'efficacité."},
+  {"terme": "Étude observationnelle", "libelle": "Étude observationnelle", "categorie": "Méthodologie", "auto": false, "variantes": [], "definition": "Étude sans intervention attribuée par l'investigateur : cohortes, cas-témoins, registres. Établit des associations, pas des causalités, car les groupes diffèrent d'emblée."},
+  {"terme": "Émulation d'essai cible", "libelle": "Émulation d'essai cible (target trial emulation)", "categorie": "Méthodologie", "auto": false, "variantes": [], "definition": "Méthode appliquant à des données observationnelles la structure d'un essai randomisé hypothétique explicitement défini. Réduit certains biais classiques sans supprimer la confusion résiduelle."},
+  {"terme": "Delphi", "libelle": "Méthode Delphi", "categorie": "Méthodologie", "auto": true, "variantes": [], "definition": "Méthode de consensus formalisé : plusieurs tours de questionnaires anonymes entre experts, avec restitution des réponses du groupe, jusqu'à convergence sur un seuil d'accord fixé à l'avance (souvent 70 ou 75 %)."},
+  {"terme": "GRADE", "libelle": "Grading of Recommendations Assessment, Development and Evaluation", "categorie": "Méthodologie", "auto": true, "variantes": [], "definition": "Système d'évaluation du niveau de certitude des preuves — élevé, modéré, faible, très faible — et de la force des recommandations qui en découlent."},
+  {"terme": "PRISMA", "libelle": "Preferred Reporting Items for Systematic Reviews and Meta-Analyses", "categorie": "Méthodologie", "auto": true, "variantes": [], "definition": "Standard de rédaction et de transparence des revues systématiques. Son respect est un indice de qualité formelle, pas une garantie de qualité des études incluses."},
+  {"terme": "PROSPERO", "libelle": "International Prospective Register of Systematic Reviews", "categorie": "Méthodologie", "auto": true, "variantes": [], "definition": "Registre d'enregistrement préalable des protocoles de revues systématiques. Limite les modifications d'objectifs a posteriori."},
+  {"terme": "ITT", "libelle": "Analyse en intention de traiter", "categorie": "Méthodologie", "auto": true, "variantes": [], "definition": "Analyse conservant chaque participant dans le groupe où il a été randomisé, même s'il n'a pas suivi le traitement. Plus conservatrice et plus proche de la pratique réelle que l'analyse per protocole."},
+  {"terme": "Post hoc", "libelle": "Analyse post hoc", "categorie": "Méthodologie", "auto": false, "variantes": [], "definition": "Analyse décidée après avoir vu les données. Elle génère des hypothèses ; elle ne les confirme pas. Les analyses en sous-groupes non prévues au protocole en relèvent presque toujours."},
+  {"terme": "Biais de publication", "libelle": "Biais de publication", "categorie": "Méthodologie", "auto": false, "variantes": [], "definition": "Tendance à publier davantage les résultats positifs que les résultats négatifs, qui conduit les méta-analyses à surestimer les effets."},
+  {"terme": "IC95%", "libelle": "Intervalle de confiance à 95 %", "categorie": "Statistiques", "auto": true, "variantes": ["IC 95 %", "IC95", "IC 95%"], "definition": "Fourchette de valeurs compatibles avec les données observées. S'il contient la valeur nulle — 0 pour une différence, 1 pour un rapport — le résultat n'est pas statistiquement significatif. Sa largeur renseigne sur la précision : un intervalle très large signale un effectif insuffisant."},
+  {"terme": "DMS", "libelle": "Différence moyenne standardisée", "categorie": "Statistiques", "auto": true, "variantes": ["DME"], "definition": "Taille d'effet exprimée en écarts-types, qui permet de comparer des résultats mesurés sur des échelles différentes. Repères usuels : 0,2 faible, 0,5 modéré, 0,8 fort. Le corpus emploie indifféremment les sigles DMS et DME."},
+  {"terme": "d de Cohen", "libelle": "d de Cohen", "categorie": "Statistiques", "auto": false, "variantes": [], "definition": "Mesure de taille d'effet standardisée, exprimée en écarts-types. Le g de Hedges en est la version corrigée du biais lié aux petits effectifs."},
+  {"terme": "SMC", "libelle": "Standardized Mean Change", "categorie": "Statistiques", "auto": true, "variantes": [], "definition": "Variation moyenne standardisée avant-après à l'intérieur d'un même groupe. Ne mesure pas l'effet propre du traitement, faute de comparateur : une grande partie peut relever de l'évolution spontanée ou de la régression vers la moyenne."},
+  {"terme": "I²", "libelle": "Indice d'hétérogénéité I²", "categorie": "Statistiques", "auto": true, "variantes": ["I2"], "definition": "Part de la variabilité entre études attribuable à une hétérogénéité réelle plutôt qu'au hasard. 0 % signale des études homogènes ; au-delà de 75 %, la légitimité d'une synthèse commune devient discutable."},
+  {"terme": "RR", "libelle": "Risque relatif", "categorie": "Statistiques", "auto": true, "variantes": [], "definition": "Rapport du risque de survenue d'un événement entre deux groupes. RR = 1 : aucune différence. RR = 3,5 : risque multiplié par 3,5 en relatif — ce qui peut rester faible en valeur absolue si l'événement est rare."},
+  {"terme": "OR", "libelle": "Odds ratio (rapport des cotes)", "categorie": "Statistiques", "auto": true, "variantes": [], "definition": "Rapport des cotes de survenue d'un événement entre deux groupes. Proche du risque relatif quand l'événement est rare, il le surestime nettement quand l'événement est fréquent."},
+  {"terme": "HR", "libelle": "Hazard ratio (rapport de risques instantanés)", "categorie": "Statistiques", "auto": true, "variantes": [], "definition": "Rapport des risques de survenue à chaque instant, utilisé dans les analyses de survie et de délai de survenue d'un événement."},
+  {"terme": "NNT", "libelle": "Nombre de sujets à traiter", "categorie": "Statistiques", "auto": true, "variantes": [], "definition": "Nombre de patients à traiter pour éviter un événement supplémentaire. Plus il est bas, plus le traitement est utile en pratique. Traduit une taille d'effet en grandeur clinique interprétable."},
+  {"terme": "SUCRA", "libelle": "Surface Under the Cumulative Ranking curve", "categorie": "Statistiques", "auto": true, "variantes": [], "definition": "Dans une méta-analyse en réseau, probabilité qu'un traitement figure parmi les meilleurs. C'est un classement, pas une mesure d'effet : deux traitements très proches peuvent avoir des SUCRA éloignés."},
+  {"terme": "QALY", "libelle": "Année de vie ajustée sur la qualité", "categorie": "Statistiques", "auto": true, "variantes": [], "definition": "Unité des évaluations médico-économiques, combinant durée de vie et qualité de vie. Sert à comparer le coût par unité de bénéfice entre interventions."},
+  {"terme": "Valeur p", "libelle": "Valeur p", "categorie": "Statistiques", "auto": false, "variantes": [], "definition": "Probabilité d'observer un résultat au moins aussi extrême si l'hypothèse nulle était vraie. Un p inférieur à 0,05 ne dit ni l'ampleur de l'effet, ni son importance clinique, ni la probabilité que l'hypothèse soit vraie."},
+  {"terme": "ADHD-RS", "libelle": "ADHD Rating Scale", "categorie": "Échelles et mesures", "auto": true, "variantes": ["ADHD-RS-5"], "definition": "Échelle de sévérité des symptômes de TDAH, cotée par le clinicien ou les parents. La version 5 est alignée sur les critères du DSM-5. Critère principal de la plupart des essais sur le TDAH."},
+  {"terme": "MADRS", "libelle": "Montgomery-Åsberg Depression Rating Scale", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Échelle de sévérité dépressive cotée par le clinicien, en 10 items. Très utilisée comme critère principal dans les essais sur la dépression."},
+  {"terme": "CDRS-R", "libelle": "Children's Depression Rating Scale – Revised", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Échelle de dépression spécifiquement pédiatrique, cotée par le clinicien à partir d'entretiens avec l'enfant et ses parents."},
+  {"terme": "C-SSRS", "libelle": "Columbia Suicide Severity Rating Scale", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Échelle de référence pour évaluer la sévérité des idées et des comportements suicidaires, distinguant intensité des idées et actes réels."},
+  {"terme": "ABC-I", "libelle": "Aberrant Behavior Checklist – sous-échelle Irritabilité", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Critère principal des essais sur l'irritabilité et l'agressivité dans le TSA. Une différence de 5 points environ est généralement considérée comme cliniquement perceptible."},
+  {"terme": "EDE-Q", "libelle": "Eating Disorder Examination Questionnaire", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Auto-questionnaire de psychopathologie alimentaire, avec un seuil clinique au-delà duquel les préoccupations sont considérées comme pathologiques."},
+  {"terme": "SCARED", "libelle": "Screen for Child Anxiety Related Emotional Disorders", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Questionnaire de dépistage des troubles anxieux de l'enfant et de l'adolescent, en versions enfant et parent."},
+  {"terme": "SNAP-IV", "libelle": "Swanson, Nolan and Pelham questionnaire", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Échelle de TDAH et de trouble oppositionnel renseignée par les parents et les enseignants, utile pour objectiver le retentissement dans les deux milieux."},
+  {"terme": "CGI-S", "libelle": "Clinical Global Impression – Severity", "categorie": "Échelles et mesures", "auto": true, "variantes": ["CGI-I", "CGI"], "definition": "Impression clinique globale en 7 points, en sévérité (CGI-S) ou en amélioration (CGI-I). Simple et robuste, mais peu sensible aux changements fins."},
+  {"terme": "C-GAS", "libelle": "Children's Global Assessment Scale", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Évaluation du fonctionnement global de l'enfant sur une échelle de 1 à 100. Mesure le retentissement plutôt que les symptômes."},
+  {"terme": "CY-BOCS", "libelle": "Children's Yale-Brown Obsessive Compulsive Scale", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Échelle de sévérité du TOC de l'enfant et de l'adolescent, cotée par le clinicien."},
+  {"terme": "BRIEF", "libelle": "Behavior Rating Inventory of Executive Function", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Questionnaire évaluant les fonctions exécutives au quotidien (inhibition, mémoire de travail, flexibilité, planification), renseigné par les parents et les enseignants."},
+  {"terme": "PANSS", "libelle": "Positive and Negative Syndrome Scale", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Échelle de sévérité des symptômes positifs, négatifs et généraux des troubles psychotiques."},
+  {"terme": "DSM-5", "libelle": "Manuel diagnostique et statistique des troubles mentaux, 5e édition", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Classification de l'American Psychiatric Association, référence de la recherche internationale. La CIM-11 de l'OMS est la classification officielle en France."},
+  {"terme": "EUC", "libelle": "Enhanced Usual Care (soins usuels optimisés)", "categorie": "Échelles et mesures", "auto": true, "variantes": [], "definition": "Bras comparateur actif de nombreux essais : soins courants renforcés, et non absence de traitement. Un essai contre EUC est nettement plus exigeant qu'un essai contre liste d'attente."}
+];
+/* GLOSSAIRE_END */
+
+/* ============================================================
    3) CURRICULUM — 4 modules de compétences TCD (contenu fixe)
    Résumés originaux ; acronymes anglais + glose française.
    ============================================================ */
@@ -3300,7 +3476,37 @@ function spine(niveau) {
   for (let i = 4; i >= 1; i--) html += `<i style="${i <= filled ? `background:${color}` : ""}"></i>`;
   return `<div class="spine" title="Niveau de preuve : ${esc(niveau)}" aria-label="Niveau de preuve : ${esc(niveau)}">${html}</div>`;
 }
+/* ---------- Repérage des termes du glossaire dans les synthèses ----------
+   Le texte est déjà échappé quand il arrive ici : il ne contient aucune
+   balise, l'insertion de <button> est donc sans risque. Repérage sensible à
+   la casse et limité à la première occurrence par carte, pour ne pas
+   transformer chaque synthèse en champ de mines soulignées. */
+const GLOSS_MAP = new Map();   // graphie exacte -> terme canonique
+GLOSSAIRE.forEach(g => {
+  if (!g.auto) return;
+  [g.terme, ...(g.variantes ?? [])].forEach(v => { if (!GLOSS_MAP.has(v)) GLOSS_MAP.set(v, g.terme); });
+});
+const GLOSS_RE = (() => {
+  const graphies = [...GLOSS_MAP.keys()].sort((a, b) => b.length - a.length)
+    .map(t => t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
+  try {
+    // Lookarounds unicode plutôt que \b : « Thymorégulateur » se termine par
+    // une lettre accentuée, que \b ne reconnaît pas comme caractère de mot.
+    return new RegExp("(?<![\\p{L}\\p{N}_])(" + graphies.join("|") + ")(?![\\p{L}\\p{N}_])", "gu");
+  } catch { return null; }   // navigateur sans lookbehind : repérage désactivé
+})();
+function annoter(txt, vus) {
+  if (!GLOSS_RE) return txt;
+  return txt.replace(GLOSS_RE, m => {
+    const canon = GLOSS_MAP.get(m);
+    if (!canon || vus.has(canon)) return m;
+    vus.add(canon);
+    return `<button type="button" class="gloss" data-terme="${esc(canon)}">${m}</button>`;
+  });
+}
+
 function veilleCard(e, i) {
+  const vus = new Set();
   const bodyId = `card-body-${i}`;
   const open = openCards.has(e.url);
   const tags = [
@@ -3316,8 +3522,8 @@ function veilleCard(e, i) {
     <h2><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.titre)}</a></h2>
     <p class="meta">${esc(e.source)} · ${esc(e.typeSource)} · publié le ${fmtDate(e.datePublication)}<span class="meta-add"> · ajouté le ${fmtDateTime(e.dateAjout)}</span></p>
     <div class="card-body" id="${bodyId}">
-      <p class="synthese">${esc(e.synthese)}</p>
-      <p class="pertinence"><strong>En pratique —</strong> ${esc(e.pertinence)}</p>
+      <p class="synthese">${annoter(esc(e.synthese), vus)}</p>
+      <p class="pertinence"><strong>En pratique —</strong> ${annoter(esc(e.pertinence), vus)}</p>
     </div>
     <div class="card-foot">
       <div class="tags">${tags}</div>
@@ -3460,6 +3666,8 @@ function appliquerFiltreTag(filter, value) {
   window.scrollTo(0, 0);
 }
 document.getElementById("veille-list").addEventListener("click", ev => {
+  const gl = ev.target.closest(".gloss");
+  if (gl) { ouvrirGloss(gl); return; }
   const tag = ev.target.closest(".tag-btn");
   if (tag) { appliquerFiltreTag(tag.dataset.filter, tag.dataset.value); return; }
   if (ev.target.closest("a")) return;              // lien vers la source : laisser passer
@@ -3523,6 +3731,136 @@ document.getElementById("reset-filters").addEventListener("click", () => {
   document.getElementById("soustheme").value = "";
   renderVeille();
 });
+
+/* ============================================================
+   GLOSSAIRE : infobulle, bascule et panneau dédié
+   ============================================================ */
+const glossPop = document.createElement("div");
+glossPop.id = "gloss-pop";
+glossPop.hidden = true;
+glossPop.setAttribute("role", "dialog");
+glossPop.setAttribute("aria-label", "Définition");
+document.body.appendChild(glossPop);
+let glossAncre = null;
+
+function fermerGloss() {
+  glossPop.hidden = true;
+  if (glossAncre) { glossAncre.setAttribute("aria-expanded", "false"); glossAncre = null; }
+}
+function ouvrirGloss(btn) {
+  const g = GLOSSAIRE.find(x => x.terme === btn.dataset.terme);
+  if (!g) return;
+  if (glossAncre === btn && !glossPop.hidden) { fermerGloss(); return; }
+  const idx = GLOSSAIRE.indexOf(g);
+  glossPop.innerHTML =
+    `<p class="pop-terme">${esc(g.terme)}</p>` +
+    `<p class="pop-lib">${esc(g.libelle)}</p>` +
+    `<p class="pop-def">${esc(g.definition)}</p>` +
+    `<div class="pop-foot"><button type="button" data-goto="${idx}">Voir dans le glossaire</button>` +
+    `<button type="button" data-close>Fermer</button></div>`;
+  glossPop.hidden = false;
+  // Positionnement après affichage, pour disposer des dimensions réelles.
+  const r = btn.getBoundingClientRect();
+  const w = glossPop.offsetWidth, h = glossPop.offsetHeight;
+  const dessous = r.bottom + 8 + h <= innerHeight - 8;
+  glossPop.style.top = (dessous ? r.bottom + 8 : Math.max(8, r.top - h - 8)) + "px";
+  glossPop.style.left = Math.min(Math.max(8, r.left), Math.max(8, innerWidth - w - 8)) + "px";
+  btn.setAttribute("aria-expanded", "true");
+  glossAncre = btn;
+}
+glossPop.addEventListener("click", ev => {
+  const goto = ev.target.closest("[data-goto]");
+  if (goto) { fermerGloss(); allerAuGlossaire(Number(goto.dataset.goto)); return; }
+  if (ev.target.closest("[data-close]")) fermerGloss();
+});
+document.addEventListener("click", ev => {
+  if (glossPop.hidden) return;
+  if (ev.target.closest("#gloss-pop") || ev.target.closest(".gloss")) return;
+  fermerGloss();
+});
+document.addEventListener("keydown", ev => { if (ev.key === "Escape") fermerGloss(); });
+window.addEventListener("scroll", fermerGloss, { passive: true });
+window.addEventListener("resize", fermerGloss);
+
+/* Bascule du repérage dans les synthèses. */
+const GLOSS_KEY = "veille-gloss-v1";
+let glossOn = true;
+try { const v = localStorage.getItem(GLOSS_KEY); if (v === "off") glossOn = false; } catch {}
+function applyGloss() {
+  document.getElementById("veille-list").dataset.gloss = glossOn ? "on" : "off";
+  document.getElementById("gloss-toggle").setAttribute("aria-pressed", String(glossOn));
+}
+document.getElementById("gloss-toggle").addEventListener("click", () => {
+  glossOn = !glossOn;
+  try { localStorage.setItem(GLOSS_KEY, glossOn ? "on" : "off"); } catch {}
+  if (!glossOn) fermerGloss();
+  applyGloss();
+});
+
+/* Panneau Glossaire. */
+const GLOSS_CATS = [...new Set(GLOSSAIRE.map(g => g.categorie))];
+const glossState = { q: "", cat: null };
+function glossMatches(g) {
+  if (glossState.cat && g.categorie !== glossState.cat) return false;
+  if (!glossState.q) return true;
+  const hay = [g.terme, g.libelle, g.definition, ...(g.variantes ?? [])].join(" ").toLowerCase();
+  return hay.includes(glossState.q);
+}
+function renderGlossaire() {
+  const visibles = GLOSSAIRE.map((g, i) => ({ g, i })).filter(({ g }) => glossMatches(g));
+  const html = GLOSS_CATS.map(cat => {
+    const dedans = visibles.filter(({ g }) => g.categorie === cat)
+      .sort((a, b) => a.g.terme.localeCompare(b.g.terme, "fr"));
+    if (!dedans.length) return "";
+    const cartes = dedans.map(({ g, i }) => `<article class="gloss-entry" id="gloss-e-${i}">
+      <h4>${esc(g.terme)}<span class="g-lib">${esc(g.libelle)}</span></h4>
+      <p>${esc(g.definition)}</p>
+      ${(g.variantes ?? []).length ? `<p class="g-var">Aussi écrit : ${esc((g.variantes ?? []).join(", "))}</p>` : ""}
+    </article>`).join("");
+    return `<section class="gloss-cat"><h3>${esc(cat)}</h3><div class="gloss-grid">${cartes}</div></section>`;
+  }).join("");
+  document.getElementById("glossaire-list").innerHTML = html;
+  document.getElementById("glossaire-empty").hidden = visibles.length > 0;
+  document.getElementById("glossaire-stats").textContent =
+    `${GLOSSAIRE.length} termes · ${visibles.length} affiché${visibles.length > 1 ? "s" : ""}`;
+}
+(function initGlossCats() {
+  const zone = document.getElementById("gloss-cats");
+  GLOSS_CATS.forEach(cat => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.setAttribute("aria-pressed", "false");
+    b.textContent = cat;
+    const n = document.createElement("span");
+    n.className = "chip-count";
+    n.textContent = GLOSSAIRE.filter(g => g.categorie === cat).length;
+    b.appendChild(n);
+    b.addEventListener("click", () => {
+      const actif = glossState.cat === cat;
+      glossState.cat = actif ? null : cat;
+      zone.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === b && !actif)));
+      renderGlossaire();
+    });
+    zone.appendChild(b);
+    zone.appendChild(document.createTextNode(" "));
+  });
+})();
+document.getElementById("gloss-search").addEventListener("input", ev => {
+  glossState.q = ev.target.value.trim().toLowerCase();
+  renderGlossaire();
+});
+/* Depuis l'infobulle : bascule vers l'onglet et met le terme en évidence. */
+function allerAuGlossaire(idx) {
+  glossState.q = ""; glossState.cat = null;
+  document.getElementById("gloss-search").value = "";
+  document.getElementById("gloss-cats").querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", "false"));
+  selectTab("tab-glossaire");
+  renderGlossaire();
+  const el = document.getElementById("gloss-e-" + idx);
+  if (!el) return;
+  el.scrollIntoView({ block: "center" });
+  el.classList.add("gloss-hit");
+  setTimeout(() => el.classList.remove("gloss-hit"), 2400);
+}
 
 /* ============================================================
    RENDU FORMATION + PROGRESSION
@@ -3701,11 +4039,13 @@ const tabs = [
   { tab: "tab-veille", panel: "panel-veille" },
   { tab: "tab-formation", panel: "panel-formation" },
   { tab: "tab-formation-tcc", panel: "panel-formation-tcc" },
-  { tab: "tab-traitements", panel: "panel-traitements" }
+  { tab: "tab-traitements", panel: "panel-traitements" },
+  { tab: "tab-glossaire", panel: "panel-glossaire" }
 ];
 let formationRendered = false;
 let formationTccRendered = false;
 let traitementsRendered = false;
+let glossaireRendered = false;
 function selectTab(tabId, { focus = false } = {}) {
   tabs.forEach(t => {
     const sel = t.tab === tabId;
@@ -3719,6 +4059,7 @@ function selectTab(tabId, { focus = false } = {}) {
   if (tabId === "tab-formation" && !formationRendered) { renderFormation(); formationRendered = true; }
   if (tabId === "tab-formation-tcc" && !formationTccRendered) { renderFormationTCC(); formationTccRendered = true; }
   if (tabId === "tab-traitements" && !traitementsRendered) { renderTraitements(); traitementsRendered = true; }
+  if (tabId === "tab-glossaire" && !glossaireRendered) { renderGlossaire(); glossaireRendered = true; }
 }
 tabs.forEach(({ tab }) => {
   document.getElementById(tab).addEventListener("click", () => selectTab(tab));
@@ -3738,6 +4079,7 @@ document.querySelector(".tabs").addEventListener("keydown", ev => {
 });
 
 applyDensity();
+applyGloss();
 renderVeille();
 </script>
 </body>

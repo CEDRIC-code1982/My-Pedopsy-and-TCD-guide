@@ -144,6 +144,15 @@ TYPES_SOURCE = [
     "Recommandation officielle", "Revue narrative", "Article de presse spécialisée",
 ]
 
+# ---------------------------------------------------------------------------
+# Catégories du glossaire. Elles structurent l'onglet dédié : en ajouter une
+# crée une section, donc ne le faire que pour un ensemble de termes cohérent.
+# ---------------------------------------------------------------------------
+CATEGORIES_GLOSSAIRE = [
+    "Réglementation et institutions", "Troubles et diagnostics", "Psychothérapies",
+    "Pharmacologie", "Méthodologie", "Statistiques", "Échelles et mesures",
+]
+
 THEMES = ["Pédopsychiatrie", "TCD", "TCD-Adolescents (DBT-A)", "TCC", "Transversal"]
 NIVEAUX = ["Élevé", "Modéré", "Faible", "Avis d'expert"]
 CONSENSUS = ["Consensus établi", "Émergent", "Controversé"]

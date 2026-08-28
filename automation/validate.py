@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Validation d'index.html avant commit.
 
-Vérifie que les deux blocs de données sont intacts et cohérents :
+Vérifie que les trois blocs de données sont intacts et cohérents :
 structure JSON, champs obligatoires, énumérations, vocabulaire contrôlé
 des sousThemes, absence de doublons, et syntaxe du bloc <script>.
 
@@ -19,8 +19,8 @@ from pathlib import Path
 
 RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE / "automation"))
-from vocabulaire import (ALIAS, CONSENSUS, NIVEAUX, SOURCES,  # noqa: E402
-                         THEMES, TYPES_SOURCE, VOCABULAIRE)
+from vocabulaire import (ALIAS, CATEGORIES_GLOSSAIRE, CONSENSUS,  # noqa: E402
+                         NIVEAUX, SOURCES, THEMES, TYPES_SOURCE, VOCABULAIRE)
 
 CHAMPS = ["titre", "url", "datePublication", "dateAjout", "theme", "sousThemes",
           "typeSource", "niveauPreuve", "consensus", "source", "synthese", "pertinence"]
@@ -31,8 +31,11 @@ TYPES_RES = {"Livre", "Site", "Vidéo", "Formation", "Article"}
 LANGUES = {"FR", "EN", "FR/EN"}
 COUTS = {"Gratuit", "Payant"}
 
+CHAMPS_GLOSS = ["terme", "libelle", "categorie", "auto", "variantes", "definition"]
+
 MARQUEURS = ["/* VEILLE_DATA_START */", "/* VEILLE_DATA_END */",
-             "/* FORMATION_RESSOURCES_START */", "/* FORMATION_RESSOURCES_END */"]
+             "/* FORMATION_RESSOURCES_START */", "/* FORMATION_RESSOURCES_END */",
+             "/* GLOSSAIRE_START */", "/* GLOSSAIRE_END */"]
 
 erreurs = []
 
@@ -138,6 +141,46 @@ def valide_ressources(ressources):
             vus[v] = n
 
 
+def valide_glossaire(entrees):
+    """Un terme = une définition, et une graphie = un seul terme.
+
+    La seconde règle est ce qui empêche l'annotation automatique des synthèses
+    de devenir ambiguë : si deux entrées revendiquaient la graphie « DBT »,
+    le repérage en choisirait une au hasard.
+    """
+    vus_terme, vus_graphie = {}, {}
+    for n, g in enumerate(entrees, 1):
+        ref = f"glossaire #{n} ({str(g.get('terme', '?'))[:35]}…)"
+        manquants = [c for c in CHAMPS_GLOSS if c not in g]
+        superflus = [c for c in g if c not in CHAMPS_GLOSS]
+        if manquants:
+            err(f"{ref} : champs manquants {manquants}")
+        if superflus:
+            err(f"{ref} : champs inattendus {superflus}")
+        if g.get("categorie") not in CATEGORIES_GLOSSAIRE:
+            err(f"{ref} : categorie invalide {g.get('categorie')!r} "
+                f"(ajouter à automation/vocabulaire.py si légitime)")
+        if not isinstance(g.get("auto"), bool):
+            err(f"{ref} : auto doit être un booléen, reçu {g.get('auto')!r}")
+        if not isinstance(g.get("variantes"), list):
+            err(f"{ref} : variantes doit être une liste (vide si aucune)")
+        for cle in ("terme", "libelle", "definition"):
+            if not str(g.get(cle, "")).strip():
+                err(f"{ref} : {cle} vide")
+        t = norme(g.get("terme", ""))
+        if t in vus_terme:
+            err(f"{ref} : terme en double avec l'entrée #{vus_terme[t]}")
+        else:
+            vus_terme[t] = n
+        if g.get("auto"):
+            for graphie in [g.get("terme", "")] + list(g.get("variantes") or []):
+                if graphie in vus_graphie:
+                    err(f"{ref} : graphie {graphie!r} déjà revendiquée par "
+                        f"l'entrée #{vus_graphie[graphie]} — le repérage serait ambigu")
+                else:
+                    vus_graphie[graphie] = n
+
+
 def valide_js(src):
     if shutil.which("node") is None:
         print("  ⚠️  node absent : contrôle de syntaxe JS ignoré")
@@ -178,25 +221,35 @@ def main():
         err(f"RESSOURCES illisible : {exc}")
         rapport(cible)
         return 1
+    try:
+        gs, ge = bornes_tableau(src, "GLOSSAIRE")
+        glossaire = json.loads(src[gs:ge])
+    except (ValueError, json.JSONDecodeError) as exc:
+        err(f"GLOSSAIRE illisible : {exc}")
+        rapport(cible)
+        return 1
 
     if not (src.index(MARQUEURS[0]) < vs < ve < src.index(MARQUEURS[1])):
         err("VEILLE_DATA déborde de ses marqueurs")
     if not (src.index(MARQUEURS[2]) < rs < re_ < src.index(MARQUEURS[3])):
         err("RESSOURCES déborde de ses marqueurs")
+    if not (src.index(MARQUEURS[4]) < gs < ge < src.index(MARQUEURS[5])):
+        err("GLOSSAIRE déborde de ses marqueurs")
 
     valide_veille(veille)
     valide_ressources(ressources)
+    valide_glossaire(glossaire)
     valide_js(src)
 
-    rapport(cible, len(veille), len(ressources))
+    rapport(cible, len(veille), len(ressources), len(glossaire))
     return 1 if erreurs else 0
 
 
-def rapport(cible, n_veille=None, n_res=None):
+def rapport(cible, n_veille=None, n_res=None, n_gloss=None):
     print(f"Validation de {cible.name}")
     if n_veille is not None:
         print(f"  {n_veille} entrées de veille · {n_res} ressources · "
-              f"{len(VOCABULAIRE)} tags au vocabulaire")
+              f"{n_gloss} termes au glossaire · {len(VOCABULAIRE)} tags au vocabulaire")
     if erreurs:
         print(f"\n❌ {len(erreurs)} erreur(s) :")
         for e in erreurs:

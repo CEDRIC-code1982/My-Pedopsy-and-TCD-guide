@@ -127,6 +127,27 @@ et `/* FORMATION_RESSOURCES_END */`)
   dans `note`. Même règle de déduplication (URL/titre).
 - Ne PAS inventer d'édition française : si l'existence d'une traduction est
   incertaine, l'écrire explicitement dans `note` ("à vérifier").
+**Bloc C — Glossaire** (entre `/* GLOSSAIRE_START */` et `/* GLOSSAIRE_END */`)
+- Le glossaire alimente l'onglet dédié ET le repérage automatique des sigles
+  dans les synthèses de veille. Champs : `terme`, `libelle`, `categorie`
+  (liste `CATEGORIES_GLOSSAIRE` dans `automation/vocabulaire.py`), `auto`,
+  `variantes`, `definition`.
+- **À chaque run, vérifier que les sigles introduits par les nouvelles entrées
+  sont définis.** Un sigle employé dans une synthèse sans être au glossaire est
+  un manque : l'ajouter dans le même commit.
+- `auto: true` = le terme est souligné et cliquable dans les synthèses. Le
+  réserver aux sigles distinctifs. Le mettre à `false` pour les expressions
+  courantes (« post hoc », « titration », « comorbidité ») : annotées partout,
+  elles rendraient les synthèses illisibles.
+- Le repérage est **sensible à la casse** et ne prend que la première
+  occurrence par carte. Pour les autres graphies rencontrées (« DME » pour
+  « DMS », « IC 95 % » pour « IC95% »), utiliser `variantes` plutôt que de
+  créer une seconde entrée. Une même graphie ne peut être revendiquée que par
+  un seul terme — `validate.py` rejette les collisions.
+- Définitions en français, 1 à 4 phrases, factuelles. Quand un sigle recouvre
+  un enjeu réglementaire ou méthodologique (AMM, hors AMM, SMC, SUCRA),
+  le dire explicitement : c'est ce qui empêche une mauvaise lecture.
+
 3. Déduplication : ne pas ajouter une entrée dont l'URL ou le titre
    existe déjà dans le tableau.
 4. Si des entrées de démonstration `[EXEMPLE FICTIF]` sont présentes,
