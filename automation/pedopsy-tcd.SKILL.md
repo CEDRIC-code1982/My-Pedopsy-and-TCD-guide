@@ -83,14 +83,34 @@ manuellement si besoin. Ne jamais le passer sous silence.
    (Chine, Japon, Corée), Asie du Sud, Moyen-Orient (Iran, Turquie, Israël),
    Amérique latine, Afrique, Océanie. Registres utiles au-delà de PubMed :
    SciELO et LILACS (Amérique latine), J-STAGE (Japon), KoreaMed, CNKI (Chine).
-   Registres d'essais pour repérer ce qui n'est pas encore publié :
-   ClinicalTrials.gov, ISRCTN, EU CTR, ANZCTR, ChiCTR, IRCT (Iran), CTRI (Inde),
-   jRCT (Japon).
+   Registres d'essais, voir le point 3bis ci-dessous.
    - Pour une source non anglophone et non francophone, conserver le lien
      original dans `url` et indiquer la langue et le pays dans la `synthese`.
    - Signaler explicitement les limites de transposabilité quand elles existent
      (système de soins, pratiques de prescription, ascendance de la population
      pour les travaux génétiques).
+
+3bis. **Interroger les registres d'essais à CHAQUE run.** La littérature
+   publiée a deux à quatre ans de retard sur ce qui se décide aujourd'hui dans
+   les protocoles. Interroger au minimum ClinicalTrials.gov (API v2, sans clé :
+   `curl -s -G "https://clinicaltrials.gov/api/v2/studies" --data-urlencode
+   "query.term=..." --data-urlencode "filter.overallStatus=RECRUITING|NOT_YET_RECRUITING|ACTIVE_NOT_RECRUITING"`)
+   et, quand le sujet s'y prête, ISRCTN, EU CTR, ANZCTR, ChiCTR, IRCT (Iran),
+   CTRI (Inde), jRCT (Japon) ou le portail ICTRP de l'OMS.
+   ⚠️ En zsh, `for id in $VAR` ne découpe PAS la variable : écrire la liste en
+   toutes lettres dans la boucle ou utiliser `${=VAR}`.
+   - Ce qui est retenu va dans le **bloc D** (`ESSAIS_A_SUIVRE`), jamais dans
+     `VEILLE_DATA` : un essai enregistré ne prouve rien et ne porte donc ni
+     niveau de preuve ni consensus.
+   - Viser 1 à 3 mouvements par run : ajout d'un essai marquant, mise à jour
+     d'un statut, ou retrait d'un essai désormais publié.
+   - **Quand un essai suivi est publié**, le retirer du bloc D et créer
+     l'entrée correspondante dans `VEILLE_DATA`. `validate.py` refuse qu'une
+     même URL figure dans les deux, et signale tout essai dont l'échéance de
+     résultats est dépassée depuis plus d'un an.
+   - Privilégier les essais avec comparateur actif, effectif conséquent ou
+     question sans réponse actuelle. Écarter les protocoles sans publication
+     attendue avant plus de quatre ans.
 
 3. **Veille exploratoire : inclure les travaux expérimentaux.** Ne pas se
    limiter à ce qui est déjà transposable en consultation. Les essais de phase
@@ -147,6 +167,17 @@ et `/* FORMATION_RESSOURCES_END */`)
 - Définitions en français, 1 à 4 phrases, factuelles. Quand un sigle recouvre
   un enjeu réglementaire ou méthodologique (AMM, hors AMM, SMC, SUCRA),
   le dire explicitement : c'est ce qui empêche une mauvaise lecture.
+
+**Bloc D — Essais à suivre** (entre `/* ESSAIS_START */` et `/* ESSAIS_END */`)
+- Essais enregistrés dont les résultats ne sont pas publiés. Champs : `titre`,
+  `registre` (liste `REGISTRES`), `identifiant`, `url`, `pays`, `theme`,
+  `statut` (liste `STATUTS_ESSAI`), `finPrevue` (AAAA-MM), `population`,
+  `comparaison`, `criterePrincipal`, `interet`.
+- Ni `niveauPreuve` ni `consensus` : ces champs n'existent pas ici, et c'est
+  délibéré. Le champ `interet` doit dire ce que l'essai trancherait, et
+  signaler ses limites de conception connues d'avance (bras unique, critère
+  de faisabilité, comparateur en liste d'attente).
+- Le glossaire s'applique aussi à ce bloc : les sigles y sont annotés.
 
 3. Déduplication : ne pas ajouter une entrée dont l'URL ou le titre
    existe déjà dans le tableau.

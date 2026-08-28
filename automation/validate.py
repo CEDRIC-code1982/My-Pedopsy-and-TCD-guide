@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """Validation d'index.html avant commit.
 
-Vérifie que les trois blocs de données sont intacts et cohérents :
+Vérifie que les quatre blocs de données sont intacts et cohérents :
 structure JSON, champs obligatoires, énumérations, vocabulaire contrôlé
 des sousThemes, absence de doublons, et syntaxe du bloc <script>.
 
@@ -15,12 +15,14 @@ import shutil
 import subprocess
 import sys
 import tempfile
+from datetime import date
 from pathlib import Path
 
 RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE / "automation"))
 from vocabulaire import (ALIAS, CATEGORIES_GLOSSAIRE, CONSENSUS,  # noqa: E402
-                         NIVEAUX, SOURCES, THEMES, TYPES_SOURCE, VOCABULAIRE)
+                         NIVEAUX, REGISTRES, SOURCES, STATUTS_ESSAI, THEMES,
+                         TYPES_SOURCE, VOCABULAIRE)
 
 CHAMPS = ["titre", "url", "datePublication", "dateAjout", "theme", "sousThemes",
           "typeSource", "niveauPreuve", "consensus", "source", "synthese", "pertinence"]
@@ -33,9 +35,18 @@ COUTS = {"Gratuit", "Payant"}
 
 CHAMPS_GLOSS = ["terme", "libelle", "categorie", "auto", "variantes", "definition"]
 
+CHAMPS_ESSAI = ["titre", "registre", "identifiant", "url", "pays", "theme",
+                "statut", "finPrevue", "population", "comparaison",
+                "criterePrincipal", "interet"]
+
 MARQUEURS = ["/* VEILLE_DATA_START */", "/* VEILLE_DATA_END */",
              "/* FORMATION_RESSOURCES_START */", "/* FORMATION_RESSOURCES_END */",
-             "/* GLOSSAIRE_START */", "/* GLOSSAIRE_END */"]
+             "/* GLOSSAIRE_START */", "/* GLOSSAIRE_END */",
+             "/* ESSAIS_START */", "/* ESSAIS_END */"]
+
+# Échéance en deçà de laquelle un essai « à suivre » est considéré périmé :
+# un an avant le mois courant.
+PERIME = f"{date.today().year - 1:04d}-{date.today().month:02d}"
 
 erreurs = []
 
@@ -181,6 +192,45 @@ def valide_glossaire(entrees):
                     vus_graphie[graphie] = n
 
 
+def valide_essais(entrees, urls_veille):
+    """Essais enregistrés non publiés.
+
+    Deux contrôles propres à ce bloc : l'échéance annoncée doit rester dans le
+    futur proche (un essai dont les résultats étaient attendus il y a plus d'un
+    an est soit publié, soit abandonné — dans les deux cas il n'a plus sa place
+    ici), et l'essai ne doit pas déjà figurer dans la veille.
+    """
+    vus = {}
+    for n, e in enumerate(entrees, 1):
+        ref = f"essai #{n} ({str(e.get('identifiant', '?'))})"
+        manquants = [c for c in CHAMPS_ESSAI if c not in e]
+        superflus = [c for c in e if c not in CHAMPS_ESSAI]
+        if manquants:
+            err(f"{ref} : champs manquants {manquants}")
+        if superflus:
+            err(f"{ref} : champs inattendus {superflus}")
+        if e.get("registre") not in REGISTRES:
+            err(f"{ref} : registre invalide {e.get('registre')!r}")
+        if e.get("statut") not in STATUTS_ESSAI:
+            err(f"{ref} : statut invalide {e.get('statut')!r}")
+        if e.get("theme") not in THEMES:
+            err(f"{ref} : theme invalide {e.get('theme')!r}")
+        if not re.fullmatch(r"\d{4}-\d{2}", str(e.get("finPrevue", ""))):
+            err(f"{ref} : finPrevue doit être AAAA-MM, reçu {e.get('finPrevue')!r}")
+        elif e["finPrevue"] < PERIME:
+            err(f"{ref} : résultats attendus en {e['finPrevue']}, dépassé depuis plus "
+                f"d'un an — publier l'entrée dans la veille ou la retirer")
+        if not str(e.get("url", "")).startswith("https://"):
+            err(f"{ref} : url non https {e.get('url')!r}")
+        ident = str(e.get("identifiant", "")).strip()
+        if ident in vus:
+            err(f"{ref} : identifiant en double avec l'essai #{vus[ident]}")
+        else:
+            vus[ident] = n
+        if norme(e.get("url", "")) in urls_veille:
+            err(f"{ref} : cet essai figure déjà dans la veille — le retirer d'ici")
+
+
 def valide_js(src):
     if shutil.which("node") is None:
         print("  ⚠️  node absent : contrôle de syntaxe JS ignoré")
@@ -228,6 +278,13 @@ def main():
         err(f"GLOSSAIRE illisible : {exc}")
         rapport(cible)
         return 1
+    try:
+        es, ee = bornes_tableau(src, "ESSAIS_A_SUIVRE")
+        essais = json.loads(src[es:ee])
+    except (ValueError, json.JSONDecodeError) as exc:
+        err(f"ESSAIS_A_SUIVRE illisible : {exc}")
+        rapport(cible)
+        return 1
 
     if not (src.index(MARQUEURS[0]) < vs < ve < src.index(MARQUEURS[1])):
         err("VEILLE_DATA déborde de ses marqueurs")
@@ -235,21 +292,24 @@ def main():
         err("RESSOURCES déborde de ses marqueurs")
     if not (src.index(MARQUEURS[4]) < gs < ge < src.index(MARQUEURS[5])):
         err("GLOSSAIRE déborde de ses marqueurs")
+    if not (src.index(MARQUEURS[6]) < es < ee < src.index(MARQUEURS[7])):
+        err("ESSAIS_A_SUIVRE déborde de ses marqueurs")
 
     valide_veille(veille)
     valide_ressources(ressources)
     valide_glossaire(glossaire)
+    valide_essais(essais, {norme(e.get("url", "")) for e in veille})
     valide_js(src)
 
-    rapport(cible, len(veille), len(ressources), len(glossaire))
+    rapport(cible, len(veille), len(ressources), len(glossaire), len(essais))
     return 1 if erreurs else 0
 
 
-def rapport(cible, n_veille=None, n_res=None, n_gloss=None):
+def rapport(cible, n_veille=None, n_res=None, n_gloss=None, n_essais=None):
     print(f"Validation de {cible.name}")
     if n_veille is not None:
-        print(f"  {n_veille} entrées de veille · {n_res} ressources · "
-              f"{n_gloss} termes au glossaire · {len(VOCABULAIRE)} tags au vocabulaire")
+        print(f"  {n_veille} entrées de veille · {n_res} ressources · {n_essais} essais "
+              f"suivis · {n_gloss} termes au glossaire · {len(VOCABULAIRE)} tags")
     if erreurs:
         print(f"\n❌ {len(erreurs)} erreur(s) :")
         for e in erreurs:

@@ -40,7 +40,7 @@
   }
   /* Seul l'onglet Veille passe en pleine largeur : les onglets de formation
      contiennent du texte suivi, illisible au-delà de ~75 caractères par ligne. */
-  body[data-tab="veille"], body[data-tab="glossaire"] { max-width: var(--wide); }
+  body[data-tab="veille"], body[data-tab="glossaire"], body[data-tab="essais"] { max-width: var(--wide); }
   a { color: var(--teal); }
   a:focus-visible, button:focus-visible, input:focus-visible {
     outline: 2px solid var(--teal);
@@ -60,8 +60,10 @@
   h1 .amp { color: var(--teal); font-style: italic; }
 
   /* ---------- Onglets ---------- */
+  /* flex-wrap : au-delà de quatre onglets, la barre déborderait sur mobile. */
   .tabs {
-    display: flex; gap: 4px; border-bottom: 2px solid var(--line); margin-bottom: 28px;
+    display: flex; flex-wrap: wrap; gap: 4px;
+    border-bottom: 2px solid var(--line); margin-bottom: 28px;
   }
   .tab {
     font: 700 15px "Source Sans 3", sans-serif;
@@ -167,6 +169,7 @@
   }
   /* Mode compact : synthèse et « En pratique » masquées jusqu'au dépliage. */
   #veille-list[data-density="compact"] .card { cursor: pointer; }
+  #essais-list[data-gloss="off"] .gloss { border-bottom: none; pointer-events: none; cursor: inherit; }
   #veille-list[data-density="compact"] .card-body { display: none; }
   #veille-list[data-density="compact"] .card[data-open="1"] .card-body { display: block; }
   #veille-list[data-density="compact"] .meta-add { display: none; }
@@ -396,6 +399,33 @@
   .chip-reset { margin-left: auto; color: var(--muted); border-style: dashed; }
   .chip-reset:hover { color: var(--ink); border-color: var(--muted); }
 
+  /* ---------- Essais en cours ---------- */
+  .essais-avert { margin-bottom: 20px; }
+  #essais-list {
+    display: grid; gap: 14px; align-items: start;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  }
+  .essai {
+    background: var(--card); border: 1px solid var(--line);
+    border-left: 3px solid var(--amber); border-radius: 10px; padding: 16px 18px;
+  }
+  .essai h2 { font-family: "Spectral", Georgia, serif; font-weight: 600; font-size: 17px; line-height: 1.3; }
+  .essai h2 a { color: var(--ink); text-decoration: none; }
+  .essai h2 a:hover { color: var(--teal); text-decoration: underline; }
+  .essai .e-meta {
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px; color: var(--muted);
+    margin: 6px 0 10px;
+  }
+  .essai dl { display: grid; grid-template-columns: 108px 1fr; gap: 4px 10px; font-size: 13.5px; }
+  .essai dt { color: var(--muted); font-size: 12px; padding-top: 1px; }
+  .essai .e-interet {
+    font-size: 14px; background: var(--amber-soft); border-left: 3px solid var(--amber);
+    border-radius: 0 6px 6px 0; padding: 8px 12px; margin-top: 12px;
+  }
+  .essai .e-interet strong { color: var(--amber); }
+  .e-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  @media (max-width: 560px) { .essai dl { grid-template-columns: 1fr; } .essai dt { margin-top: 6px; } }
+
   /* ---------- Glossaire ---------- */
   /* Terme annoté dans une synthèse : reste du texte courant, souligné en
      pointillé, cliquable. Le bouton « Définitions » neutralise le repérage. */
@@ -463,7 +493,8 @@
     html, body { background: #fff; }
     .panel[hidden] { display: none !important; }
     .card, .skill, .res, .theory-block, .goal, .progress-head, .step { break-inside: avoid; }
-    #veille-list, #resources, #resources-tcc, .gloss-grid { display: block !important; }
+    #veille-list, #resources, #resources-tcc, .gloss-grid, #essais-list { display: block !important; }
+    .essai { margin-bottom: 12px; break-inside: avoid; }
     #gloss-pop { display: none !important; }
     .gloss { border-bottom: none !important; }
     #veille-list .card-body { display: block !important; }
@@ -486,6 +517,7 @@
   <button class="tab" role="tab" id="tab-formation" aria-controls="panel-formation" aria-selected="false" tabindex="-1">Formation TCD</button>
   <button class="tab" role="tab" id="tab-formation-tcc" aria-controls="panel-formation-tcc" aria-selected="false" tabindex="-1">Formation TCC</button>
   <button class="tab" role="tab" id="tab-traitements" aria-controls="panel-traitements" aria-selected="false" tabindex="-1">Traitements</button>
+  <button class="tab" role="tab" id="tab-essais" aria-controls="panel-essais" aria-selected="false" tabindex="-1">Essais en cours</button>
   <button class="tab" role="tab" id="tab-glossaire" aria-controls="panel-glossaire" aria-selected="false" tabindex="-1">Glossaire</button>
 </div>
 
@@ -542,6 +574,21 @@
 
   <div id="veille-list"></div>
   <p class="empty" id="veille-empty" hidden>Aucune entrée ne correspond aux filtres.</p>
+</section>
+
+<!-- ==================== PANEL ESSAIS ==================== -->
+<section class="panel" id="panel-essais" role="tabpanel" aria-labelledby="tab-essais" hidden>
+  <p class="panel-stats" id="essais-stats"></p>
+  <div class="warn-banner essais-avert">Ces travaux sont <strong>enregistrés mais non publiés</strong> : aucun résultat n'est disponible et
+  aucun niveau de preuve ne leur est attaché. Ils indiquent ce qui se prépare, pas ce qui est acquis. Rien ici ne fonde une décision clinique.</div>
+  <div class="filters" role="toolbar" aria-label="Filtres des essais">
+    <span class="group-label">Thème</span>
+    <span id="essais-themes"></span>
+    <span class="sep" aria-hidden="true"></span>
+    <input class="search" id="essais-search" type="search" placeholder="Rechercher un essai, un pays, une molécule…" aria-label="Rechercher dans les essais">
+  </div>
+  <div id="essais-list"></div>
+  <p class="empty" id="essais-empty" hidden>Aucun essai ne correspond à ces filtres.</p>
 </section>
 
 <!-- ==================== PANEL GLOSSAIRE ==================== -->
@@ -3058,6 +3105,28 @@ const RESSOURCES = [
    « DMS », « IC 95 % » pour « IC95% »…).
    Repérage sensible à la casse : « ACT » est annoté, « act » ne l'est pas.
    ============================================================ */
+/* ============================================================
+   2bis) ESSAIS À SUIVRE — travaux enregistrés, résultats non publiés
+   Repérés dans les registres (ClinicalTrials.gov, ISRCTN, EU CTR, ChiCTR,
+   IRCT, CTRI, jRCT…). Ils ne portent AUCUN niveau de preuve : ce sont des
+   questions posées, pas des réponses. Retirer une entrée quand l'essai est
+   publié — et l'ajouter alors à VEILLE_DATA.
+   ============================================================ */
+/* ESSAIS_START */
+const ESSAIS_A_SUIVRE = [
+  {"titre": "Propranolol sous réactivation mnésique dans le trouble de stress post-traumatique de l'enfant", "registre": "ClinicalTrials.gov", "identifiant": "NCT04985344", "url": "https://clinicaltrials.gov/study/NCT04985344", "pays": "France — CHU de Toulouse", "theme": "Pédopsychiatrie", "statut": "Recrutement en cours", "finPrevue": "2027-09", "population": "92 enfants de 7 à 12 ans présentant un TSPT", "comparaison": "Propranolol versus placebo, administré avant une séance de réactivation du souvenir traumatique (phase 3)", "criterePrincipal": "Child Post-Traumatic Stress Reaction Index (CPTS-RI)", "interet": "Seul essai de phase 3 français de cette sélection. Le blocage de la reconsolidation mnésique par un bêtabloquant est une piste ancienne chez l'adulte, jamais tranchée chez l'enfant : un résultat positif ouvrirait une option de nature très différente des psychothérapies du trauma."},
+  {"titre": "TEENS : thérapie de régulation émotionnelle par internet (ERITA) ajoutée aux soins courants dans l'automutilation", "registre": "ClinicalTrials.gov", "identifiant": "NCT05179655", "url": "https://clinicaltrials.gov/study/NCT05179655", "pays": "Danemark — Mental Health Centre Copenhagen", "theme": "Pédopsychiatrie", "statut": "Recrutement en cours", "finPrevue": "2026-05", "population": "356 adolescents de 13 à 17 ans pratiquant l'automutilation", "comparaison": "ERITA ajoutée aux soins courants versus soins courants seuls", "criterePrincipal": "Nombre d'épisodes d'automutilation non suicidaire", "interet": "Le plus gros essai en cours sur l'automutilation de l'adolescent, avec des résultats attendus sous un an. Format numérique et comparateur en soins courants : directement transposable à une organisation de soins publique."},
+  {"titre": "POET : traitement en ligne de la régulation émotionnelle délivré en soins primaires", "registre": "ClinicalTrials.gov", "identifiant": "NCT06067165", "url": "https://clinicaltrials.gov/study/NCT06067165", "pays": "Suède — Karolinska Institutet", "theme": "Pédopsychiatrie", "statut": "Recrutement en cours", "finPrevue": "2026-10", "population": "388 adolescents de 12 à 17 ans suivis en soins primaires", "comparaison": "Programme POET en ligne versus traitement de soutien (comparateur actif)", "criterePrincipal": "Impression clinique globale de sévérité (CGI-S)", "interet": "Teste une intervention de régulation émotionnelle au niveau des soins primaires plutôt qu'en centre spécialisé — précisément le goulot d'étranglement français. Le comparateur actif rend l'essai exigeant."},
+  {"titre": "TCD pour adolescents avec auto-mutilation et conduites suicidaires : essai ouvert", "registre": "ClinicalTrials.gov", "identifiant": "NCT06315075", "url": "https://clinicaltrials.gov/study/NCT06315075", "pays": "Norvège — Haukeland University Hospital, Bergen", "theme": "TCD-Adolescents (DBT-A)", "statut": "Recrutement en cours", "finPrevue": "2027-12", "population": "140 adolescents de 13 à 18 ans", "comparaison": "Bras unique de TCD-A, sans groupe témoin", "criterePrincipal": "Lifetime Parasuicide Count et recours aux urgences pour conduites suicidaires", "interet": "Cohorte importante pour la TCD-A, mais essai ouvert sans comparateur : il documentera l'évolution sous traitement en conditions réelles, pas un effet propre du traitement. À lire comme une étude de mise en œuvre."},
+  {"titre": "Adaptation culturelle de l'entraînement aux compétences TCD pour adolescents à Taïwan", "registre": "ClinicalTrials.gov", "identifiant": "NCT06566235", "url": "https://clinicaltrials.gov/study/NCT06566235", "pays": "Taïwan — Mackay Memorial Hospital", "theme": "TCD-Adolescents (DBT-A)", "statut": "Recrutement en cours", "finPrevue": "2028-07", "population": "160 adolescents de 12 à 18 ans présentant des troubles émotionnels", "comparaison": "Groupe de compétences TCD-A adapté culturellement versus groupe fondé sur l'approche de Satir", "criterePrincipal": "Youth Self Report (YSR) et Child Behavior Checklist (CBCL)", "interet": "Rare essai contrôlé de TCD en Asie de l'Est comportant un comparateur psychothérapeutique actif et non une liste d'attente. Éclairera la part culturelle de l'efficacité du modèle."},
+  {"titre": "Prescription d'antidépresseurs guidée par la pharmacogénétique chez l'adolescent anxieux ou déprimé", "registre": "ClinicalTrials.gov", "identifiant": "NCT06853587", "url": "https://clinicaltrials.gov/study/NCT06853587", "pays": "Canada — université de Calgary", "theme": "Pédopsychiatrie", "statut": "Recrutement en cours", "finPrevue": "2027-09", "population": "228 adolescents de 12 à 17 ans", "comparaison": "Prescription guidée par le génotype versus prescription selon les recommandations en vigueur", "criterePrincipal": "Proportion de participants en rémission de la dépression et de l'anxiété", "interet": "Transpose à l'adolescent une question restée sans réponse claire chez l'adulte. Si le bénéfice se confirme, le génotypage deviendrait un préalable à la prescription, avec des conséquences organisationnelles et de coût considérables."},
+  {"titre": "SAFETY : traitement psychosocial de prévention du suicide chez le jeune", "registre": "ClinicalTrials.gov", "identifiant": "NCT06931639", "url": "https://clinicaltrials.gov/study/NCT06931639", "pays": "Suède — Karolinska Institutet", "theme": "Pédopsychiatrie", "statut": "Recrutement en cours", "finPrevue": "2027-09", "population": "282 jeunes de 10 à 17 ans", "comparaison": "Programme SAFETY versus soins courants renforcés", "criterePrincipal": "Survenue d'une tentative de suicide (C-SSRS ou dossier médical électronique)", "interet": "Un des rares essais dont le critère principal est la tentative de suicide elle-même et non une échelle d'idéation. Le comparateur en soins courants renforcés en fait un test difficile à passer."},
+  {"titre": "STIME : prévention intersectorielle des troubles psychiques sévères du jeune", "registre": "ClinicalTrials.gov", "identifiant": "NCT07413887", "url": "https://clinicaltrials.gov/study/NCT07413887", "pays": "Danemark — Center for Clinical Research and Prevention", "theme": "Transversal", "statut": "Recrutement en cours", "finPrevue": "2028-02", "population": "1 200 enfants et adolescents de 3 à 17 ans", "comparaison": "Intervention intersectorielle versus groupe témoin actif et groupe sans intervention", "criterePrincipal": "Bien-être", "interet": "Le plus gros effectif de cette sélection, sur une logique de prévention coordonnée entre santé, école et social plutôt que de soin spécialisé. Le critère de bien-être reste vague : la définition retenue conditionnera l'interprétation."},
+  {"titre": "Sertraline associée à des probiotiques multi-souches dans la dépression de l'adolescent", "registre": "ClinicalTrials.gov", "identifiant": "NCT07645157", "url": "https://clinicaltrials.gov/study/NCT07645157", "pays": "Chine — premier hôpital affilié de l'université médicale de Chongqing", "theme": "Pédopsychiatrie", "statut": "Recrutement en cours", "finPrevue": "2028-10", "population": "120 adolescents de 12 à 18 ans", "comparaison": "Sertraline associée à des probiotiques versus sertraline associée à un placebo (phase 2)", "criterePrincipal": "Évolution du score CDRS-R", "interet": "Essai de phase 2 sur l'axe intestin-cerveau, avec un authentique comparateur placebo. Aucune conséquence pratique avant plusieurs années : c'est exactement le type de piste que la veille doit repérer tôt."},
+  {"titre": "Reframe-IT+ et CARIBOU : soins stratifiés pour l'idéation suicidaire, la dépression et l'automutilation", "registre": "ClinicalTrials.gov", "identifiant": "NCT07780084", "url": "https://clinicaltrials.gov/study/NCT07780084", "pays": "Chili — Universidad de los Andes", "theme": "Pédopsychiatrie", "statut": "En cours, recrutement clos", "finPrevue": "2027-11", "population": "90 adolescents de 14 à 18 ans", "comparaison": "Bras unique, évalué sur des critères de faisabilité, de fidélité et d'acceptabilité", "criterePrincipal": "Faisabilité et fidélité de mise en œuvre du plan de soins stratifiés", "interet": "Étude de faisabilité et non d'efficacité : elle dira si un modèle de soins gradués tient en Amérique latine, pas s'il fait mieux qu'autre chose. Source latino-américaine rare sur la suicidalité de l'adolescent."}
+];
+/* ESSAIS_END */
+
 /* GLOSSAIRE_START */
 const GLOSSAIRE = [
   {"terme": "AMM", "libelle": "Autorisation de mise sur le marché", "categorie": "Réglementation et institutions", "auto": true, "variantes": [], "definition": "Autorisation de commercialiser un médicament, délivrée par l'ANSM en France, l'EMA au niveau européen ou la FDA aux États-Unis. Elle n'est jamais générale : elle borne une indication, une tranche d'âge et une posologie précises. Beaucoup de psychotropes utilisés en pédopsychiatrie n'ont d'AMM que chez l'adulte."},
@@ -3733,6 +3802,76 @@ document.getElementById("reset-filters").addEventListener("click", () => {
 });
 
 /* ============================================================
+   ESSAIS EN COURS
+   Volontairement sans niveau de preuve ni consensus : un essai enregistré
+   ne prouve rien. Les définitions du glossaire s'appliquent aussi ici.
+   ============================================================ */
+const essaisState = { theme: null, q: "" };
+const ESSAIS_THEMES = [...new Set(ESSAIS_A_SUIVRE.map(e => e.theme))];
+function essaiMatches(e) {
+  if (essaisState.theme && !themeMatches(e.theme, essaisState.theme)) return false;
+  if (!essaisState.q) return true;
+  const hay = [e.titre, e.pays, e.population, e.comparaison, e.criterePrincipal,
+               e.interet, e.identifiant, e.registre, e.theme].join(" ").toLowerCase();
+  return hay.includes(essaisState.q);
+}
+function essaiCarte(e) {
+  const vus = new Set();
+  const champ = (dt, dd) => `<dt>${dt}</dt><dd>${annoter(esc(dd), vus)}</dd>`;
+  return `<article class="essai">
+    <h2><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.titre)}</a></h2>
+    <p class="e-meta">${esc(e.registre)} · ${esc(e.identifiant)} · ${esc(e.pays)}</p>
+    <dl>
+      ${champ("Population", e.population)}
+      ${champ("Comparaison", e.comparaison)}
+      ${champ("Critère principal", e.criterePrincipal)}
+    </dl>
+    <p class="e-interet"><strong>Pourquoi le suivre —</strong> ${annoter(esc(e.interet), vus)}</p>
+    <div class="e-badges">
+      <span class="tag theme">${esc(e.theme)}</span>
+      <span class="tag">${esc(e.statut)}</span>
+      <span class="tag">Résultats attendus ${esc(e.finPrevue)}</span>
+    </div></article>`;
+}
+function renderEssais() {
+  const visibles = [...ESSAIS_A_SUIVRE]
+    .sort((a, b) => String(a.finPrevue).localeCompare(String(b.finPrevue)))
+    .filter(essaiMatches);
+  document.getElementById("essais-list").innerHTML = visibles.map(essaiCarte).join("");
+  document.getElementById("essais-empty").hidden = visibles.length > 0;
+  document.getElementById("essais-stats").textContent =
+    `${ESSAIS_A_SUIVRE.length} essais suivis · ${visibles.length} affiché${visibles.length > 1 ? "s" : ""} · triés par échéance de résultats`;
+}
+(function initEssaisFiltres() {
+  const zone = document.getElementById("essais-themes");
+  ESSAIS_THEMES.forEach(t => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "chip"; b.setAttribute("aria-pressed", "false");
+    b.textContent = t;
+    const n = document.createElement("span");
+    n.className = "chip-count";
+    n.textContent = ESSAIS_A_SUIVRE.filter(e => e.theme === t).length;
+    b.appendChild(n);
+    b.addEventListener("click", () => {
+      const actif = essaisState.theme === t;
+      essaisState.theme = actif ? null : t;
+      zone.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", String(x === b && !actif)));
+      renderEssais();
+    });
+    zone.appendChild(b);
+    zone.appendChild(document.createTextNode(" "));
+  });
+})();
+document.getElementById("essais-search").addEventListener("input", ev => {
+  essaisState.q = ev.target.value.trim().toLowerCase();
+  renderEssais();
+});
+document.getElementById("essais-list").addEventListener("click", ev => {
+  const gl = ev.target.closest(".gloss");
+  if (gl) ouvrirGloss(gl);
+});
+
+/* ============================================================
    GLOSSAIRE : infobulle, bascule et panneau dédié
    ============================================================ */
 const glossPop = document.createElement("div");
@@ -3788,6 +3927,7 @@ let glossOn = true;
 try { const v = localStorage.getItem(GLOSS_KEY); if (v === "off") glossOn = false; } catch {}
 function applyGloss() {
   document.getElementById("veille-list").dataset.gloss = glossOn ? "on" : "off";
+  document.getElementById("essais-list").dataset.gloss = glossOn ? "on" : "off";
   document.getElementById("gloss-toggle").setAttribute("aria-pressed", String(glossOn));
 }
 document.getElementById("gloss-toggle").addEventListener("click", () => {
@@ -4040,12 +4180,14 @@ const tabs = [
   { tab: "tab-formation", panel: "panel-formation" },
   { tab: "tab-formation-tcc", panel: "panel-formation-tcc" },
   { tab: "tab-traitements", panel: "panel-traitements" },
+  { tab: "tab-essais", panel: "panel-essais" },
   { tab: "tab-glossaire", panel: "panel-glossaire" }
 ];
 let formationRendered = false;
 let formationTccRendered = false;
 let traitementsRendered = false;
 let glossaireRendered = false;
+let essaisRendered = false;
 function selectTab(tabId, { focus = false } = {}) {
   tabs.forEach(t => {
     const sel = t.tab === tabId;
@@ -4060,6 +4202,7 @@ function selectTab(tabId, { focus = false } = {}) {
   if (tabId === "tab-formation-tcc" && !formationTccRendered) { renderFormationTCC(); formationTccRendered = true; }
   if (tabId === "tab-traitements" && !traitementsRendered) { renderTraitements(); traitementsRendered = true; }
   if (tabId === "tab-glossaire" && !glossaireRendered) { renderGlossaire(); glossaireRendered = true; }
+  if (tabId === "tab-essais" && !essaisRendered) { renderEssais(); essaisRendered = true; }
 }
 tabs.forEach(({ tab }) => {
   document.getElementById(tab).addEventListener("click", () => selectTab(tab));

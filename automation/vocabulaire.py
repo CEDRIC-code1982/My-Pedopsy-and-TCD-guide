@@ -145,6 +145,21 @@ TYPES_SOURCE = [
 ]
 
 # ---------------------------------------------------------------------------
+# Registres d'essais cliniques et statuts d'avancement, pour le bloc
+# ESSAIS_A_SUIVRE. Un essai enregistré n'a pas de niveau de preuve : il n'en
+# porte donc aucun. Dès qu'il est publié, il quitte ce bloc pour VEILLE_DATA.
+# ---------------------------------------------------------------------------
+REGISTRES = [
+    "ClinicalTrials.gov", "ISRCTN", "EU CTR", "ANZCTR", "ChiCTR",
+    "IRCT", "CTRI", "jRCT", "ICTRP (OMS)",
+]
+
+STATUTS_ESSAI = [
+    "Recrutement à venir", "Recrutement en cours",
+    "En cours, recrutement clos", "Terminé, résultats non publiés",
+]
+
+# ---------------------------------------------------------------------------
 # Catégories du glossaire. Elles structurent l'onglet dédié : en ajouter une
 # crée une section, donc ne le faire que pour un ensemble de termes cohérent.
 # ---------------------------------------------------------------------------
