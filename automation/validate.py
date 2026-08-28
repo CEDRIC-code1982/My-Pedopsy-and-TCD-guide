@@ -231,6 +231,22 @@ def valide_essais(entrees, urls_veille):
             err(f"{ref} : cet essai figure déjà dans la veille — le retirer d'ici")
 
 
+def valide_renvois(src, urls_veille):
+    """Les onglets Traitements renvoient à la veille par l'URL (champ `src`).
+
+    Rien n'empêchait jusqu'ici qu'une entrée soit reformulée ou archivée en
+    laissant derrière elle un renvoi vers le vide : le lien tombait sans bruit.
+    """
+    for nom in ("SYNTHESE_TROUBLES", "PHARMA_REF", "PHARMA_HORS_AMM"):
+        m = re.search(rf"const {nom} = \[(.*?)\n\];", src, re.S)
+        if m is None:
+            err(f"{nom} introuvable — les renvois des traitements ne peuvent être vérifiés")
+            continue
+        for u in re.findall(r'src:\s*"([^"]+)"', m.group(1)):
+            if norme(u) not in urls_veille:
+                err(f"{nom} : renvoi vers une entrée absente de la veille — {u}")
+
+
 def valide_js(src):
     if shutil.which("node") is None:
         print("  ⚠️  node absent : contrôle de syntaxe JS ignoré")
@@ -298,7 +314,9 @@ def main():
     valide_veille(veille)
     valide_ressources(ressources)
     valide_glossaire(glossaire)
-    valide_essais(essais, {norme(e.get("url", "")) for e in veille})
+    urls_veille = {norme(e.get("url", "")) for e in veille}
+    valide_essais(essais, urls_veille)
+    valide_renvois(src, urls_veille)
     valide_js(src)
 
     rapport(cible, len(veille), len(ressources), len(glossaire), len(essais))
