@@ -24,6 +24,9 @@
     --done: #0F766E;
     --doing: #B07D2B;
     --todo: #C3CDCD;
+    /* Largeurs : la prose reste à ~75 caractères, la veille s'étale en grille. */
+    --prose: 920px;
+    --wide: 1520px;
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { background: var(--paper); }
@@ -31,10 +34,13 @@
     font-family: "Source Sans 3", -apple-system, "Segoe UI", sans-serif;
     color: var(--ink);
     line-height: 1.55;
-    max-width: 860px;
+    max-width: var(--prose);
     margin: 0 auto;
     padding: 40px 20px 80px;
   }
+  /* Seul l'onglet Veille passe en pleine largeur : les onglets de formation
+     contiennent du texte suivi, illisible au-delà de ~75 caractères par ligne. */
+  body[data-tab="veille"] { max-width: var(--wide); }
   a { color: var(--teal); }
   a:focus-visible, button:focus-visible, input:focus-visible {
     outline: 2px solid var(--teal);
@@ -76,6 +82,15 @@
     padding: 14px 0; border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line); margin-bottom: 24px;
   }
+  /* Collante au défilement sur écran large seulement : sur mobile elle occupe
+     trop de hauteur pour rester affichée en permanence. */
+  @media (min-width: 900px) {
+    .filters {
+      position: sticky; top: 0; z-index: 20; background: var(--paper);
+      margin-left: -20px; margin-right: -20px;
+      padding-left: 20px; padding-right: 20px;
+    }
+  }
   .filters .group-label {
     font-family: "IBM Plex Mono", monospace; font-size: 11px;
     text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-right: 2px;
@@ -111,8 +126,9 @@
   .card {
     display: grid; grid-template-columns: 14px 1fr; gap: 16px;
     background: var(--card); border: 1px solid var(--line);
-    border-radius: 10px; padding: 18px 20px; margin-bottom: 14px;
+    border-radius: 10px; padding: 18px 20px;
   }
+  .card-main { min-width: 0; }
   .spine { display: flex; flex-direction: column; gap: 3px; padding-top: 4px; }
   .spine i { flex: 1; border-radius: 2px; background: var(--grey-soft); min-height: 14px; }
   .card h2 {
@@ -135,6 +151,53 @@
   .tag.consensus-emergent { background: var(--amber-soft); color: var(--amber); }
   .tag.consensus-controverse { background: var(--red-soft); color: var(--red); }
   .empty { text-align: center; color: var(--muted); padding: 48px 0; font-size: 15px; }
+
+  /* ---------- Veille : grille, densité, séparateurs de run ---------- */
+  /* auto-fill + minmax : les cartes se placent côte à côte et reviennent à la
+     ligne dès qu'il n'y a plus la place. Le plancher (420px détaillé,
+     330px compact) plafonne de fait à 3 colonnes en détaillé et 4 en compact
+     sur --wide, au-delà la synthèse devient une colonne de journal. */
+  #veille-list {
+    display: grid; gap: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr));
+  }
+  #veille-list[data-density="compact"] {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr));
+    align-items: start;   /* une carte dépliée ne fait pas grandir ses voisines */
+  }
+  /* Mode compact : synthèse et « En pratique » masquées jusqu'au dépliage. */
+  #veille-list[data-density="compact"] .card { cursor: pointer; }
+  #veille-list[data-density="compact"] .card-body { display: none; }
+  #veille-list[data-density="compact"] .card[data-open="1"] .card-body { display: block; }
+  #veille-list[data-density="compact"] .meta-add { display: none; }
+  #veille-list[data-density="detail"] .card-toggle { display: none; }
+
+  .card-foot { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .card-toggle {
+    flex: 0 0 auto; font: 600 12px "Source Sans 3", sans-serif;
+    background: none; border: 1px solid var(--line); border-radius: 999px;
+    color: var(--muted); padding: 3px 10px; cursor: pointer; white-space: nowrap;
+  }
+  .card-toggle:hover { color: var(--ink); border-color: var(--muted); }
+  .tag-btn { border: none; cursor: pointer; font-family: inherit; }
+  .tag-btn:hover { box-shadow: inset 0 0 0 1px var(--muted); }
+  /* Dans une colonne étroite, 6 tags s'empilent sur 5 lignes et ruinent la
+     compacité : on n'en garde que 4 tant que la carte est repliée. */
+  .tag-more { background: none; border: 1px dashed var(--line); color: var(--muted); }
+  #veille-list[data-density="compact"] .card:not([data-open="1"]) .tags > *:nth-child(n+5):not(.tag-more) { display: none; }
+  #veille-list[data-density="compact"] .card[data-open="1"] .tag-more { display: none; }
+  #veille-list[data-density="detail"] .tag-more { display: none; }
+
+  /* Séparateur de run de veille (tri « Ajout récent » seulement). */
+  .run-sep {
+    grid-column: 1 / -1; display: flex; align-items: center; gap: 12px;
+    font-family: "IBM Plex Mono", monospace; font-size: 11.5px;
+    text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted);
+    margin: 12px 0 0;
+  }
+  .run-sep:first-child { margin-top: 0; }
+  .run-sep::after { content: ""; flex: 1; height: 1px; background: var(--line); order: 2; }
+  .run-sep .run-count { order: 3; }
   /* ---------- Formation : progression globale ---------- */
   .progress-head {
     background: var(--card); border: 1px solid var(--line); border-radius: 10px;
@@ -246,10 +309,14 @@
   /* ---------- Formation : ressources ---------- */
   .res-head { font-family: "Spectral", serif; font-weight: 700; font-size: 22px; margin: 40px 0 6px; }
   .res-sub { color: var(--muted); font-size: 14px; margin-bottom: 16px; }
+  #resources, #resources-tcc {
+    display: grid; gap: 10px; align-items: start;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr));
+  }
   .res {
     display: flex; justify-content: space-between; gap: 14px; flex-wrap: wrap;
     background: var(--card); border: 1px solid var(--line); border-radius: 8px;
-    padding: 14px 16px; margin-bottom: 10px;
+    padding: 14px 16px;
   }
   .res h4 { font-family: "Spectral", serif; font-weight: 600; font-size: 16px; }
   .res h4 a { color: var(--ink); text-decoration: none; }
@@ -348,11 +415,16 @@
     html, body { background: #fff; }
     .panel[hidden] { display: none !important; }
     .card, .skill, .res, .theory-block, .goal, .progress-head, .step { break-inside: avoid; }
+    #veille-list, #resources, #resources-tcc { display: block !important; }
+    #veille-list .card-body { display: block !important; }
+    #veille-list .meta-add { display: inline !important; }
+    .card-toggle { display: none !important; }
+    .card, .res { margin-bottom: 12px; }
     a { color: #000; text-decoration: underline; }
   }
 </style>
 </head>
-<body>
+<body data-tab="veille">
 
 <header>
   <p class="eyebrow">Espace clinique personnel</p>
@@ -391,6 +463,11 @@
     <button class="chip" data-filter="periode" data-value="12" aria-pressed="false">12 mois</button>
     <button class="chip" data-filter="periode" data-value="24" aria-pressed="false">24 mois</button>
     <span class="sep" aria-hidden="true"></span>
+    <label class="sort-label" for="soustheme">Sous-thème</label>
+    <select class="sort" id="soustheme" aria-label="Filtrer par sous-thème">
+      <option value="">Tous</option>
+    </select>
+    <span class="sep" aria-hidden="true"></span>
     <label class="sort-label" for="sort">Tri</label>
     <select class="sort" id="sort" aria-label="Critère de tri des entrées">
       <option value="ajout">Ajout récent</option>
@@ -398,6 +475,7 @@
     </select>
     <span class="sep" aria-hidden="true"></span>
     <input class="search" id="search" type="search" placeholder="Rechercher…" aria-label="Rechercher dans la veille">
+    <button class="chip" id="density-toggle" type="button" aria-pressed="false" title="Afficher la synthèse et « En pratique » de toutes les cartes">Détaillé</button>
     <button class="chip chip-action" id="export-md" type="button" title="Copier les entrées affichées au format Markdown">Copier (MD)</button>
     <button class="chip chip-action" id="export-csv" type="button" title="Télécharger les entrées affichées au format CSV">CSV</button>
     <button class="chip chip-reset" id="reset-filters" type="button" hidden>Réinitialiser</button>
@@ -3033,8 +3111,18 @@ const PHARMA_HORS_AMM = [
 const LEVELS = { "Élevé": 4, "Modéré": 3, "Faible": 2, "Avis d'expert": 1 };
 const LEVEL_COLORS = { "Élevé": "var(--teal)", "Modéré": "var(--amber)", "Faible": "var(--red)", "Avis d'expert": "var(--grey)" };
 const CONSENSUS_CLASS = { "Consensus établi": "consensus-etabli", "Émergent": "consensus-emergent", "Controversé": "consensus-controverse" };
-const state = { theme: null, niveau: null, nature: null, periode: null, q: "", sort: "ajout" };
+const state = { theme: null, niveau: null, nature: null, periode: null, soustheme: "", q: "", sort: "ajout" };
 let visibleEntries = [];   // entrées actuellement affichées — base des exports
+const openCards = new Set();   // urls des cartes dépliées, conservées d'un rendu à l'autre
+
+/* Densité d'affichage : « compact » (titre + méta + tags, synthèse au clic)
+   ou « detail » (tout visible). Mémorisée si le stockage est disponible. */
+const DENSITY_KEY = "veille-density-v1";
+let densite = "compact";
+try {
+  const d = localStorage.getItem(DENSITY_KEY);
+  if (d === "compact" || d === "detail") densite = d;
+} catch {}
 
 function esc(s) {
   return String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -3060,18 +3148,29 @@ function spine(niveau) {
   for (let i = 4; i >= 1; i--) html += `<i style="${i <= filled ? `background:${color}` : ""}"></i>`;
   return `<div class="spine" title="Niveau de preuve : ${esc(niveau)}" aria-label="Niveau de preuve : ${esc(niveau)}">${html}</div>`;
 }
-function veilleCard(e) {
+function veilleCard(e, i) {
+  const bodyId = `card-body-${i}`;
+  const open = openCards.has(e.url);
   const tags = [
-    `<span class="tag theme">${esc(e.theme)}</span>`,
+    `<button type="button" class="tag theme tag-btn" data-filter="theme" data-value="${esc(e.theme)}" title="Filtrer sur « ${esc(e.theme)} »">${esc(e.theme)}</button>`,
     `<span class="tag ${CONSENSUS_CLASS[e.consensus] ?? ""}">${esc(e.consensus)}</span>`,
-    ...(e.sousThemes ?? []).map(t => `<span class="tag">${esc(t)}</span>`)
+    ...(e.sousThemes ?? []).map(t =>
+      `<button type="button" class="tag tag-btn" data-filter="soustheme" data-value="${esc(t)}" title="Filtrer sur « ${esc(t)} »">${esc(t)}</button>`),
+    (e.sousThemes ?? []).length > 2
+      ? `<span class="tag tag-more" title="${esc((e.sousThemes ?? []).slice(2).join(" · "))}">+${(e.sousThemes ?? []).length - 2}</span>`
+      : ""
   ].join("");
-  return `<article class="card">${spine(e.niveauPreuve)}<div>
+  return `<article class="card" data-url="${esc(e.url)}"${open ? ' data-open="1"' : ""}>${spine(e.niveauPreuve)}<div class="card-main">
     <h2><a href="${esc(e.url)}" target="_blank" rel="noopener noreferrer">${esc(e.titre)}</a></h2>
-    <p class="meta">${esc(e.source)} · ${esc(e.typeSource)} · publié le ${fmtDate(e.datePublication)} · ajouté le ${fmtDateTime(e.dateAjout)}</p>
-    <p class="synthese">${esc(e.synthese)}</p>
-    <p class="pertinence"><strong>En pratique —</strong> ${esc(e.pertinence)}</p>
-    <div class="tags">${tags}</div></div></article>`;
+    <p class="meta">${esc(e.source)} · ${esc(e.typeSource)} · publié le ${fmtDate(e.datePublication)}<span class="meta-add"> · ajouté le ${fmtDateTime(e.dateAjout)}</span></p>
+    <div class="card-body" id="${bodyId}">
+      <p class="synthese">${esc(e.synthese)}</p>
+      <p class="pertinence"><strong>En pratique —</strong> ${esc(e.pertinence)}</p>
+    </div>
+    <div class="card-foot">
+      <div class="tags">${tags}</div>
+      <button type="button" class="card-toggle" aria-expanded="${open}" aria-controls="${bodyId}"><span class="chev" aria-hidden="true">${open ? "▴" : "▾"}</span> Synthèse</button>
+    </div></div></article>`;
 }
 // La puce « TCD » est un filtre parapluie : elle englobe aussi la TCD-Adolescents (DBT-A).
 function themeMatches(entryTheme, filterValue) {
@@ -3091,6 +3190,7 @@ function veilleMatches(e) {
   if (state.niveau && e.niveauPreuve !== state.niveau) return false;
   if (state.nature && e.typeSource !== state.nature) return false;
   if (state.periode && !withinMonths(e.datePublication, state.periode)) return false;
+  if (state.soustheme && !(e.sousThemes ?? []).includes(state.soustheme)) return false;
   if (state.q) {
     const hay = [e.titre, e.synthese, e.pertinence, e.source, e.theme, ...(e.sousThemes ?? [])].join(" ").toLowerCase();
     if (!hay.includes(state.q)) return false;
@@ -3104,13 +3204,36 @@ function renderVeille() {
   const sorted = [...VEILLE_DATA].sort((a, b) => key(b).localeCompare(key(a)));
   const visible = sorted.filter(veilleMatches);
   visibleEntries = visible;
-  document.getElementById("veille-list").innerHTML = visible.map(veilleCard).join("");
+  // Sur le tri « Ajout récent », un séparateur par run de veille : ce qui est
+  // arrivé depuis la dernière visite se repère d'un coup d'œil.
+  const runCounts = new Map();
+  if (state.sort === "ajout") {
+    visible.forEach(e => {
+      const j = String(e.dateAjout).slice(0, 10);
+      runCounts.set(j, (runCounts.get(j) ?? 0) + 1);
+    });
+  }
+  const html = [];
+  let runCourant = null;
+  visible.forEach((e, i) => {
+    if (state.sort === "ajout") {
+      const jour = String(e.dateAjout).slice(0, 10);
+      if (jour !== runCourant) {
+        runCourant = jour;
+        const n = runCounts.get(jour);
+        html.push(`<div class="run-sep"><span>Ajouté le ${fmtDate(jour)}</span><span class="run-count">${n} entrée${n > 1 ? "s" : ""}</span></div>`);
+      }
+    }
+    html.push(veilleCard(e, i));
+  });
+  document.getElementById("veille-list").innerHTML = html.join("");
   document.getElementById("veille-empty").hidden = visible.length > 0;
   const parAjout = [...VEILLE_DATA].sort((a, b) => b.dateAjout.localeCompare(a.dateAjout));
   const last = parAjout.length ? fmtDateTime(parAjout[0].dateAjout) : "—";
   document.getElementById("veille-stats").textContent =
     `${VEILLE_DATA.length} entrée${VEILLE_DATA.length > 1 ? "s" : ""} · ${visible.length} affichée${visible.length > 1 ? "s" : ""} · dernière mise à jour : ${last}`;
-  document.getElementById("reset-filters").hidden = !(state.theme || state.niveau || state.nature || state.periode || state.q);
+  document.getElementById("reset-filters").hidden =
+    !(state.theme || state.niveau || state.nature || state.periode || state.soustheme || state.q);
 }
 // Compteurs par filtre (calculés sur l'ensemble des entrées)
 function chipCount(filter, value) {
@@ -3135,6 +3258,63 @@ document.querySelectorAll(".chip[data-filter]").forEach(btn => {
 });
 document.getElementById("search").addEventListener("input", ev => { state.q = ev.target.value.trim().toLowerCase(); renderVeille(); });
 document.getElementById("sort").addEventListener("change", ev => { state.sort = ev.target.value; renderVeille(); });
+
+/* ---------- Sous-thèmes : liste alimentée par les entrées ---------- */
+(function remplirSousThemes() {
+  const counts = new Map();
+  VEILLE_DATA.forEach(e => (e.sousThemes ?? []).forEach(t => counts.set(t, (counts.get(t) ?? 0) + 1)));
+  const sel = document.getElementById("soustheme");
+  [...counts.keys()].sort((a, b) => a.localeCompare(b, "fr")).forEach(t => {
+    const o = document.createElement("option");
+    o.value = t;
+    o.textContent = `${t} (${counts.get(t)})`;
+    sel.appendChild(o);
+  });
+})();
+document.getElementById("soustheme").addEventListener("change", ev => { state.soustheme = ev.target.value; renderVeille(); });
+
+/* ---------- Densité d'affichage ---------- */
+function applyDensity() {
+  document.getElementById("veille-list").dataset.density = densite;
+  document.getElementById("density-toggle").setAttribute("aria-pressed", String(densite === "detail"));
+}
+document.getElementById("density-toggle").addEventListener("click", () => {
+  densite = densite === "compact" ? "detail" : "compact";
+  try { localStorage.setItem(DENSITY_KEY, densite); } catch {}
+  applyDensity();
+});
+
+/* ---------- Cartes : dépliage et filtrage par tag ---------- */
+function toggleCard(card) {
+  const ouvert = card.dataset.open === "1";
+  if (ouvert) { delete card.dataset.open; openCards.delete(card.dataset.url); }
+  else { card.dataset.open = "1"; openCards.add(card.dataset.url); }
+  const btn = card.querySelector(".card-toggle");
+  if (btn) {
+    btn.setAttribute("aria-expanded", String(!ouvert));
+    btn.querySelector(".chev").textContent = ouvert ? "▾" : "▴";
+  }
+}
+function appliquerFiltreTag(filter, value) {
+  if (filter === "theme") {
+    state.theme = state.theme === value ? null : value;
+    document.querySelectorAll('.chip[data-filter="theme"]')
+      .forEach(b => b.setAttribute("aria-pressed", String(b.dataset.value === state.theme)));
+  } else {
+    state.soustheme = state.soustheme === value ? "" : value;
+    document.getElementById("soustheme").value = state.soustheme;
+  }
+  renderVeille();
+  window.scrollTo(0, 0);
+}
+document.getElementById("veille-list").addEventListener("click", ev => {
+  const tag = ev.target.closest(".tag-btn");
+  if (tag) { appliquerFiltreTag(tag.dataset.filter, tag.dataset.value); return; }
+  if (ev.target.closest("a")) return;              // lien vers la source : laisser passer
+  if (densite !== "compact") return;               // en mode détaillé, tout est déjà visible
+  const card = ev.target.closest(".card");
+  if (card) toggleCard(card);
+});
 
 /* ---------- Export des entrées affichées ---------- */
 function flashDone(btn, label) {
@@ -3184,9 +3364,11 @@ document.getElementById("export-csv").addEventListener("click", ev => {
   flashDone(ev.currentTarget, `✓ ${visibleEntries.length} lignes`);
 });
 document.getElementById("reset-filters").addEventListener("click", () => {
-  state.theme = null; state.niveau = null; state.nature = null; state.periode = null; state.q = "";
+  state.theme = null; state.niveau = null; state.nature = null; state.periode = null;
+  state.soustheme = ""; state.q = "";
   document.querySelectorAll(".chip[data-filter]").forEach(b => b.setAttribute("aria-pressed", "false"));
   document.getElementById("search").value = "";
+  document.getElementById("soustheme").value = "";
   renderVeille();
 });
 
@@ -3381,6 +3563,7 @@ function selectTab(tabId, { focus = false } = {}) {
     document.getElementById(t.panel).hidden = !sel;
     if (sel && focus) el.focus();
   });
+  document.body.dataset.tab = tabId.replace(/^tab-/, "");
   if (tabId === "tab-formation" && !formationRendered) { renderFormation(); formationRendered = true; }
   if (tabId === "tab-formation-tcc" && !formationTccRendered) { renderFormationTCC(); formationTccRendered = true; }
   if (tabId === "tab-traitements" && !traitementsRendered) { renderTraitements(); traitementsRendered = true; }
@@ -3402,6 +3585,7 @@ document.querySelector(".tabs").addEventListener("keydown", ev => {
   selectTab(tabs[next].tab, { focus: true });
 });
 
+applyDensity();
 renderVeille();
 </script>
 </body>
