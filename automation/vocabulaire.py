@@ -145,6 +145,17 @@ TYPES_SOURCE = [
 ]
 
 # ---------------------------------------------------------------------------
+# Relations entre entrées de veille (champ optionnel `liens`).
+# Le lien se pose sur l'entrée la PLUS RÉCENTE, qui commente l'antérieure ;
+# le sens inverse est calculé et affiché automatiquement (rétrolien).
+# ---------------------------------------------------------------------------
+RELATIONS = {
+    "prolonge": "prolongé par",     # même question, résultats convergents ou suite
+    "nuance": "nuancé par",         # tempère ou restreint la portée
+    "contredit": "contredit par",   # résultat opposé
+}
+
+# ---------------------------------------------------------------------------
 # Registres d'essais cliniques et statuts d'avancement, pour le bloc
 # ESSAIS_A_SUIVRE. Un essai enregistré n'a pas de niveau de preuve : il n'en
 # porte donc aucun. Dès qu'il est publié, il quitte ce bloc pour VEILLE_DATA.

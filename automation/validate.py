@@ -21,11 +21,13 @@ from pathlib import Path
 RACINE = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(RACINE / "automation"))
 from vocabulaire import (ALIAS, CATEGORIES_GLOSSAIRE, CONSENSUS,  # noqa: E402
-                         NIVEAUX, REGISTRES, SOURCES, STATUTS_ESSAI, THEMES,
-                         TYPES_SOURCE, VOCABULAIRE)
+                         NIVEAUX, REGISTRES, RELATIONS, SOURCES, STATUTS_ESSAI,
+                         THEMES, TYPES_SOURCE, VOCABULAIRE)
 
 CHAMPS = ["titre", "url", "datePublication", "dateAjout", "theme", "sousThemes",
           "typeSource", "niveauPreuve", "consensus", "source", "synthese", "pertinence"]
+# `liens` est facultatif : la plupart des entrées se suffisent à elles-mêmes.
+CHAMPS_OPT = ["liens"]
 # Les énumérations vivent dans automation/vocabulaire.py — un seul point d'évolution.
 
 CHAMPS_RES = ["titre", "url", "type", "langue", "cout", "note"]
@@ -86,7 +88,7 @@ def valide_veille(entrees):
     for n, e in enumerate(entrees, 1):
         ref = f"veille #{n} ({str(e.get('titre', '?'))[:45]}…)"
         manquants = [c for c in CHAMPS if c not in e]
-        superflus = [c for c in e if c not in CHAMPS]
+        superflus = [c for c in e if c not in CHAMPS + CHAMPS_OPT]
         if manquants:
             err(f"{ref} : champs manquants {manquants}")
         if superflus:
@@ -127,6 +129,42 @@ def valide_veille(entrees):
                 err(f"{ref} : {cle} en double avec l'entrée #{registre[v]}")
             else:
                 registre[v] = n
+
+
+def valide_liens_corpus(entrees):
+    """Relations entre entrées (« nuance », « prolonge », « contredit »).
+
+    Une relation qui pointe vers une entrée absente est pire qu'une absence de
+    relation : elle affiche un renvoi mort au milieu d'une synthèse. Le lien se
+    pose sur l'entrée la plus récente ; le sens inverse est calculé à
+    l'affichage, il ne doit donc pas être saisi deux fois.
+    """
+    urls = {e.get("url") for e in entrees}
+    for n, e in enumerate(entrees, 1):
+        liens = e.get("liens")
+        if liens is None:
+            continue
+        ref = f"veille #{n} ({str(e.get('titre', '?'))[:40]}…)"
+        if not isinstance(liens, list) or not liens:
+            err(f"{ref} : liens doit être une liste non vide, ou être absent")
+            continue
+        cibles = []
+        for l in liens:
+            if not isinstance(l, dict) or set(l) != {"url", "relation", "note"}:
+                err(f"{ref} : un lien doit avoir exactement url, relation et note")
+                continue
+            if l["relation"] not in RELATIONS:
+                err(f"{ref} : relation invalide {l['relation']!r} "
+                    f"(attendu : {', '.join(RELATIONS)})")
+            if l["url"] == e.get("url"):
+                err(f"{ref} : lien vers l'entrée elle-même")
+            elif l["url"] not in urls:
+                err(f"{ref} : lien vers une entrée absente du corpus — {l['url']}")
+            if not str(l.get("note", "")).strip():
+                err(f"{ref} : note de lien vide — dire ce que la relation apporte")
+            cibles.append(l["url"])
+        if len(set(cibles)) != len(cibles):
+            err(f"{ref} : deux liens vers la même entrée")
 
 
 def valide_ressources(ressources):
@@ -312,6 +350,7 @@ def main():
         err("ESSAIS_A_SUIVRE déborde de ses marqueurs")
 
     valide_veille(veille)
+    valide_liens_corpus(veille)
     valide_ressources(ressources)
     valide_glossaire(glossaire)
     urls_veille = {norme(e.get("url", "")) for e in veille}

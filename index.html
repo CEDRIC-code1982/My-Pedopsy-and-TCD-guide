@@ -399,6 +399,33 @@
   .chip-reset { margin-left: auto; color: var(--muted); border-style: dashed; }
   .chip-reset:hover { color: var(--ink); border-color: var(--muted); }
 
+  /* ---------- Liens entre entrées ---------- */
+  .liens-corpus {
+    border-top: 1px dashed var(--line); margin-top: 12px; padding-top: 10px;
+  }
+  .liens-corpus .lc-label {
+    font-family: "IBM Plex Mono", monospace; font-size: 10.5px;
+    text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 6px;
+  }
+  .lien-item { font-size: 13px; margin-bottom: 8px; }
+  .lien-item:last-child { margin-bottom: 0; }
+  .lien-rel {
+    display: inline-block; font: 700 10.5px "Source Sans 3", sans-serif;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    border-radius: 999px; padding: 1px 8px; margin-right: 6px; vertical-align: 1px;
+  }
+  .lien-rel.r-nuance, .lien-rel.r-nuance-inv { background: var(--amber-soft); color: var(--amber); }
+  .lien-rel.r-contredit, .lien-rel.r-contredit-inv { background: var(--red-soft); color: var(--red); }
+  .lien-rel.r-prolonge, .lien-rel.r-prolonge-inv { background: var(--teal-soft); color: var(--teal); }
+  .lien-titre {
+    font: inherit; font-weight: 600; background: none; border: none; padding: 0;
+    color: var(--teal); text-align: left; cursor: pointer; text-decoration: underline;
+    text-decoration-style: dotted;
+  }
+  .lien-titre:hover { text-decoration-style: solid; }
+  .lien-note { color: var(--muted); display: block; margin-top: 2px; }
+  .card.card-hit { border-color: var(--amber); box-shadow: 0 0 0 2px var(--amber-soft); }
+
   /* ---------- Essais en cours ---------- */
   .essais-avert { margin-bottom: 20px; }
   #essais-list {
@@ -900,7 +927,14 @@ const VEILLE_DATA = [
     "consensus": "Émergent",
     "source": "PubMed",
     "synthese": "Essai pragmatique ouvert mené sur 64 sites américains, centres de santé mentale communautaires comme centres universitaires, auprès de 1 565 jeunes de 8 à 19 ans en surpoids ou obésité, porteurs d'un trouble du spectre bipolaire et traités ou débutant un antipsychotique de 2e génération. Randomisation 1:1 entre intervention hygiéno-diététique seule (LIFE) et metformine associée à cette intervention, avec comme critères co-principaux la variation du Z-score d'IMC à 6 et 24 mois en intention de traiter. L'ajout de metformine fait mieux aux deux échéances, mais l'effet s'amenuise avec le temps : taille d'effet standardisée 0,26 (IC95% 0,15-0,37) à 6 mois, 0,11 (IC95% 0,00-0,22) à 24 mois. Les effets indésirables digestifs sont 2 à 4 fois plus fréquents sous metformine, sans différence sur la suicidalité. Les auteurs concluent que, pour la plupart des patients, le bénéfice dépasse le risque.",
-    "pertinence": "Premier essai de taille à évaluer la metformine au-delà de six mois et en conditions de soins réelles : elle mérite d'être envisagée chez un jeune prenant du poids sous antipsychotique, en sachant que l'effet à deux ans est faible et frôle l'absence de significativité. Usage hors AMM en psychiatrie, l'AMM se limitant au diabète de type 2."
+    "pertinence": "Premier essai de taille à évaluer la metformine au-delà de six mois et en conditions de soins réelles : elle mérite d'être envisagée chez un jeune prenant du poids sous antipsychotique, en sachant que l'effet à deux ans est faible et frôle l'absence de significativité. Usage hors AMM en psychiatrie, l'AMM se limitant au diabète de type 2.",
+    "liens": [
+      {
+        "url": "https://doi.org/10.1177/00912174261424599",
+        "relation": "prolonge",
+        "note": "La revue émiratie documente le vide de données sur les complications hépatiques des antipsychotiques ; cet essai apporte une réponse pratique sur le versant pondéral, en amont de ces complications."
+      }
+    ]
   },
   {
     "titre": "Entraînement aux compétences TCD délivré seul dans le trouble borderline : revue systématique et méta-analyse",
@@ -919,7 +953,14 @@ const VEILLE_DATA = [
     "consensus": "Émergent",
     "source": "PubMed",
     "synthese": "Travail de l'hôpital de la Santa Creu i Sant Pau (Barcelone), avec une recherche bibliographique menée en anglais et en espagnol (PubMed, PsycINFO, Psicodoc, Psyke). Seuls sont retenus les programmes d'entraînement aux compétences TCD délivrés seuls, sans thérapie individuelle associée, couvrant les quatre modules standard, chez des adultes avec trouble borderline diagnostiqué. Sept études répondent aux critères, cinq entrent dans la méta-analyse. Les améliorations avant-après sont larges sur la sévérité du trouble borderline (d = -1,32 ; IC95% -1,99 à -0,64) et sur la dépression (d = -1,04 ; IC95% -1,33 à -0,75), avec une hétérogénéité substantielle ; les abandons atteignent 29 %, soit 71 % de rétention. Les auteurs rappellent qu'il s'agit d'effets intra-bras et non de comparaisons contrôlées.",
-    "pertinence": "Fournit des repères chiffrés pour un format allégé souvent employé faute de moyens pour la TCD complète, mais l'absence de bras comparateur interdit d'en conclure une équivalence avec la TCD standard."
+    "pertinence": "Fournit des repères chiffrés pour un format allégé souvent employé faute de moyens pour la TCD complète, mais l'absence de bras comparateur interdit d'en conclure une équivalence avec la TCD standard.",
+    "liens": [
+      {
+        "url": "https://doi.org/10.1186/s12888-026-08254-z",
+        "relation": "prolonge",
+        "note": "Les compétences TCD délivrées seules avaient été testées dans un essai randomisé multicentrique chez l'adolescent déprimé qui s'automutile ; cette méta-analyse fournit les repères adultes du même format allégé, effets d'ampleur comparable et rétention de 71 %."
+      }
+    ]
   },
   {
     "titre": "Thérapie comportementale dialectique radicalement ouverte (RO-DBT) dans l'anorexie mentale : suivi à six mois",
@@ -976,7 +1017,14 @@ const VEILLE_DATA = [
     "consensus": "Consensus établi",
     "source": "PubMed",
     "synthese": "Méta-analyse turque (universités Istanbul Aydın, Sakarya et Istanbul Gelisim) regroupant 11 essais randomisés et 1 135 participants de moins de 18 ans, comparant l'aripiprazole oral au placebo ou à un comparateur actif, sur des recherches arrêtées en septembre 2025. L'aripiprazole réduit significativement l'irritabilité mesurée par l'Aberrant Behavior Checklist–Irritability (différence moyenne -5,18 ; IC95% -6,72 à -3,64) avec une hétérogénéité nulle (I² = 0 %), et améliore les scores d'impression clinique globale. Les effets indésirables les plus fréquents sont la prise de poids, la sédation et les symptômes extrapyramidaux, mais les taux d'arrêt de traitement sont comparables au placebo. Les auteurs recommandent une posologie individualisée et une surveillance prolongée.",
-    "pertinence": "Confirme sur des données agrégées homogènes l'efficacité de l'aripiprazole sur l'irritabilité du TSA ; en France cette indication reste hors AMM, l'autorisation européenne se limitant à la schizophrénie dès 15 ans et aux épisodes maniaques dès 13 ans."
+    "pertinence": "Confirme sur des données agrégées homogènes l'efficacité de l'aripiprazole sur l'irritabilité du TSA ; en France cette indication reste hors AMM, l'autorisation européenne se limitant à la schizophrénie dès 15 ans et aux épisodes maniaques dès 13 ans.",
+    "liens": [
+      {
+        "url": "https://doi.org/10.1016/j.braindev.2025.104454",
+        "relation": "prolonge",
+        "note": "L'essai indien comparait rispéridone et aripiprazole tête à tête sans les départager ; cette méta-analyse de 11 essais quantifie l'effet de l'aripiprazole contre placebo."
+      }
+    ]
   },
   {
     "titre": "Modérateurs de la réponse aux psychostimulants dans le TDAH préscolaire : méta-analyse sur données individuelles",
@@ -2352,7 +2400,14 @@ const VEILLE_DATA = [
     "consensus": "Consensus établi",
     "source": "PubMed",
     "synthese": "Méta-analyse en réseau publiée dans le Journal of Affective Disorders (en ligne le 29 juillet 2026) portant sur 113 essais randomisés, 49 combinaisons de traitements et 20 666 participants, avec prise en compte explicite des posologies et des groupes d'âge dans la manie aiguë du trouble bipolaire. Dans l'analyse de sensibilité restreinte aux études à faible risque de biais, de nombreuses options dépassent le placebo sur la réduction des symptômes maniaques : rispéridone, halopéridol, valproate, palipéridone à libération prolongée, olanzapine, cariprazine, ziprasidone, asénapine, aripiprazole, ainsi que le lithium 1500 mg/j (SMD = -0,42 ; IC95% -0,57 à -0,28) et des molécules non psychotropes en add-on (tamoxifène, célécoxib, allopurinol, rivastigmine). Chez l'enfant spécifiquement, seules la ziprasidone 160 mg/j, le célécoxib 200 mg/j et l'asénapine 10 et 20 mg/j se montrent plus efficaces que le placebo. Aucune différence significative entre traitements et placebo n'est retrouvée sur la réponse, la rémission, l'acceptabilité, la tolérance et le virage maniaque ou hypomaniaque. Une méta-régression montre que les tailles d'effet les plus grandes proviennent des études de moindre qualité méthodologique (scores AMSTAR-Plus les plus bas), ce qui invite à la prudence sur les estimations les plus spectaculaires.",
-    "pertinence": "Donne des repères comparatifs par molécule et par dose dans la manie aiguë, et rappelle que les données propres à l'enfant se limitent à quelques molécules et posologies, le lithium conservant un effet modeste mais cohérent dans l'analyse tous âges."
+    "pertinence": "Donne des repères comparatifs par molécule et par dose dans la manie aiguë, et rappelle que les données propres à l'enfant se limitent à quelques molécules et posologies, le lithium conservant un effet modeste mais cohérent dans l'analyse tous âges.",
+    "liens": [
+      {
+        "url": "https://doi.org/10.1016/j.jaac.2024.07.920",
+        "relation": "prolonge",
+        "note": "Même question deux ans plus tard, avec 113 essais au lieu de 18 et la posologie prise en compte : la hiérarchie antipsychotiques devant thymorégulateurs se confirme, avec des estimations plus précises."
+      }
+    ]
   },
   {
     "titre": "Extrapolation pédiatrique de l'efficacité de la cariprazine (schizophrénie, manie bipolaire) par pharmacocinétique de population : base des autorisations FDA chez l'enfant et l'adolescent",
@@ -2560,7 +2615,14 @@ const VEILLE_DATA = [
     "consensus": "Émergent",
     "source": "PubMed",
     "synthese": "Méta-analyse en réseau bayésienne publiée dans le Journal of Medical Internet Research le 18 août 2026, comparant quatre modalités de thérapeutiques numériques dans le TDAH de 4 à 17 ans : tâche unique, double tâche cognitivo-motrice, tâche unique enrichie par intelligence artificielle et double tâche cognitivo-motrice enrichie par IA. Trente-deux essais randomisés totalisant 2 819 patients sont inclus. La double tâche cognitivo-motrice augmentée par IA se classe première sur tous les critères, avec des différences moyennes significatives sur l'ADHD-RS (-3,03 ; IC crédible 95 % -5,59 à -0,47), sur les sous-échelles d'inattention (-5,58) et d'hyperactivité-impulsivité (-6,84) de la SNAP-IV, et sur le BRIEF (-7,75). La portée de ce classement est toutefois limitée : 40,6 % des essais sont à risque élevé de biais (randomisation ou aveugle mal rapportés), et les intervalles de prédiction à 95 % traversent zéro pour la SNAP-IV et le BRIEF, ce qui signale une hétérogénéité importante et une généralisation incertaine.",
-    "pertinence": "Situe les outils numériques comme adjuvant plausible plutôt que comme alternative au traitement de référence du TDAH ; en pratique, privilégier les dispositifs combinant tâche cognitive et engagement moteur, sans attendre d'effet comparable à celui des psychostimulants."
+    "pertinence": "Situe les outils numériques comme adjuvant plausible plutôt que comme alternative au traitement de référence du TDAH ; en pratique, privilégier les dispositifs combinant tâche cognitive et engagement moteur, sans attendre d'effet comparable à celui des psychostimulants.",
+    "liens": [
+      {
+        "url": "https://doi.org/10.3389/fpsyt.2026.1747368",
+        "relation": "nuance",
+        "note": "Deux méta-analyses en réseau du même sujet à deux mois d'intervalle, avec des découpages d'interventions différents et des classements divergents : neurofeedback ici, double tâche augmentée par IA là. Le classement dépend surtout de la façon dont les modalités sont regroupées."
+      }
+    ]
   },
   {
     "titre": "Biofeedback de variabilité cardiaque et stimulation vagale auriculaire transcutanée en milieu scolaire : étude pilote de faisabilité chez l'adolescent",
@@ -2889,7 +2951,14 @@ const VEILLE_DATA = [
     "consensus": "Controversé",
     "source": "PubMed",
     "synthese": "Revue systématique et méta-analyse PRISMA publiée dans Acta Psychiatrica Scandinavica (numéro de septembre 2026, mise en ligne le 1er juin 2026) par une équipe néerlandaise (GGz Centraal Amersfoort, Radboud UMC Nimègue, Amsterdam UMC), portant sur la stimulation magnétique transcrânienne répétitive dans la dépression caractérisée de l'adolescent. Sur 687 études repérées, 19 ont été incluses. L'agrégation des variations avant-après intra-groupe donne un effet fort (SMC = −2,15 ; IC 95 % [−2,58 ; −1,73]) mais avec une hétérogénéité très élevée (I² = 87 %). Restreinte aux seuls essais randomisés, l'estimation tombe à −0,90 avec un intervalle de confiance qui traverse zéro ([−1,90 ; 0,11]) : l'effet n'est plus statistiquement significatif. Le taux de réponse agrégé est de 54 % (IC 95 % [42 % ; 66 %]). La réduction des idées suicidaires, importante en apparence (SMC = −2,78), repose sur trois études seulement et n'atteint pas la significativité ([−5,98 ; 0,42]). Les effets indésirables rapportés sont légers et transitoires. La majorité des études incluses sont à haut risque de biais, et les auteurs concluent malgré tout à l'efficacité et à la bonne tolérance du procédé.",
-    "pertinence": "Tempère nettement l'élan créé par les autorisations FDA de dispositifs de TMS chez l'adolescent : dès qu'on exclut les séries non contrôlées, le bénéfice antidépresseur n'est plus démontré. À citer face à une demande familiale de rTMS pour éviter de surestimer ce qui est acquis."
+    "pertinence": "Tempère nettement l'élan créé par les autorisations FDA de dispositifs de TMS chez l'adolescent : dès qu'on exclut les séries non contrôlées, le bénéfice antidépresseur n'est plus démontré. À citer face à une demande familiale de rTMS pour éviter de surestimer ce qui est acquis.",
+    "liens": [
+      {
+        "url": "https://doi.org/10.1038/s41380-026-03455-0",
+        "relation": "nuance",
+        "note": "L'autorisation FDA commentée dans Molecular Psychiatry s'appuie sur un registre industriel ; cette méta-analyse montre que l'effet s'effondre dès qu'on se limite aux essais randomisés."
+      }
+    ]
   },
   {
     "titre": "Entraînement à la pleine conscience enfant-parent versus méthylphénidate dans le TDAH de l'enfant : évaluation médico-économique à dix mois",
@@ -3598,6 +3667,34 @@ function annoter(txt, vus) {
   });
 }
 
+/* Rétroliens : la relation est saisie une seule fois, sur l'entrée la plus
+   récente. Le sens inverse est reconstruit ici, pour que l'entrée ancienne
+   sache elle aussi qu'un travail plus récent la nuance ou la prolonge. */
+const RELATIONS_INV = { prolonge: "prolongé par", nuance: "nuancé par", contredit: "contredit par" };
+const RETROLIENS = new Map();
+VEILLE_DATA.forEach(e => {
+  (e.liens ?? []).forEach(l => {
+    if (!RETROLIENS.has(l.url)) RETROLIENS.set(l.url, []);
+    RETROLIENS.get(l.url).push({ url: e.url, relation: l.relation, note: l.note, inverse: true });
+  });
+});
+const TITRES_PAR_URL = new Map(VEILLE_DATA.map(e => [e.url, e.titre]));
+
+function blocLiens(e) {
+  const sortants = (e.liens ?? []).map(l => ({ ...l, inverse: false }));
+  const tous = [...sortants, ...(RETROLIENS.get(e.url) ?? [])];
+  if (!tous.length) return "";
+  const items = tous.map(l => {
+    const libelle = l.inverse ? (RELATIONS_INV[l.relation] ?? l.relation) : l.relation;
+    const cls = `r-${l.relation}${l.inverse ? "-inv" : ""}`;
+    const titre = TITRES_PAR_URL.get(l.url) ?? l.url;
+    return `<p class="lien-item"><span class="lien-rel ${cls}">${esc(libelle)}</span>` +
+      `<button type="button" class="lien-titre" data-aller="${esc(l.url)}">${esc(titre)}</button>` +
+      `<span class="lien-note">${esc(l.note)}</span></p>`;
+  }).join("");
+  return `<div class="liens-corpus"><p class="lc-label">À lire avec</p>${items}</div>`;
+}
+
 function veilleCard(e, i) {
   const vus = new Set();
   const bodyId = `card-body-${i}`;
@@ -3617,6 +3714,7 @@ function veilleCard(e, i) {
     <div class="card-body" id="${bodyId}">
       <p class="synthese">${annoter(esc(e.synthese), vus)}</p>
       <p class="pertinence"><strong>En pratique —</strong> ${annoter(esc(e.pertinence), vus)}</p>
+      ${blocLiens(e)}
     </div>
     <div class="card-foot">
       <div class="tags">${tags}</div>
@@ -3761,6 +3859,8 @@ function appliquerFiltreTag(filter, value) {
 document.getElementById("veille-list").addEventListener("click", ev => {
   const gl = ev.target.closest(".gloss");
   if (gl) { ouvrirGloss(gl); return; }
+  const aller = ev.target.closest("[data-aller]");
+  if (aller) { allerAEntree(aller.dataset.aller); return; }
   const tag = ev.target.closest(".tag-btn");
   if (tag) { appliquerFiltreTag(tag.dataset.filter, tag.dataset.value); return; }
   if (ev.target.closest("a")) return;              // lien vers la source : laisser passer
@@ -3824,6 +3924,23 @@ document.getElementById("reset-filters").addEventListener("click", () => {
   document.getElementById("soustheme").value = "";
   renderVeille();
 });
+
+/* Navigation vers une entrée liée : les filtres en cours pourraient la
+   masquer, on les lève avant de la mettre en évidence. */
+function allerAEntree(url) {
+  state.theme = null; state.niveau = null; state.nature = null; state.periode = null;
+  state.soustheme = ""; state.q = "";
+  document.querySelectorAll(".chip[data-filter]").forEach(b => b.setAttribute("aria-pressed", "false"));
+  document.getElementById("search").value = "";
+  document.getElementById("soustheme").value = "";
+  openCards.add(url);            // la cible s'ouvre, pour qu'on voie de quoi il retourne
+  renderVeille();
+  const carte = document.querySelector(`.card[data-url="${CSS.escape(url)}"]`);
+  if (!carte) return;
+  carte.scrollIntoView({ block: "center" });
+  carte.classList.add("card-hit");
+  setTimeout(() => carte.classList.remove("card-hit"), 2400);
+}
 
 /* ============================================================
    ESSAIS EN COURS
