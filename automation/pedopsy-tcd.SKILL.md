@@ -264,7 +264,19 @@ et `/* FORMATION_RESSOURCES_END */`)
     cesserait de s'ouvrir par simple double-clic, ce qui est sa principale
     qualité. Quand le fichier dépassera ~600 Ko ou ~300 entrées, la bonne
     manœuvre est de déplacer les entrées de plus de 24 mois vers un
-    `archive.html` autonome bâti sur le même gabarit.
+    `archive.html` autonome, ce que fait `automation/archiver.py` :
+
+    ```bash
+    python3 automation/archiver.py                 # simulation, n'écrit rien
+    python3 automation/archiver.py --appliquer     # déplace réellement
+    ```
+
+    Le script refuse d'archiver une entrée encore référencée — cible d'un lien
+    « nuance / prolonge / contredit » depuis une entrée conservée, ou d'un
+    renvoi `src` de l'onglet Traitements — et le dit. L'archive ne duplique
+    aucun référentiel : elle ne contient que la veille et le glossaire.
+    Valider ENSUITE les deux fichiers :
+    `python3 automation/validate.py && python3 automation/validate.py archive.html`.
 
 ## RÈGLES DE RÉDACTION
 

@@ -48,6 +48,7 @@ automation/
   journal-pubmed.json             mémoire des PMID retenus ET écartés, avec la raison
   validate.py                     validation d'index.html avant commit
   check-liens.py                  contrôle des liens morts (hors pre-commit : réseau)
+  archiver.py                     bascule des entrées anciennes vers archive.html
 .githooks/pre-commit              rejoue validate.py, bloque un commit invalide
 ```
 
@@ -144,9 +145,22 @@ les anciens libellés qu'il remplace dans `ALIAS`, puis relancer `validate.py`.
 ## Croissance du fichier
 
 `index.html` gagne environ 170 lignes par exécution de la routine. Quand il
-dépassera ~600 Ko ou ~300 entrées, déplacer les entrées de plus de 24 mois vers
-un `archive.html` autonome bâti sur le même gabarit, plutôt que de découper les
-données en fichiers externes.
+dépassera ~600 Ko ou ~300 entrées, basculer les entrées anciennes vers un
+`archive.html` autonome :
+
+```bash
+python3 automation/archiver.py                 # simulation, n'écrit rien
+python3 automation/archiver.py --appliquer     # déplace réellement
+```
+
+Le script refuse de déplacer une entrée encore référencée — cible d'un lien
+depuis une entrée conservée, ou d'un renvoi de l'onglet Traitements — et le
+dit. L'archive ne contient que la veille et le glossaire : y recopier les
+traitements ou les ressources créerait une seconde version qui divergerait.
+
+**Ne jamais extraire les données dans un `data.json` externe** : `fetch()` est
+bloqué sur `file://` par la politique d'origine, et la page cesserait de
+s'ouvrir par simple double-clic — sa principale qualité.
 
 ## Convention git
 

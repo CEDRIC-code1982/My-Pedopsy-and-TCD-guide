@@ -276,11 +276,12 @@ def valide_renvois(src, urls_veille):
     laissant derrière elle un renvoi vers le vide : le lien tombait sans bruit.
     """
     for nom in ("SYNTHESE_TROUBLES", "PHARMA_REF", "PHARMA_HORS_AMM"):
-        m = re.search(rf"const {nom} = \[(.*?)\n\];", src, re.S)
-        if m is None:
+        try:                                   # bornes_tableau tolère « [] »
+            a, b = bornes_tableau(src, nom)
+        except ValueError:
             err(f"{nom} introuvable — les renvois des traitements ne peuvent être vérifiés")
             continue
-        for u in re.findall(r'src:\s*"([^"]+)"', m.group(1)):
+        for u in re.findall(r'src:\s*"([^"]+)"', src[a:b]):
             if norme(u) not in urls_veille:
                 err(f"{nom} : renvoi vers une entrée absente de la veille — {u}")
 
