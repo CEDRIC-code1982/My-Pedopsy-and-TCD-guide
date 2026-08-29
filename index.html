@@ -111,7 +111,6 @@
     border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px;
     background: var(--card); color: var(--ink);
   }
-  .sort-label { font: 600 12px "Source Sans 3", sans-serif; color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em; }
   .sort {
     font: 600 13px "Source Sans 3", sans-serif;
     border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
@@ -120,9 +119,99 @@
   .chip-action { border-style: dashed; color: var(--muted); }
   .chip-action:hover { color: var(--ink); border-color: var(--muted); }
   .chip-action[data-done="1"] { background: var(--teal); border-color: var(--teal); border-style: solid; color: #fff; }
-  .legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: var(--muted); margin-bottom: 20px; }
-  .legend span { display: inline-flex; align-items: center; gap: 6px; }
-  .legend i { display: inline-block; width: 10px; height: 10px; border-radius: 2px; }
+  /* ---------- Barre de filtres de la veille : zones étiquetées ----------
+     Trois natures d'action cohabitaient sur une seule ligne, au même style de
+     pastille : filtrer les entrées, changer l'affichage, exporter. Rien ne
+     distinguait « voir la TCD » d'un téléchargement de fichier. On sépare donc :
+     la recherche d'abord, les deux filtres du quotidien ensuite dans des zones
+     nommées, et tout le secondaire replié.
+     La légende des couleurs a disparu : les pastilles de niveau de preuve
+     portent désormais elles-mêmes les barres du même code que les cartes. */
+  .filterbar {
+    border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+    margin-bottom: 24px; padding: 14px 0 12px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  @media (min-width: 900px) {
+    .filterbar {
+      position: sticky; top: 0; z-index: 20; background: var(--paper);
+      margin-left: -20px; margin-right: -20px;
+      padding-left: 20px; padding-right: 20px;
+      /* Garde-fou : sur une fenêtre courte, la barre ne doit jamais avaler
+         l'écran une fois « Plus d'options » déplié. */
+      max-height: 72vh; overflow-y: auto;
+    }
+  }
+
+  /* Ligne 1 — la recherche : entrée la plus intuitive, donc première et large. */
+  .fb-top { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .fb-search {
+    flex: 1 1 280px; min-width: 180px;
+    font: 400 15px "Source Sans 3", sans-serif;
+    border: 1px solid var(--line); border-radius: 8px;
+    padding: 9px 12px 9px 36px; background-color: var(--card); color: var(--ink);
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2393A3B4' stroke-width='2.2' stroke-linecap='round'><circle cx='10.5' cy='10.5' r='6.5'/><path d='M15.5 15.5L21 21'/></svg>");
+    background-repeat: no-repeat; background-position: 12px 50%; background-size: 15px;
+  }
+  .fb-count {
+    font: 400 13px "Source Sans 3", sans-serif; color: var(--muted);
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .fb-count strong { color: var(--ink); font-weight: 600; }
+
+  /* Zones — un libellé lisible en écriture normale, puis ses pastilles. */
+  .fb-zone { display: grid; grid-template-columns: 148px 1fr; gap: 6px 14px; align-items: start; }
+  .fb-label {
+    font: 600 13px "Source Sans 3", sans-serif; color: var(--muted);
+    padding-top: 6px; line-height: 1.3;
+  }
+  .fb-chips { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  @media (max-width: 700px) {
+    .fb-zone { grid-template-columns: 1fr; gap: 4px; }
+    .fb-label { padding-top: 0; }
+  }
+
+  /* Pastille « Tous » : elle rend visible l'état par défaut, qui n'était
+     jusqu'ici déductible que de l'absence de pastille active. */
+  .chip-tous { border-style: dashed; }
+  .chip-tous[aria-pressed="true"] { border-style: solid; }
+
+  /* Barres de niveau de preuve dans la pastille : même code que les cartes
+     (4/4 Élevé → 1/4 Avis d'expert), ce qui rend la légende inutile. */
+  .chip-niveau { display: inline-flex; align-items: center; gap: 7px; }
+  .chip-spine { display: inline-flex; gap: 2px; align-items: flex-end; }
+  .chip-spine i { display: block; width: 3px; height: 11px; border-radius: 1px; background: var(--grey-soft); }
+  .chip[data-value="Élevé"] .chip-spine i { background: var(--teal); }
+  .chip[data-value="Modéré"] .chip-spine i:nth-child(-n+3) { background: var(--amber); }
+  .chip[data-value="Faible"] .chip-spine i:nth-child(-n+2) { background: var(--red); }
+  .chip[data-value="Avis d\'expert"] .chip-spine i:nth-child(1) { background: var(--grey); }
+  /* Pastille active : fond plein, les barres passent en couleur du texte. */
+  .chip[aria-pressed="true"] .chip-spine i { background: currentColor; opacity: 0.28; }
+  .chip[aria-pressed="true"][data-value="Élevé"] .chip-spine i,
+  .chip[aria-pressed="true"][data-value="Modéré"] .chip-spine i:nth-child(-n+3),
+  .chip[aria-pressed="true"][data-value="Faible"] .chip-spine i:nth-child(-n+2),
+  .chip[aria-pressed="true"][data-value="Avis d\'expert"] .chip-spine i:nth-child(1) { opacity: 1; }
+
+  /* Repli du secondaire — période, sous-thème, tri, affichage, export. */
+  .fb-foot { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+  .fb-more-btn {
+    font: 600 13px "Source Sans 3", sans-serif; color: var(--muted);
+    background: none; border: 0; padding: 4px 0; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .fb-more-btn:hover { color: var(--ink); }
+  .fb-more-btn .chev { transition: transform 0.15s; font-size: 11px; }
+  .fb-more-btn[aria-expanded="true"] .chev { transform: rotate(180deg); }
+  .fb-more {
+    display: flex; flex-direction: column; gap: 12px;
+    padding: 14px 0 2px; border-top: 1px dashed var(--line);
+  }
+  /* Sans cette règle, le `display: flex` ci-dessus l'emporte sur l'attribut
+     `hidden` et le panneau reste affiché en permanence. */
+  .fb-more[hidden] { display: none; }
+  /* Affichage et export ne filtrent rien : style distinct, pour qu'on ne les
+     confonde pas avec une pastille de filtre. */
+  .fb-sep { height: 1px; background: var(--line); margin: 2px 0; border: 0; }
 
   /* ---------- Cartes veille ---------- */
   .card {
@@ -515,7 +604,7 @@
 
   /* ---------- Impression (sortir une fiche proprement) ---------- */
   @media print {
-    .tabs, .filters, .legend, .status-btns, .chip-reset { display: none !important; }
+    .tabs, .filters, .filterbar, .status-btns, .chip-reset { display: none !important; }
     body { max-width: none; margin: 0; padding: 0; color: #000; }
     html, body { background: #fff; }
     .panel[hidden] { display: none !important; }
@@ -552,51 +641,103 @@
 <section class="panel" id="panel-veille" role="tabpanel" aria-labelledby="tab-veille">
   <p class="panel-stats" id="veille-stats"></p>
 
-  <div class="filters" role="toolbar" aria-label="Filtres de veille">
-    <span class="group-label">Thème</span>
-    <button class="chip" data-filter="theme" data-value="Pédopsychiatrie" aria-pressed="false">Pédopsychiatrie</button>
-    <button class="chip" data-filter="theme" data-value="TCD" aria-pressed="false">TCD</button>
-    <button class="chip" data-filter="theme" data-value="TCD-Adolescents (DBT-A)" aria-pressed="false">DBT-A</button>
-    <button class="chip" data-filter="theme" data-value="TCC" aria-pressed="false">TCC</button>
-    <button class="chip" data-filter="theme" data-value="Transversal" aria-pressed="false">Transversal</button>
-    <span class="sep" aria-hidden="true"></span>
-    <span class="group-label">Preuve</span>
-    <button class="chip" data-filter="niveau" data-value="Élevé" aria-pressed="false">Élevé</button>
-    <button class="chip" data-filter="niveau" data-value="Modéré" aria-pressed="false">Modéré</button>
-    <button class="chip" data-filter="niveau" data-value="Faible" aria-pressed="false">Faible</button>
-    <button class="chip" data-filter="niveau" data-value="Avis d'expert" aria-pressed="false">Avis d'expert</button>
-    <span class="sep" aria-hidden="true"></span>
-    <span class="group-label">Nature</span>
-    <button class="chip" data-filter="nature" data-value="Étude expérimentale" aria-pressed="false" title="Recherche en amont de la pratique : phases précoces, preuves de concept, pilotes">Expérimental</button>
-    <span class="sep" aria-hidden="true"></span>
-    <span class="group-label">Période</span>
-    <button class="chip" data-filter="periode" data-value="12" aria-pressed="false">12 mois</button>
-    <button class="chip" data-filter="periode" data-value="24" aria-pressed="false">24 mois</button>
-    <span class="sep" aria-hidden="true"></span>
-    <label class="sort-label" for="soustheme">Sous-thème</label>
-    <select class="sort" id="soustheme" aria-label="Filtrer par sous-thème">
-      <option value="">Tous</option>
-    </select>
-    <span class="sep" aria-hidden="true"></span>
-    <label class="sort-label" for="sort">Tri</label>
-    <select class="sort" id="sort" aria-label="Critère de tri des entrées">
-      <option value="ajout">Ajout récent</option>
-      <option value="publication">Publication récente</option>
-    </select>
-    <span class="sep" aria-hidden="true"></span>
-    <input class="search" id="search" type="search" placeholder="Rechercher…" aria-label="Rechercher dans la veille">
-    <button class="chip" id="density-toggle" type="button" aria-pressed="false" title="Afficher la synthèse et « En pratique » de toutes les cartes">Détaillé</button>
-    <button class="chip" id="gloss-toggle" type="button" aria-pressed="true" title="Souligner les sigles définis au glossaire et les rendre cliquables">Définitions</button>
-    <button class="chip chip-action" id="export-md" type="button" title="Copier les entrées affichées au format Markdown">Copier (MD)</button>
-    <button class="chip chip-action" id="export-csv" type="button" title="Télécharger les entrées affichées au format CSV">CSV</button>
-    <button class="chip chip-reset" id="reset-filters" type="button" hidden>Réinitialiser</button>
-  </div>
+  <div class="filterbar" role="region" aria-label="Rechercher et filtrer la veille">
 
-  <div class="legend" aria-hidden="true">
-    <span><i style="background:var(--teal)"></i> Élevé (4/4)</span>
-    <span><i style="background:var(--amber)"></i> Modéré (3/4)</span>
-    <span><i style="background:var(--red)"></i> Faible (2/4)</span>
-    <span><i style="background:var(--grey)"></i> Avis d'expert (1/4)</span>
+    <!-- 1. Chercher : le geste le plus direct, donc en premier et en grand. -->
+    <div class="fb-top">
+      <input class="fb-search" id="search" type="search"
+             placeholder="Rechercher un titre, une molécule, un pays…"
+             aria-label="Rechercher dans la veille">
+      <span class="fb-count" id="fb-count" aria-live="polite"></span>
+      <button class="chip chip-reset" id="reset-filters" type="button" hidden>Réinitialiser</button>
+    </div>
+
+    <!-- 2. Les deux filtres du quotidien, chacun dans une zone nommée. -->
+    <div class="fb-zone" role="group" aria-labelledby="fb-lab-theme">
+      <span class="fb-label" id="fb-lab-theme">Thème</span>
+      <div class="fb-chips">
+        <button class="chip chip-tous" data-filter="theme" data-value="" aria-pressed="true">Tous</button>
+        <button class="chip" data-filter="theme" data-value="Pédopsychiatrie" aria-pressed="false">Pédopsychiatrie</button>
+        <button class="chip" data-filter="theme" data-value="TCD" aria-pressed="false">TCD</button>
+        <button class="chip" data-filter="theme" data-value="TCD-Adolescents (DBT-A)" aria-pressed="false">DBT-A</button>
+        <button class="chip" data-filter="theme" data-value="TCC" aria-pressed="false">TCC</button>
+        <button class="chip" data-filter="theme" data-value="Transversal" aria-pressed="false">Transversal</button>
+      </div>
+    </div>
+
+    <div class="fb-zone" role="group" aria-labelledby="fb-lab-preuve">
+      <span class="fb-label" id="fb-lab-preuve">Niveau de preuve</span>
+      <div class="fb-chips">
+        <button class="chip chip-tous" data-filter="niveau" data-value="" aria-pressed="true">Tous</button>
+        <button class="chip chip-niveau" data-filter="niveau" data-value="Élevé" aria-pressed="false" title="Méta-analyse ou essai randomisé de grande taille"><span class="chip-spine" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Élevé</button>
+        <button class="chip chip-niveau" data-filter="niveau" data-value="Modéré" aria-pressed="false" title="Essai randomisé de petit effectif ou cohorte solide"><span class="chip-spine" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Modéré</button>
+        <button class="chip chip-niveau" data-filter="niveau" data-value="Faible" aria-pressed="false" title="Observationnel limité, étude pilote ou expérimentale"><span class="chip-spine" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Faible</button>
+        <button class="chip chip-niveau" data-filter="niveau" data-value="Avis d'expert" aria-pressed="false" title="Éditorial, consensus ou recommandation sans littérature forte"><span class="chip-spine" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Avis d'expert</button>
+      </div>
+    </div>
+
+    <!-- 3. Le reste, replié : il ne sert pas à chaque consultation. -->
+    <div class="fb-foot">
+      <button class="fb-more-btn" id="fb-more-btn" type="button"
+              aria-expanded="false" aria-controls="fb-more">
+        <span class="chev" aria-hidden="true">▾</span>Plus d'options
+      </button>
+    </div>
+
+    <div class="fb-more" id="fb-more" hidden>
+      <div class="fb-zone" role="group" aria-labelledby="fb-lab-periode">
+        <span class="fb-label" id="fb-lab-periode">Date de publication</span>
+        <div class="fb-chips">
+          <button class="chip chip-tous" data-filter="periode" data-value="" aria-pressed="true">Toutes</button>
+          <button class="chip" data-filter="periode" data-value="12" aria-pressed="false">12 derniers mois</button>
+          <button class="chip" data-filter="periode" data-value="24" aria-pressed="false">24 derniers mois</button>
+        </div>
+      </div>
+
+      <div class="fb-zone">
+        <label class="fb-label" for="soustheme">Sous-thème</label>
+        <div class="fb-chips">
+          <select class="sort" id="soustheme" aria-label="Filtrer par sous-thème">
+            <option value="">Tous les sous-thèmes</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fb-zone" role="group" aria-labelledby="fb-lab-nature">
+        <span class="fb-label" id="fb-lab-nature">Nature du travail</span>
+        <div class="fb-chips">
+          <button class="chip" data-filter="nature" data-value="Étude expérimentale" aria-pressed="false" title="Recherche en amont de la pratique : phases précoces, preuves de concept, pilotes. Rien n'en découle pour la consultation d'aujourd'hui.">Ne montrer que l'expérimental</button>
+        </div>
+      </div>
+
+      <div class="fb-zone">
+        <label class="fb-label" for="sort">Trier par</label>
+        <div class="fb-chips">
+          <select class="sort" id="sort" aria-label="Critère de tri des entrées">
+            <option value="ajout">Date d'ajout à la veille</option>
+            <option value="publication">Date de publication</option>
+          </select>
+        </div>
+      </div>
+
+      <hr class="fb-sep">
+
+      <div class="fb-zone" role="group" aria-labelledby="fb-lab-vue">
+        <span class="fb-label" id="fb-lab-vue">Affichage</span>
+        <div class="fb-chips">
+          <button class="chip" id="density-toggle" type="button" aria-pressed="false" title="Ouvrir d'emblée la synthèse et « En pratique » de toutes les cartes">Cartes dépliées</button>
+          <button class="chip" id="gloss-toggle" type="button" aria-pressed="true" title="Souligner les sigles définis au glossaire et les rendre cliquables">Sigles soulignés</button>
+        </div>
+      </div>
+
+      <div class="fb-zone" role="group" aria-labelledby="fb-lab-export">
+        <span class="fb-label" id="fb-lab-export">Exporter la sélection</span>
+        <div class="fb-chips">
+          <button class="chip chip-action" id="export-md" type="button" title="Copier les entrées affichées au format Markdown">Copier en Markdown</button>
+          <button class="chip chip-action" id="export-csv" type="button" title="Télécharger les entrées affichées au format CSV">Télécharger en CSV</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="veille-list"></div>
@@ -3970,31 +4111,68 @@ function renderVeille() {
   const parAjout = [...VEILLE_DATA].sort((a, b) => b.dateAjout.localeCompare(a.dateAjout));
   const last = parAjout.length ? fmtDateTime(parAjout[0].dateAjout) : "—";
   document.getElementById("veille-stats").textContent =
-    `${VEILLE_DATA.length} entrée${VEILLE_DATA.length > 1 ? "s" : ""} · ${visible.length} affichée${visible.length > 1 ? "s" : ""} · dernière mise à jour : ${last}`;
-  document.getElementById("reset-filters").hidden =
-    !(state.theme || state.niveau || state.nature || state.periode || state.soustheme || state.q);
+    `${VEILLE_DATA.length} entrée${VEILLE_DATA.length > 1 ? "s" : ""} · dernière mise à jour : ${last}`;
+  // Le nombre qui bouge vit dans la barre, au contact des filtres qui le font
+  // bouger, et non plus dans la ligne de statut au-dessus.
+  const filtre = !!(state.theme || state.niveau || state.nature || state.periode
+                    || state.soustheme || state.q);
+  document.getElementById("fb-count").innerHTML = filtre
+    ? `<strong>${visible.length}</strong> entrée${visible.length > 1 ? "s" : ""} sur ${VEILLE_DATA.length}`
+    : `<strong>${VEILLE_DATA.length}</strong> entrées`;
+  document.getElementById("reset-filters").hidden = !filtre;
 }
 // Compteurs par filtre (calculés sur l'ensemble des entrées)
 function chipCount(filter, value) {
+  if (value === "") return VEILLE_DATA.length;      // pastille « Tous »
   if (filter === "theme") return VEILLE_DATA.filter(e => themeMatches(e.theme, value)).length;
   if (filter === "nature") return VEILLE_DATA.filter(e => e.typeSource === value).length;
   if (filter === "periode") return VEILLE_DATA.filter(e => withinMonths(e.datePublication, value)).length;
   return VEILLE_DATA.filter(e => e.niveauPreuve === value).length;
 }
+/* Une pastille « Tous » par famille rend l'état par défaut visible : sans elle,
+   « aucun filtre » ne se déduisait que de l'absence de pastille allumée. Elle
+   s'allume donc quand la famille est vide, et l'éteindre revient à tout voir. */
+function syncChips(filter) {
+  const courant = state[filter] ?? "";
+  document.querySelectorAll(`.chip[data-filter="${filter}"]`)
+    .forEach(b => b.setAttribute("aria-pressed", String(b.dataset.value === courant)));
+}
+function syncAllChips() {
+  new Set([...document.querySelectorAll(".chip[data-filter]")].map(b => b.dataset.filter))
+    .forEach(syncChips);
+}
 document.querySelectorAll(".chip[data-filter]").forEach(btn => {
   const n = chipCount(btn.dataset.filter, btn.dataset.value);
-  if (n === 0) btn.classList.add("chip-empty");
+  if (n === 0 && btn.dataset.value !== "") btn.classList.add("chip-empty");
   const span = document.createElement("span");
   span.className = "chip-count";
   span.textContent = n;
   btn.appendChild(span);
   btn.addEventListener("click", () => {
-    const { filter, value } = btn.dataset, active = state[filter] === value;
-    state[filter] = active ? null : value;
-    document.querySelectorAll(`.chip[data-filter="${filter}"]`).forEach(b => b.setAttribute("aria-pressed", String(b === btn && !active)));
+    const { filter, value } = btn.dataset;
+    const actif = (state[filter] ?? "") === value;
+    state[filter] = actif ? null : (value || null);
+    syncChips(filter);
     renderVeille();
   });
 });
+/* « Plus d'options » : on le laisse ouvert si l'utilisateur l'a ouvert, mais on
+   l'ouvre d'office quand un filtre replié est actif — sinon un filtre invisible
+   expliquerait une liste courte sans qu'on puisse voir pourquoi. */
+const MORE_KEY = "pedopsy-filtres-plus";
+const fbMore = document.getElementById("fb-more");
+const fbMoreBtn = document.getElementById("fb-more-btn");
+function setMore(ouvert) {
+  fbMore.hidden = !ouvert;
+  fbMoreBtn.setAttribute("aria-expanded", String(ouvert));
+}
+fbMoreBtn.addEventListener("click", () => {
+  const ouvert = fbMoreBtn.getAttribute("aria-expanded") === "true";
+  setMore(!ouvert);
+  try { localStorage.setItem(MORE_KEY, ouvert ? "0" : "1"); } catch {}
+});
+try { if (localStorage.getItem(MORE_KEY) === "1") setMore(true); } catch {}
+
 document.getElementById("search").addEventListener("input", ev => { state.q = ev.target.value.trim().toLowerCase(); renderVeille(); });
 document.getElementById("sort").addEventListener("change", ev => { state.sort = ev.target.value; renderVeille(); });
 
@@ -4037,11 +4215,13 @@ function toggleCard(card) {
 function appliquerFiltreTag(filter, value) {
   if (filter === "theme") {
     state.theme = state.theme === value ? null : value;
-    document.querySelectorAll('.chip[data-filter="theme"]')
-      .forEach(b => b.setAttribute("aria-pressed", String(b.dataset.value === state.theme)));
+    syncChips("theme");
   } else {
     state.soustheme = state.soustheme === value ? "" : value;
     document.getElementById("soustheme").value = state.soustheme;
+    // Le sous-thème vit dans le panneau replié : on l'ouvre, sinon la liste
+    // rétrécit sans que rien à l'écran n'explique pourquoi.
+    if (state.soustheme) setMore(true);
   }
   renderVeille();
   window.scrollTo(0, 0);
@@ -4109,7 +4289,7 @@ document.getElementById("export-csv").addEventListener("click", ev => {
 document.getElementById("reset-filters").addEventListener("click", () => {
   state.theme = null; state.niveau = null; state.nature = null; state.periode = null;
   state.soustheme = ""; state.q = "";
-  document.querySelectorAll(".chip[data-filter]").forEach(b => b.setAttribute("aria-pressed", "false"));
+  syncAllChips();
   document.getElementById("search").value = "";
   document.getElementById("soustheme").value = "";
   renderVeille();
@@ -4120,7 +4300,7 @@ document.getElementById("reset-filters").addEventListener("click", () => {
 function allerAEntree(url) {
   state.theme = null; state.niveau = null; state.nature = null; state.periode = null;
   state.soustheme = ""; state.q = "";
-  document.querySelectorAll(".chip[data-filter]").forEach(b => b.setAttribute("aria-pressed", "false"));
+  syncAllChips();
   document.getElementById("search").value = "";
   document.getElementById("soustheme").value = "";
   openCards.add(url);            // la cible s'ouvre, pour qu'on voie de quoi il retourne
