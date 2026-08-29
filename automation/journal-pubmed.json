@@ -1,5 +1,5 @@
 {
- "derniere_recherche": "2026/08/28",
+ "derniere_recherche": "2026/08/29",
  "pmids": {
   "39128561": {
    "date": "2026-08-28",
@@ -205,6 +205,12 @@
    "statut": "retenu",
    "titre": "Thérapie familiale versus thérapie individuelle chez l'enfant avec trouble de l'alimentation sélective et évit"
   },
+  "42032718": {
+   "date": "2026-08-29",
+   "raison": "revue systématique de la formation des thérapeutes à la TCD (Kirkpatrick, GRADE, 24 études) : axe formation, jamais couvert",
+   "statut": "retenu",
+   "titre": "The effectiveness of dialectical behaviour therapy training: a quantitative systematic review using Kirkpatric"
+  },
   "42047814": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -216,6 +222,12 @@
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Interventions précoces médiées par les parents chez les nourrissons à risque élevé de TSA : revue systématique"
+  },
+  "42104500": {
+   "date": "2026-08-29",
+   "raison": "méta-analyse TCD dans le TSA (4 ECR, n=375) : retenue avec réserve explicite, tailles d'effet invraisemblables",
+   "statut": "retenu",
+   "titre": "Efficacy of dialectical behavior therapy-based interventions for individuals with autism spectrum disorder: a "
   },
   "42105579": {
    "date": "2026-08-28",
@@ -276,6 +288,12 @@
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Méthylphénidate et croissance physique chez l'enfant et l'adolescent avec TDAH : revue systématique et méta-an"
+  },
+  "42206397": {
+   "date": "2026-08-29",
+   "raison": "ECR multicentrique chinois, DBT-ST 13 sem vs groupe de soutien social, n=196 : comparateur actif, supériorité sur le comportement d'automutilation",
+   "statut": "retenu",
+   "titre": "Effectiveness of 13-week dialectical behavior therapy skills training for non-suicidal self-injury: a multi-ce"
   },
   "42223086": {
    "date": "2026-08-28",
@@ -373,6 +391,12 @@
    "statut": "retenu",
    "titre": "Interventions numériques dans le TDAH de l'enfant et de l'adolescent : méta-analyse en réseau"
   },
+  "42361271": {
+   "date": "2026-08-29",
+   "raison": "ECR chinois à composantes additives, n=165 ados : autocompassion + différenciation de soi ajoutées aux compétences TCD vs TCD seule",
+   "statut": "retenu",
+   "titre": "The effect of a self-compassion focused integrated treatment on adolescent non suicidal self-injury: A randomi"
+  },
   "42368806": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -386,9 +410,9 @@
    "titre": "Programme scolaire combinant littératie en santé mentale et compétences TCD délivré par les enseignants : essa"
   },
   "42394598": {
-   "date": "2026-08-28",
-   "raison": "revue de portée sur les thérapies de groupe du jeune suicidaire (Israël) : travail récupéré par la correction de l'axe tcd, à juger au prochain run",
-   "statut": "reporte",
+   "date": "2026-08-29",
+   "raison": "revue de portée, 10 études hétérogènes majoritairement sans groupe contrôle ; l'apport (risque de contagion suicidaire en groupe, absence d'adaptation culturelle) ne justifie pas une entrée, le corpus couvrant déjà la TCD-A dans la suicidalité",
+   "statut": "ecarte",
    "titre": "Group Therapy for Adolescents at Risk of Suicide: A Scoping Review."
   },
   "42398677": {
@@ -409,6 +433,12 @@
    "statut": "retenu",
    "titre": "Résultats de la TCD chez des adolescents et jeunes adultes suicidaires selon les symptômes internalisés et ext"
   },
+  "42441734": {
+   "date": "2026-08-29",
+   "raison": "recommandations internationales CANMAT/ICOCS 2025 sur le TOC, avec une section enfant et adolescent : demande une lecture du texte intégral (85 pages) et l'ajout de CANMAT à la liste SOURCES — quota du run atteint",
+   "statut": "reporte",
+   "titre": "Canadian Network for Mood and Anxiety Treatments (CANMAT) and International College of Obsessive-Compulsive Sp"
+  },
   "42449452": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -422,9 +452,9 @@
    "titre": "Extrapolation pédiatrique de l'efficacité de la cariprazine (schizophrénie, manie bipolaire) par pharmacocinét"
   },
   "42461812": {
-   "date": "2026-08-28",
-   "raison": "protocole DBT-A (PLoS One) : à verser au bloc D si un identifiant de registre est disponible",
-   "statut": "reporte",
+   "date": "2026-08-29",
+   "raison": "protocole d'étude qualitative longitudinale (15 triades, Pays-Bas) sans enregistrement dans un registre d'essais : inéligible au bloc D, et un protocole ne porte aucun résultat",
+   "statut": "ecarte",
    "titre": "Unraveling dynamic factors in Dialectic Behavioural Treatment for Adolescents (DBT-A): A study protocol."
   },
   "42477112": {
@@ -456,6 +486,12 @@
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Persistance des traitements antidépresseurs chez l'enfant et l'adolescent déprimé au Japon : étude nationale s"
+  },
+  "42525221": {
+   "date": "2026-08-29",
+   "raison": "faisabilité de la déprescription par décision partagée chez le jeune (États-Unis) : entrée expérimentale du run",
+   "statut": "retenu",
+   "titre": "Deprescribing Psychiatric Medications in Youth: A Feasibility Study."
   },
   "42526603": {
    "date": "2026-08-28",
@@ -506,9 +542,9 @@
    "titre": "Predicting early intervention outcomes in autism via individual participant data mega-analysis."
   },
   "42558898": {
-   "date": "2026-08-28",
-   "raison": "topiramate adjuvant contre la prise de poids en hospitalisation pédopsychiatrique (Turquie, rétrospectif n=285) : cliniquement utile, quota du run atteint",
-   "statut": "reporte",
+   "date": "2026-08-29",
+   "raison": "topiramate adjuvant contre la prise de poids en hospitalisation pédopsy (Turquie, n=285) — reporté au run précédent, retenu ici",
+   "statut": "retenu",
    "titre": "Weight mitigation and tolerability of adjunctive topiramate in acute pediatric psychiatry: a retrospective rea"
   },
   "42560087": {
@@ -530,9 +566,9 @@
    "titre": "Adapter la TCD aux adolescents neurodivergents : besoins et stratégies d'adaptation rapportés par les clinicie"
   },
   "42564177": {
-   "date": "2026-08-28",
-   "raison": "ISRS/IRSN et COVID long chez l'enfant (Nature Mental Health) : à lire sur texte intégral",
-   "statut": "reporte",
+   "date": "2026-08-29",
+   "raison": "cohorte rétrospective massive (110 955 jeunes, RECOVER) mais confusion par indication non résolue ; aucun lien avec le diagnostic de COVID long et associations symptomatiques hétérogènes : ne change rien à la prescription",
+   "statut": "ecarte",
    "titre": "SSRI/SNRI and long COVID in children and adolescents with neuropsychiatric conditions: a cohort study from the"
   },
   "42572187": {
@@ -560,9 +596,9 @@
    "titre": "Integrative Residential Treatment of Co-Occurring Borderline and Narcissistic Personality Dysfunction: Perspec"
   },
   "42578778": {
-   "date": "2026-08-28",
-   "raison": "revue systématique tunisienne sur le méthylphénidate : intérêt de transposabilité Maghreb, méthode faible, quota atteint",
-   "statut": "reporte",
+   "date": "2026-08-29",
+   "raison": "revue systématique tunisienne sur le méthylphénidate : méthode faible et aucun apport par rapport aux méta-analyses en réseau déjà au corpus",
+   "statut": "ecarte",
    "titre": "Efficacy and tolerability of Methylphenidate in children and adolescents with ADHD : A Systematic Review."
   },
   "42580772": {
@@ -584,9 +620,9 @@
    "titre": "Predicting US Army Soldier Suicide-Related Behaviors at the Time of Periodic Health Assessments."
   },
   "42590803": {
-   "date": "2026-08-28",
-   "raison": "ECR iTBS versus sham sur l'insomnie du TSA (Chine, n=70) : effet clinique non chiffré dans le résumé, à vérifier sur texte intégral",
-   "statut": "reporte",
+   "date": "2026-08-29",
+   "raison": "vérification faite sur le résumé complet : l'article est centré sur l'imagerie et la transcriptomique, l'ampleur de l'effet clinique sur l'ISI n'est jamais chiffrée — ne permet pas de conclure sur le bénéfice de l'iTBS",
+   "statut": "ecarte",
    "titre": "Intermittent Theta Burst Stimulation Improves Sleep in Autism Spectrum Disorder by Reorganizing Overlapping Br"
   },
   "42596557": {
@@ -608,8 +644,8 @@
    "titre": "Antipsychotiques atypiques versus second antidépresseur dans la dépression de l'adolescent difficile à traiter"
   },
   "42602975": {
-   "date": "2026-08-28",
-   "raison": "encéphalite à anticorps anti-NMDA pédiatrique : évolution symptomatique et prise en charge médicamenteuse",
+   "date": "2026-08-29",
+   "raison": "encéphalite à récepteurs NMDA pédiatrique (35 cas, Gênes et Londres) : prise en charge médicamenteuse symptomatique avec ratios effet indésirable/bénéfice, candidat prioritaire au prochain run — quota des 8 entrées atteint",
    "statut": "reporte",
    "titre": "Symptom evolution, persistence, and pharmacological management in paediatric NMDA receptor antibody encephalit"
   },
@@ -626,9 +662,9 @@
    "titre": "Suivi thérapeutique pharmacologique de la quétiapine chez l'enfant et l'adolescent : intervalles de référence "
   },
   "42610640": {
-   "date": "2026-08-28",
-   "raison": "prévalence et prédicteurs de la catatonie chez l'adolescent avec TSA : corpus déjà fourni en catatonie ce mois-ci",
-   "statut": "reporte",
+   "date": "2026-08-29",
+   "raison": "prévalence de la catatonie dans le TSA (n=107, monocentrique) ; le corpus couvre déjà la catatonie pédiatrique et les prédicteurs identifiés reposent sur une régression à faible R² (0,26)",
+   "statut": "ecarte",
    "titre": "Prevalence, Phenotypic Correlates and Predictive Factors of Catatonia in Adolescents With Autism Spectrum Diso"
   },
   "42611696": {
@@ -732,6 +768,18 @@
    "raison": "NfL et GFAP sériques chez 412 adolescents : signal expérimental, anorexie mentale",
    "statut": "retenu",
    "titre": "Exploring serum biomarkers in paediatric psychiatry: the impact of NfL and GFAP."
+  },
+  "42661939": {
+   "date": "2026-08-29",
+   "raison": "pilote d'implantation israélien : groupe de compétences TCD aux parents seuls, 41 parents, CGI-S adolescent en aveugle",
+   "statut": "retenu",
+   "titre": "Feasibility of a parent-only DBT skills group in public mental health services: a pilot implementation study."
+  },
+  "42664720": {
+   "date": "2026-08-29",
+   "raison": "cohorte NeuroIMAGE : trajectoires de psychostimulants et devenir adulte >12 ans, 51 critères sans différence",
+   "statut": "retenu",
+   "titre": "Long-term outcomes of childhood ADHD stimulant use trajectories."
   }
  },
  "sans_pmid": [
