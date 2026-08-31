@@ -131,6 +131,7 @@ SOURCES = [
     "HAS", "ANSM", "DREES", "Santé publique France", "SFPEADA",
     "Académie de médecine",                     # France
     "NICE", "AACAP", "ESCAP", "OMS",            # international
+    "CANMAT",                                   # réseau canadien, recommandations
 ]
 
 # ---------------------------------------------------------------------------

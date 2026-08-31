@@ -1,5 +1,5 @@
 {
- "derniere_recherche": "2026/08/29",
+ "derniere_recherche": "2026/08/31",
  "pmids": {
   "39128561": {
    "date": "2026-08-28",
@@ -223,6 +223,12 @@
    "statut": "retenu",
    "titre": "Interventions précoces médiées par les parents chez les nourrissons à risque élevé de TSA : revue systématique"
   },
+  "42061556": {
+   "date": "2026-08-31",
+   "raison": "éditorial JAACAP de Mehlum : la TCD seule thérapie répliquée dans >1 RCT chez l'ado auto-agressif",
+   "statut": "retenu",
+   "titre": "Effective Treatment of Adolescents With Suicidal and Self-Harming Behaviors: What Are the Knowledge Gaps?"
+  },
   "42104500": {
    "date": "2026-08-29",
    "raison": "méta-analyse TCD dans le TSA (4 ECR, n=375) : retenue avec réserve explicite, tailles d'effet invraisemblables",
@@ -234,6 +240,18 @@
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Antidépresseurs et risque de conversion vers un trouble bipolaire chez l'enfant, l'adolescent et le jeune adul"
+  },
+  "42106651": {
+   "date": "2026-08-31",
+   "raison": "RCT chinois DBT-ST groupe vs TCC groupe dans le TDAH adulte (n=98) : non-infériorité non établie, comparateur actif",
+   "statut": "retenu",
+   "titre": "Group dialectical behavior therapy skills training versus group cognitive behavioral therapy for adults with A"
+  },
+  "42110902": {
+   "date": "2026-08-31",
+   "raison": "revue narrative NSSI très large (psychothérapie, pharmaco, neuromodulation, numérique) : redondante avec la revue parapluie sud-coréenne déjà au corpus",
+   "statut": "ecarte",
+   "titre": "Pharmacological and Non-Pharmacological Interventions for Non-Suicidal Self-Injury: A Narrative Review."
   },
   "42134365": {
    "date": "2026-08-28",
@@ -295,6 +313,12 @@
    "statut": "retenu",
    "titre": "Effectiveness of 13-week dialectical behavior therapy skills training for non-suicidal self-injury: a multi-ce"
   },
+  "42218549": {
+   "date": "2026-08-31",
+   "raison": "Family Connections en ligne vs présentiel, multicentrique francophone (Strasbourg/Versailles/Genève/Fribourg)",
+   "statut": "retenu",
+   "titre": "Effectiveness of online family connections for family members of people with BPD: a naturalistic comparison wi"
+  },
   "42223086": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -355,6 +379,12 @@
    "statut": "retenu",
    "titre": "La DBT-A modifie-t-elle les idées suicidaires et l'usage des compétences de coping à l'âge adulte ? Suivi à 12"
   },
+  "42317640": {
+   "date": "2026-08-31",
+   "raison": "app Kalmer (TCD/TCC + EMA) : retenue puis retirée du run au profit du point ANSM sur le lithium et la quétiapine, plus conséquent en pratique — à reprendre comme entrée expérimentale au prochain run",
+   "statut": "reporte",
+   "titre": "Kalmer, a specific based-App intervention for the treatment of Non-suicidal self-injury (NSSI): a technical an"
+  },
   "42326958": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -367,6 +397,12 @@
    "statut": "retenu",
    "titre": "Prédicteurs et modérateurs des thérapies délivrées par internet pour la dépression de l'adolescent : essai de "
   },
+  "42337431": {
+   "date": "2026-08-31",
+   "raison": "descriptif d'un partenariat État-université pour former à une TCD adaptée : aucun résultat, résumé de quelques lignes",
+   "statut": "ecarte",
+   "titre": "Expanding Access to Specialized Mental Health Services for Youths in Crisis Through a State-Provider-Universit"
+  },
   "42345447": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -378,6 +414,12 @@
    "raison": "présent dans le corpus",
    "statut": "retenu",
    "titre": "Formation à la désescalade inspirée de la TCD pour les enseignants du primaire : étude pilote sur la dysrégula"
+  },
+  "42352569": {
+   "date": "2026-08-31",
+   "raison": "revue narrative sur la régulation émotionnelle dans le TDAH : la TCD n'y est qu'un item parmi cinq, une autrice est conceptrice d'une des interventions discutées",
+   "statut": "ecarte",
+   "titre": "Review of Emotion Regulation Psychosocial Interventions for Children and Adolescents with ADHD."
   },
   "42352750": {
    "date": "2026-08-28",
@@ -421,6 +463,12 @@
    "statut": "retenu",
    "titre": "Implémentation de la TCD pour adolescents avec trouble bipolaire en clinique communautaire : procédures de for"
   },
+  "42406450": {
+   "date": "2026-08-31",
+   "raison": "commentaire d'une page en réponse à un article, sans donnée propre",
+   "statut": "ecarte",
+   "titre": "Randomized controlled trials confirm the efficacy of psychological interventions and medications: Commentary o"
+  },
   "42416199": {
    "date": "2026-08-28",
    "raison": "présent dans le corpus",
@@ -434,9 +482,9 @@
    "titre": "Résultats de la TCD chez des adolescents et jeunes adultes suicidaires selon les symptômes internalisés et ext"
   },
   "42441734": {
-   "date": "2026-08-29",
-   "raison": "recommandations internationales CANMAT/ICOCS 2025 sur le TOC, avec une section enfant et adolescent : demande une lecture du texte intégral (85 pages) et l'ajout de CANMAT à la liste SOURCES — quota du run atteint",
-   "statut": "reporte",
+   "date": "2026-08-31",
+   "raison": "recommandations CANMAT/ICOCS 2025 sur le TOC, section enfant-adolescent ; a motivé l'ajout de CANMAT aux SOURCES",
+   "statut": "retenu",
    "titre": "Canadian Network for Mood and Anxiety Treatments (CANMAT) and International College of Obsessive-Compulsive Sp"
   },
   "42449452": {
@@ -456,6 +504,18 @@
    "raison": "protocole d'étude qualitative longitudinale (15 triades, Pays-Bas) sans enregistrement dans un registre d'essais : inéligible au bloc D, et un protocole ne porte aucun résultat",
    "statut": "ecarte",
    "titre": "Unraveling dynamic factors in Dialectic Behavioural Treatment for Adolescents (DBT-A): A study protocol."
+  },
+  "42469874": {
+   "date": "2026-08-31",
+   "raison": "méta-analyse en réseau TSA par domaine comportemental (67 RCT) ; effets de l'exercice peu plausibles, conflit d'intérêts noté",
+   "statut": "retenu",
+   "titre": "Comparative efficacy of pharmacological, adjunctive, and non-pharmacological interventions across behavioral d"
+  },
+  "42474997": {
+   "date": "2026-08-31",
+   "raison": "TCD + exposition prolongée en hôpital de jour chez des vétérans : effets pré-post sans témoin, doublonne l'essai NCT05974631 déjà suivi au bloc D",
+   "statut": "ecarte",
+   "titre": "Effectiveness of combined dialectical behavior therapy and prolonged exposure in an intensive outpatient progr"
   },
   "42477112": {
    "date": "2026-08-28",
@@ -487,11 +547,29 @@
    "statut": "retenu",
    "titre": "Persistance des traitements antidépresseurs chez l'enfant et l'adolescent déprimé au Japon : étude nationale s"
   },
+  "42515959": {
+   "date": "2026-08-31",
+   "raison": "série de 20 cas : antipsychotiques pendant une catatonie du jeune avec TND, premières données pédiatriques",
+   "statut": "retenu",
+   "titre": "Antipsychotic Use During Catatonia in Youth with Neurodevelopmental Disorders and Psychotic Symptoms: A 20-Pat"
+  },
+  "42517392": {
+   "date": "2026-08-31",
+   "raison": "revue sur les formulations de lithium (LI vs LP) : angle pharmacocinétique neuf mais population tous âges, section pédiatrique à vérifier",
+   "statut": "reporte",
+   "titre": "Lithium Formulations in Clinical Practice."
+  },
   "42525221": {
    "date": "2026-08-29",
    "raison": "faisabilité de la déprescription par décision partagée chez le jeune (États-Unis) : entrée expérimentale du run",
    "statut": "retenu",
    "titre": "Deprescribing Psychiatric Medications in Youth: A Feasibility Study."
+  },
+  "42525238": {
+   "date": "2026-08-31",
+   "raison": "analyse VigiBase clozapine chez l'ado schizophrène : suicides évités vs agranulocytoses ; résumé absent de PubMed, texte intégral à lire",
+   "statut": "reporte",
+   "titre": "VigiBase suggests that the number of deaths by suicide in adolescents with schizophrenia as a result of not ta"
   },
   "42526603": {
    "date": "2026-08-28",
@@ -619,6 +697,12 @@
    "statut": "ecarte",
    "titre": "Predicting US Army Soldier Suicide-Related Behaviors at the Time of Periodic Health Assessments."
   },
+  "42586954": {
+   "date": "2026-08-31",
+   "raison": "revue de portée sur les déterminants de l'usage hors AMM des psychotropes chez le jeune (43 études, 16 pays) : solide mais quota du run atteint",
+   "statut": "reporte",
+   "titre": "Factors associated with the off-label use of psychotropic medicines in children and adolescents: A scoping rev"
+  },
   "42590803": {
    "date": "2026-08-29",
    "raison": "vérification faite sur le résumé complet : l'article est centré sur l'imagerie et la transcriptomique, l'ampleur de l'effet clinique sur l'ISI n'est jamais chiffrée — ne permet pas de conclure sur le bénéfice de l'iTBS",
@@ -644,9 +728,9 @@
    "titre": "Antipsychotiques atypiques versus second antidépresseur dans la dépression de l'adolescent difficile à traiter"
   },
   "42602975": {
-   "date": "2026-08-29",
-   "raison": "encéphalite à récepteurs NMDA pédiatrique (35 cas, Gênes et Londres) : prise en charge médicamenteuse symptomatique avec ratios effet indésirable/bénéfice, candidat prioritaire au prochain run — quota des 8 entrées atteint",
-   "statut": "reporte",
+   "date": "2026-08-31",
+   "raison": "encéphalite anti-NMDAR pédiatrique (35 cas Gênes/Londres) : tolérance des antipsychotiques, rispéridone en retrait",
+   "statut": "retenu",
    "titre": "Symptom evolution, persistence, and pharmacological management in paediatric NMDA receptor antibody encephalit"
   },
   "42606557": {
@@ -745,6 +829,12 @@
    "statut": "retenu",
    "titre": "Implementing evidence-based group psychotherapy in Veterans Health Administration (VHA): Implications for burn"
   },
+  "42637255": {
+   "date": "2026-08-31",
+   "raison": "protocole MELODY (mélatonine, ACTRN12624000017527) : bloc D impossible, l'échéance de résultats n'est pas vérifiable, ANZCTR bloqué par Cloudflare",
+   "statut": "ecarte",
+   "titre": "MELODY trial: study protocol for a 12-week randomised controlled trial of adjunctive melatonin, digital cognit"
+  },
   "42638544": {
    "date": "2026-08-28",
    "raison": "analyse intra-individuelle du sens de la vie, population adulte, sans lien avec un protocole TCD",
@@ -780,6 +870,24 @@
    "raison": "cohorte NeuroIMAGE : trajectoires de psychostimulants et devenir adulte >12 ans, 51 critères sans différence",
    "statut": "retenu",
    "titre": "Long-term outcomes of childhood ADHD stimulant use trajectories."
+  },
+  "42668354": {
+   "date": "2026-08-31",
+   "raison": "hors sujet : santé bucco-dentaire des enfants avec TDAH",
+   "statut": "ecarte",
+   "titre": "Oral health status and associated influencing factors in children with attention-deficit/hyperactivity disorde"
+  },
+  "42668410": {
+   "date": "2026-08-31",
+   "raison": "hors sujet : maltraitance émotionnelle et délinquance, aucune portée thérapeutique",
+   "statut": "ecarte",
+   "titre": "Childhood Emotional Abuse and Aggressive Behaviors in Delinquency: The Mediators of Emotional Dysregulation an"
+  },
+  "42669595": {
+   "date": "2026-08-31",
+   "raison": "hors sujet : psychotropes du post-partum et allaitement, population maternelle",
+   "statut": "ecarte",
+   "titre": "Postpartum Psychotropic Treatment Patterns and Breastfeeding: Nationwide Clustering Study."
   }
  },
  "sans_pmid": [
