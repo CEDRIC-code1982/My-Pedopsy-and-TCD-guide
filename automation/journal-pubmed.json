@@ -1,5 +1,5 @@
 {
- "derniere_recherche": "2026/09/04",
+ "derniere_recherche": "2026/09/24",
  "pmids": {
   "39128561": {
    "date": "2026-08-28",
@@ -176,9 +176,9 @@
    "titre": "Stratégies séquentielles dans la dépression de l'adolescent (switch versus potentialisation, dont le lithium) "
   },
   "41795181": {
-   "date": "2026-09-08",
-   "raison": "Wise Eating : RCT d'une app TCD pour l'hyperphagie (Shanghai, d = 1,07), population adulte — le quota TCD du run était pris",
-   "statut": "reporte",
+   "date": "2026-09-24",
+   "raison": "Wise Eating : RCT d'un mini-programme WeChat fondé sur la TCD pour l'hyperphagie (Shanghai, d = 1,07)",
+   "statut": "retenu",
    "titre": "Wise Eating: A Guided Dialectical Behavior Therapy-Based APP for Binge Eating-A Randomized Controlled Trial."
   },
   "41804225": {
@@ -620,8 +620,8 @@
    "titre": "Persistance des traitements antidépresseurs chez l'enfant et l'adolescent déprimé au Japon : étude nationale s"
   },
   "42509997": {
-   "date": "2026-09-08",
-   "raison": "méta-analyse exploratoire ACT/ERITA/IERITA dans l'automutilation de l'adolescent (Grèce), certitude GRADE modérée pour l'IERITA guidée",
+   "date": "2026-09-24",
+   "raison": "méta-analyse exploratoire ACT/ERITA/IERITA dans l'automutilation de l'adolescent (Grèce) : quota du run atteint",
    "statut": "reporte",
    "titre": "Acceptance-Based and ACT-Informed Interventions for Non-Suicidal Self-Injury in Adolescents: A Systematic Revi"
   },
@@ -632,9 +632,9 @@
    "titre": "Antipsychotic Use During Catatonia in Youth with Neurodevelopmental Disorders and Psychotic Symptoms: A 20-Pat"
   },
   "42517392": {
-   "date": "2026-09-08",
-   "raison": "revue sur les formulations de lithium (LI vs LP) : section pédiatrique toujours à vérifier sur texte intégral",
-   "statut": "reporte",
+   "date": "2026-09-24",
+   "raison": "revue sur les formulations de lithium : reportée trois runs, population tous âges, section pédiatrique trop mince",
+   "statut": "ecarte",
    "titre": "Lithium Formulations in Clinical Practice."
   },
   "42525221": {
@@ -776,9 +776,9 @@
    "titre": "Predicting US Army Soldier Suicide-Related Behaviors at the Time of Periodic Health Assessments."
   },
   "42586954": {
-   "date": "2026-09-08",
-   "raison": "revue de portée sur l'usage hors AMM des psychotropes chez le jeune (43 études, 16 pays) : solide, 3e report, à traiter en priorité au prochain run",
-   "statut": "reporte",
+   "date": "2026-09-24",
+   "raison": "revue de portée sur les déterminants de l'usage hors AMM des psychotropes du jeune (43 études, 16 pays)",
+   "statut": "retenu",
    "titre": "Factors associated with the off-label use of psychotropic medicines in children and adolescents: A scoping rev"
   },
   "42590803": {
@@ -1034,8 +1034,8 @@
    "titre": "Nanomaterial-Based Enzymatic Biosensor for p-Cresol Detection as an Early Autism Spectrum Disorder Diagnosis B"
   },
   "42678315": {
-   "date": "2026-09-08",
-   "raison": "dexmédétomidine en perfusion comme sédation-relais de l'agitation sévère de l'adolescent aux urgences (Trieste, n = 20)",
+   "date": "2026-09-24",
+   "raison": "dexmédétomidine en sédation-relais de l'agitation sévère de l'adolescent aux urgences (Trieste)",
    "statut": "reporte",
    "titre": "Dexmedetomidine Continuous Infusion to Maintain Sedation in Severely Agitated Adolescents in the Emergency Dep"
   },
@@ -1142,16 +1142,232 @@
    "titre": "Pediatric catatonia across diagnostic contexts: Presentation, treatment course, and factors associated with EC"
   },
   "42692448": {
-   "date": "2026-09-08",
-   "raison": "modèle de prise en charge du TDAH par des médecins généralistes formés, cohorte de 207 enfants (Australie) : angle organisation des soins",
+   "date": "2026-09-24",
+   "raison": "prise en charge du TDAH par des généralistes formés, 207 enfants (Australie) : angle organisation des soins",
    "statut": "reporte",
    "titre": "New model of management of attention deficit hyperactivity disorder by trained general practitioners: Prospect"
+  },
+  "42694557": {
+   "date": "2026-09-24",
+   "raison": "stimulation par interférence temporelle de l'amygdale droite chez 12 adolescents déprimés : faisabilité en ouvert",
+   "statut": "retenu",
+   "titre": "Temporal Interference Stimulation Targeting the Right Amygdala in Adolescents With Depression: A Pilot Feasibi"
+  },
+  "42694606": {
+   "date": "2026-09-24",
+   "raison": "méta-analyse ocytocine intranasale dans l'autisme : signal déjà couvert par la veille antérieure",
+   "statut": "ecarte",
+   "titre": "The Effect of Intranasal Oxytocin on Social Interaction in Adults and Children With Autism Spectrum Disorders:"
+  },
+  "42695278": {
+   "date": "2026-09-24",
+   "raison": "psychométrie des deux mesures de surcontrôle du manuel RO-DBT : validité de construit faible pour l'ASC-WP",
+   "statut": "retenu",
+   "titre": "Measuring Trait-Level Overcontrol: Does the Measurement Fit the Theory?"
+  },
+  "42696002": {
+   "date": "2026-09-24",
+   "raison": "visites aux urgences pour motif psychiatrique et volume pédiatrique : épidémiologie de recours",
+   "statut": "ecarte",
+   "titre": "Childhood Mental Health-Related Visits and Emergency Department Pediatric Volume in the United States, 2016 to"
+  },
+  "42696283": {
+   "date": "2026-09-24",
+   "raison": "PROTECTconfirm (JAMA Netw Open) : TCC vs éducation aux médias, 1 793 élèves, bénéfice limité à la prévention ciblée",
+   "statut": "retenu",
+   "titre": "Cognitive Behavioral Therapy vs Media Literacy for Prevention of Gaming Disorder and Unspecified Internet Use "
+  },
+  "42696674": {
+   "date": "2026-09-24",
+   "raison": "série de cas sur l'aripiprazole retard chez l'adolescent",
+   "statut": "ecarte",
+   "titre": "Clinical Use of Aripiprazole Monohydrate Long-Acting Injectable in Adolescents: A Case Series and Review of th"
+  },
+  "42698352": {
+   "date": "2026-09-24",
+   "raison": "suivi à deux ans d'un traitement complet du TDAH : protocole local peu transposable",
+   "statut": "ecarte",
+   "titre": "Comprehensive Treatment and Monthly 2 Year Follow-Up in Children With ADHD: Randomized Controlled Prospective "
+  },
+  "42698581": {
+   "date": "2026-09-24",
+   "raison": "protocole d'élaboration d'un consensus d'experts : pas encore de contenu",
+   "statut": "ecarte",
+   "titre": "Protocol for developing an evidence-based expert consensus on efficacy evaluation and comorbidity management o"
   },
   "42700000": {
    "date": "2026-09-08",
    "raison": "revue narrative sur dysrégulation émotionnelle et suicide de l'adolescent, revue à faible sélectivité",
    "statut": "ecarte",
    "titre": "Adolescent emotional dysregulation and suicide: A review."
+  },
+  "42700484": {
+   "date": "2026-09-24",
+   "raison": "stratégies thérapeutiques après arrêt du valproate chez les femmes en âge de procréer : enjeu réglementaire à instruire",
+   "statut": "reporte",
+   "titre": "Therapeutic strategies after discontinuation of valproate in females of child-bearing potential with bipolar d"
+  },
+  "42702878": {
+   "date": "2026-09-24",
+   "raison": "validation pilote d'un entretien clinique structuré du TDAH : instrument non francophone",
+   "statut": "ecarte",
+   "titre": "Feasibility and Pilot Validation of the ADHD Child Evaluation (ACEv.2) Clinical Interview."
+  },
+  "42703200": {
+   "date": "2026-09-24",
+   "raison": "revue systématique sur catastrophes naturelles et santé mentale des jeunes : hors périmètre",
+   "statut": "ecarte",
+   "titre": "Effect of Natural Disasters on Youth Mental Health: A Systematic Review."
+  },
+  "42705646": {
+   "date": "2026-09-24",
+   "raison": "cas clinique de catatonie chez un enfant de 6 ans atteint de dystrophie de Becker",
+   "statut": "ecarte",
+   "titre": "A 6-Year-Old With Becker Muscular Dystrophy and Catatonia."
+  },
+  "42708400": {
+   "date": "2026-09-24",
+   "raison": "environnements invalidants et automutilation : longitudinal corrélationnel",
+   "statut": "ecarte",
+   "titre": "Invalidating environments and adolescent non-suicidal self-injury: longitudinal cross-lagged test of negative "
+  },
+  "42711703": {
+   "date": "2026-09-24",
+   "raison": "trajectoires de solitude et automutilation : corrélationnel",
+   "statut": "ecarte",
+   "titre": "Developmental trajectories and dynamic associations between loneliness and non-suicidal self-injury in adolesc"
+  },
+  "42712666": {
+   "date": "2026-09-24",
+   "raison": "tendances de dispensation de psychotropes en Grèce : épidémiologie descriptive sans conséquence pratique",
+   "statut": "ecarte",
+   "titre": "Psychotropic dispensing in Greek adolescents and young adults: national trends and regional variation."
+  },
+  "42714935": {
+   "date": "2026-09-24",
+   "raison": "expansion des soins virtuels et suivi médical après premier contact : organisationnel",
+   "statut": "ecarte",
+   "titre": "Virtual Care Expansion and Physician Follow-Up Among Youth With First Mental Health Contact Through a Hospital"
+  },
+  "42715222": {
+   "date": "2026-09-24",
+   "raison": "évaluation du TSA en téléconsultation sous contrainte réseau : paramètres techniques",
+   "statut": "ecarte",
+   "titre": "Telehealth autism evaluation under suboptimal network conditions: Technical parameters and clinical implicatio"
+  },
+  "42716242": {
+   "date": "2026-09-24",
+   "raison": "retard de maturation squelettique et traitement du TDAH : sous-population à croissance constitutionnellement retardée",
+   "statut": "ecarte",
+   "titre": "Skeletal Maturation Delay and ADHD Medication Use in Children with Constitutional Growth Delay: A Retrospectiv"
+  },
+  "42719016": {
+   "date": "2026-09-24",
+   "raison": "perspectives d'adolescents sur l'automutilation en ligne : qualitatif",
+   "statut": "ecarte",
+   "titre": "Navigating self-injury in a digital world: adolescents' perspectives on coping, help-seeking, and technology."
+  },
+  "42719568": {
+   "date": "2026-09-24",
+   "raison": "ECT bifrontale versus bitemporale : population adulte",
+   "statut": "ecarte",
+   "titre": "Comparative efficacy and cognitive safety of bifrontal versus bitemporal electroconvulsive therapy in adolesce"
+  },
+  "42722964": {
+   "date": "2026-09-24",
+   "raison": "commentaire de deux pages sur la kétamine en crise suicidaire pédiatrique, sans données propres",
+   "statut": "ecarte",
+   "titre": "Ketamine: from anesthesia to pediatric suicidal crisis."
+  },
+  "42723320": {
+   "date": "2026-09-24",
+   "raison": "intensité de la TCD et idéation suicidaire : 105 patients d'hôpital de jour, la réponse précoce prédit mieux que l'intensité",
+   "statut": "retenu",
+   "titre": "Does More Mean Better? Treatment Intensity and Predictors of Clinically Significant Change in Suicidal Ideatio"
+  },
+  "42728634": {
+   "date": "2026-09-24",
+   "raison": "étude qualitative sur huit thérapeutes TCD issue d'un mémoire de master : effectif et statut insuffisants",
+   "statut": "ecarte",
+   "titre": "Recovery from borderline personality disorder in relation to the concept of \"a life worth living\": a therapist"
+  },
+  "42729246": {
+   "date": "2026-09-24",
+   "raison": "cas clinique unique d'anorexie sévère de l'adolescent",
+   "statut": "ecarte",
+   "titre": "Case Report: Motivational ambivalence and family dynamics in severe adolescent anorexia nervosa treated in a M"
+  },
+  "42729250": {
+   "date": "2026-09-24",
+   "raison": "co-conception d'une thérapie des rythmes sociaux adaptée à l'adolescent : stade très amont, à revoir si essai",
+   "statut": "ecarte",
+   "titre": "Co-designing and piloting adolescent-adapted social rhythm therapy for young people with unipolar and bipolar "
+  },
+  "42729393": {
+   "date": "2026-09-24",
+   "raison": "méta-analyse en réseau sur données vérifiables à la source : aucun antidépresseur supérieur au placebo chez l'adolescent",
+   "statut": "retenu",
+   "titre": "Comparative efficacy of antidepressants for acute adolescent major depressive disorder: a source-verified syst"
+  },
+  "42730315": {
+   "date": "2026-09-24",
+   "raison": "revue Cureus sur le valproate dans le TSA : revue à contrôle éditorial léger",
+   "statut": "ecarte",
+   "titre": "Clinical Use of Valproate and Divalproex in Autism Spectrum Disorder: A Systematic Review of Efficacy and Safe"
+  },
+  "42736994": {
+   "date": "2026-09-24",
+   "raison": "évaluation d'un dispositif local de soins aigus pour adolescents",
+   "statut": "ecarte",
+   "titre": "Innovation in Acute Adolescent Mental Healthcare: Evaluating a Responsive and Sustainable Mental Healthcare Mo"
+  },
+  "42745761": {
+   "date": "2026-09-24",
+   "raison": "variations départementales de dispensation de médicaments du TDAH en Norvège : descriptif",
+   "statut": "ecarte",
+   "titre": "County-level variation and trajectories in ADHD medication dispensing among Norwegian children and adolescents"
+  },
+  "42746377": {
+   "date": "2026-09-24",
+   "raison": "revue Cureus sur la prise de poids sous antipsychotiques : sans données nouvelles",
+   "statut": "ecarte",
+   "titre": "Metabolic-Protective Strategies for Antipsychotic-Associated Weight Gain in Children and Adolescents: A System"
+  },
+  "42755720": {
+   "date": "2026-09-24",
+   "raison": "revue rapide de revues systématiques sur les interventions précoces : trop général",
+   "statut": "ecarte",
+   "titre": "Early interventions in mental health services: a rapid review of systematic review."
+  },
+  "42756521": {
+   "date": "2026-09-24",
+   "raison": "Ushirikiano : pilote randomisé kényan de psychothérapie interpersonnelle de groupe déléguée à des agents communautaires",
+   "statut": "retenu",
+   "titre": "Acceptability and feasibility of the Ushirikiano treatment model for Kenyan adolescents: a pilot randomized co"
+  },
+  "42757262": {
+   "date": "2026-09-24",
+   "raison": "intervention de groupe sur l'automutilation chez des étudiants : population non pédiatrique",
+   "statut": "ecarte",
+   "titre": "Group intervention for non-suicidal self-injury in college students guided by the Process Model of Emotional R"
+  },
+  "42757989": {
+   "date": "2026-09-24",
+   "raison": "méta-analyse sur la guidance parentale par télémédecine dans le TSA : hors axe prioritaire du run",
+   "statut": "ecarte",
+   "titre": "The Effects of Telemedicine Parent Training on Children and Adolescents With Autism: A Meta-Analysis."
+  },
+  "42768352": {
+   "date": "2026-09-24",
+   "raison": "augmentation par amisulpride chez le patient sous clozapine : population adulte",
+   "statut": "ecarte",
+   "titre": "Effectiveness of amisulpride augmentation versus other antipsychotics in clozapine-treated adolescents: a real"
+  },
+  "42769524": {
+   "date": "2026-09-24",
+   "raison": "kétamine intranasale en prémédication anesthésique : hors périmètre psychiatrique",
+   "statut": "ecarte",
+   "titre": "Comparative Evaluation of Intranasal Ketamine and Midazolam for Premedication in Children Undergoing Elective "
   }
  },
  "sans_pmid": [
