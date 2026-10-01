@@ -1,5 +1,5 @@
 {
- "derniere_recherche": "2026/09/24",
+ "derniere_recherche": "2026/10/01",
  "pmids": {
   "39128561": {
    "date": "2026-08-28",
@@ -620,9 +620,9 @@
    "titre": "Persistance des traitements antidépresseurs chez l'enfant et l'adolescent déprimé au Japon : étude nationale s"
   },
   "42509997": {
-   "date": "2026-09-24",
-   "raison": "méta-analyse exploratoire ACT/ERITA/IERITA dans l'automutilation de l'adolescent (Grèce) : quota du run atteint",
-   "statut": "reporte",
+   "date": "2026-10-01",
+   "raison": "méta-analyse exploratoire ACT/ERITA/IERITA dans l'automutilation de l'adolescent (Grèce), reportée deux runs",
+   "statut": "retenu",
    "titre": "Acceptance-Based and ACT-Informed Interventions for Non-Suicidal Self-Injury in Adolescents: A Systematic Revi"
   },
   "42515959": {
@@ -1034,7 +1034,7 @@
    "titre": "Nanomaterial-Based Enzymatic Biosensor for p-Cresol Detection as an Early Autism Spectrum Disorder Diagnosis B"
   },
   "42678315": {
-   "date": "2026-09-24",
+   "date": "2026-10-01",
    "raison": "dexmédétomidine en sédation-relais de l'agitation sévère de l'adolescent aux urgences (Trieste)",
    "statut": "reporte",
    "titre": "Dexmedetomidine Continuous Infusion to Maintain Sedation in Severely Agitated Adolescents in the Emergency Dep"
@@ -1142,8 +1142,8 @@
    "titre": "Pediatric catatonia across diagnostic contexts: Presentation, treatment course, and factors associated with EC"
   },
   "42692448": {
-   "date": "2026-09-24",
-   "raison": "prise en charge du TDAH par des généralistes formés, 207 enfants (Australie) : angle organisation des soins",
+   "date": "2026-10-01",
+   "raison": "prise en charge du TDAH par des généralistes formés, 207 enfants (Australie)",
    "statut": "reporte",
    "titre": "New model of management of attention deficit hyperactivity disorder by trained general practitioners: Prospect"
   },
@@ -1202,8 +1202,8 @@
    "titre": "Adolescent emotional dysregulation and suicide: A review."
   },
   "42700484": {
-   "date": "2026-09-24",
-   "raison": "stratégies thérapeutiques après arrêt du valproate chez les femmes en âge de procréer : enjeu réglementaire à instruire",
+   "date": "2026-10-01",
+   "raison": "stratégies thérapeutiques après arrêt du valproate chez les femmes en âge de procréer",
    "statut": "reporte",
    "titre": "Therapeutic strategies after discontinuation of valproate in females of child-bearing potential with bipolar d"
   },
@@ -1368,6 +1368,222 @@
    "raison": "kétamine intranasale en prémédication anesthésique : hors périmètre psychiatrique",
    "statut": "ecarte",
    "titre": "Comparative Evaluation of Intranasal Ketamine and Midazolam for Premedication in Children Undergoing Elective "
+  },
+  "42779129": {
+   "date": "2026-10-01",
+   "raison": "seuil de changement cliniquement pertinent dans le TDAH : travail psychométrique sans portée immédiate",
+   "statut": "ecarte",
+   "titre": "Clinically Meaningful Within-Patient Change in Core Attention-Deficit/Hyperactivity Disorder Symptoms in Child"
+  },
+  "42780229": {
+   "date": "2026-10-01",
+   "raison": "préprint medRxiv sur violence par arme à feu et décompensation psychiatrique : non relu par les pairs",
+   "statut": "ecarte",
+   "titre": "Recent, Nearby Gun Violence and Recurrent Psychiatric Exacerbation in Children and Adolescents."
+  },
+  "42780436": {
+   "date": "2026-10-01",
+   "raison": "trajectoires cardiométaboliques sous antipsychotiques de seconde génération : sujet déjà couvert par la veille",
+   "statut": "ecarte",
+   "titre": "Longitudinal cardiometabolic trajectories in children and adolescents in therapy with second-generation antips"
+  },
+  "42780871": {
+   "date": "2026-10-01",
+   "raison": "neurofeedback fNIRS ciblant le cortex préfrontal dorsolatéral droit : très amont",
+   "statut": "ecarte",
+   "titre": "fNIRS-based neurofeedback targeting the right dorsolateral prefrontal cortex (dlPFC) in children at familial r"
+  },
+  "42781822": {
+   "date": "2026-10-01",
+   "raison": "pilote FBT + compétences TCD en ligne pour aidants de jeunes anorexiques (Shanghai)",
+   "statut": "retenu",
+   "titre": "A Pilot Study of the Feasibility, Acceptability, and Preliminary Outcomes of an Intensive Multidisciplinary On"
+  },
+  "42782318": {
+   "date": "2026-10-01",
+   "raison": "facteurs prédictifs de prescription de psychotrope en pédopsychiatrie : descriptif monocentrique",
+   "statut": "ecarte",
+   "titre": "Predictive factors for psychotropic medication prescription in child and adolescent psychiatric emergency care"
+  },
+  "42782319": {
+   "date": "2026-10-01",
+   "raison": "prédicteurs cliniques des états mentaux à risque en population adolescente : corrélationnel",
+   "statut": "ecarte",
+   "titre": "Clinical predictors of at-risk mental states in general adolescent population: a 2-year follow-up study."
+  },
+  "42783369": {
+   "date": "2026-10-01",
+   "raison": "adversité dans l'enfance et santé au début de l'âge adulte : épidémiologie générale",
+   "statut": "ecarte",
+   "titre": "Childhood Adversity and Health in Emerging Adulthood."
+  },
+  "42786849": {
+   "date": "2026-10-01",
+   "raison": "prédicteurs cliniques de la réponse au lithium (chronotype, rumination, trauma) : cohorte adulte génoise, à reprendre si volet pédiatrique",
+   "statut": "reporte",
+   "titre": "Clinical Predictors of Lithium Response in Patients with Bipolar Disorder: Potential Predictive Role of Chrono"
+  },
+  "42788378": {
+   "date": "2026-10-01",
+   "raison": "cibles d'intervention de l'automutilation identifiées par simulation in silico : méthodologique",
+   "statut": "ecarte",
+   "titre": "Identifying intervention targets for adolescent non-suicidal self-injury via in silico interventions: The gend"
+  },
+  "42788929": {
+   "date": "2026-10-01",
+   "raison": "caractéristiques associées à une tentative ultérieure après passage aux urgences : descriptif",
+   "statut": "ecarte",
+   "titre": "Patient and Clinical Characteristics Associated With Subsequent Suicide Attempt Among Youth in the Emergency D"
+  },
+  "42789542": {
+   "date": "2026-10-01",
+   "raison": "étude qualitative suédoise sur les agents conversationnels d'IA en TCD",
+   "statut": "retenu",
+   "titre": "Possible Role and Function of AI Conversational Agents in Dialectical Behavior Therapy for Borderline Personal"
+  },
+  "42790916": {
+   "date": "2026-10-01",
+   "raison": "robot PARO pour la douleur et l'anxiété en périopératoire : hors périmètre psychiatrique",
+   "statut": "ecarte",
+   "titre": "Multicentre randomised controlled trial evaluating PARO for pain and anxiety during peripheral intravenous can"
+  },
+  "42791046": {
+   "date": "2026-10-01",
+   "raison": "co-adaptation d'un programme scolaire de littératie en santé mentale au Cambodge : stade de conception",
+   "statut": "ecarte",
+   "titre": "Co-adapting a school-based mental health literacy intervention for adolescents in Cambodia and Vietnam."
+  },
+  "42791556": {
+   "date": "2026-10-01",
+   "raison": "cas-témoins sur la totalité des suicides de moins de 18 ans en Angleterre : 42,6 % sans antécédent d'automutilation",
+   "statut": "retenu",
+   "titre": "Non-suicidal self-injury and other key predictors of suicide deaths among children and adolescents in England:"
+  },
+  "42792437": {
+   "date": "2026-10-01",
+   "raison": "victimation par les pairs et automutilation chez des adolescents chinois : corrélationnel",
+   "statut": "ecarte",
+   "titre": "Peer Victimization and Non-Suicidal Self-Injury Among Chinese Adolescents: Moderating Roles of Teacher Emotion"
+  },
+  "42792448": {
+   "date": "2026-10-01",
+   "raison": "sylvothérapie guidée chez l'adolescent : faisabilité opérationnelle, faible portée clinique",
+   "statut": "ecarte",
+   "titre": "Therapist-Guided Forest Therapy in Adolescents: Operational Feasibility and Anxiety-Symptom Signals from a Two"
+  },
+  "42794260": {
+   "date": "2026-10-01",
+   "raison": "parcours de dépistage du TDAH en deux temps depuis les urgences : faisabilité locale",
+   "statut": "ecarte",
+   "titre": "Feasibility of an Emergency Department-Based Two-Step ADHD Screening Pathway in Primary School-Age Children Pr"
+  },
+  "42794286": {
+   "date": "2026-10-01",
+   "raison": "cas clinique et revue sur deux entités neurologiques",
+   "statut": "ecarte",
+   "titre": "One Clinical Picture, Two Clinical Entities: A Case Report and Literature Review of Neurofibromatosis and Hemo"
+  },
+  "42797022": {
+   "date": "2026-10-01",
+   "raison": "revue de portée sur les effets nutritionnels des traitements du TDAH : descriptif",
+   "statut": "ecarte",
+   "titre": "Dual Effects of ADHD Pharmacotherapy on Nutrition: A Scoping Review of Appetite, Eating Behavior, and Growth A"
+  },
+  "42799720": {
+   "date": "2026-10-01",
+   "raison": "analyse de concept des comportements internalisés : théorique",
+   "statut": "ecarte",
+   "titre": "Concept Analysis: Internalizing Behaviors in Children and Adolescents."
+  },
+  "42801154": {
+   "date": "2026-10-01",
+   "raison": "cybervictimation et dépression de l'adolescent : analyse en profils latents, corrélationnel",
+   "statut": "ecarte",
+   "titre": "Pathways From Cyber Victimization to Adolescent Depression: A Latent Profile and Bridge Network Analysis."
+  },
+  "42801892": {
+   "date": "2026-10-01",
+   "raison": "alcool, cannabis et agressivité : corrélationnel intra-individuel",
+   "statut": "ecarte",
+   "titre": "Drinking, cannabis use and mental health as predictors of within-person changes in aggression over eight weeks"
+  },
+  "42804194": {
+   "date": "2026-10-01",
+   "raison": "conseil comportemental augmenté par la technologie sur les comportements à risque avec armes à feu : contexte américain non transposable",
+   "statut": "ecarte",
+   "titre": "Efficacy of Technology-Augmented Behavioral Counseling for Risky Firearm Behaviors: A Randomized Clinical Tria"
+  },
+  "42806329": {
+   "date": "2026-10-01",
+   "raison": "TCC numérique chez des adolescents chinois déprimés : signal déjà couvert par les entrées numériques du corpus",
+   "statut": "ecarte",
+   "titre": "Digital Cognitive Behavioral Therapy for Chinese Adolescents with Depressive Symptoms (CADS-D): protocol for a"
+  },
+  "42808539": {
+   "date": "2026-10-01",
+   "raison": "revue de portée sur la thérapie centrée sur le trauma chez les minorités sexuelles et de genre : hors axe TCD",
+   "statut": "ecarte",
+   "titre": "Trauma-Focused Therapy in Sexual and Gender Minority Individuals: A Scoping Review of Therapeutic Intervention"
+  },
+  "42808577": {
+   "date": "2026-10-01",
+   "raison": "synthèse STAGES : premier épisode psychotique avec ou sans antipsychotique, arbitrage métabolique/cognitif contre structural",
+   "statut": "retenu",
+   "titre": "Psychosocial treatment with or without antipsychotic medication in first-episode psychosis: What have we learn"
+  },
+  "42809515": {
+   "date": "2026-10-01",
+   "raison": "exposition prénatale à la dépression maternelle et aux antidépresseurs : périnatalité, hors périmètre",
+   "statut": "ecarte",
+   "titre": "Prenatal exposure to maternal depression and antidepressants and neurodevelopmental outcomes: A population coh"
+  },
+  "42810972": {
+   "date": "2026-10-01",
+   "raison": "commentaire sur un article d'interventions psychologiques dans le trouble borderline",
+   "statut": "ecarte",
+   "titre": "Comment on 'The Impact of Psychological Interventions on Functioning in the Context of Borderline Personality "
+  },
+  "42811462": {
+   "date": "2026-10-01",
+   "raison": "revue systématique des traitements du trouble borderline avec addiction : TCD la plus étudiée, effets inconstants",
+   "statut": "retenu",
+   "titre": "Treatment Outcomes for Co-Occurring Borderline Personality Disorder and Substance Use Disorders: A Systematic "
+  },
+  "42811678": {
+   "date": "2026-10-01",
+   "raison": "commentaire sur un article de recours aux urgences psychiatriques",
+   "statut": "ecarte",
+   "titre": "Comment on \"Psychiatric Emergency Service Use by Transgender and Gender-Diverse Youth\"."
+  },
+  "42812493": {
+   "date": "2026-10-01",
+   "raison": "consensus Delphi sur l'accès aux services et le numérique : revue à faible diffusion, cadrage très général",
+   "statut": "ecarte",
+   "titre": "A modified Delphi study of expert consensus on mental health service access and digital strategies for adolesc"
+  },
+  "42815730": {
+   "date": "2026-10-01",
+   "raison": "méta-analyse en réseau par dose de la dépression à caractéristiques mixtes, signal pédiatrique pour la lurasidone",
+   "statut": "retenu",
+   "titre": "Pharmacological interventions for acute major depression and bipolar depression with mixed features: A systema"
+  },
+  "42815829": {
+   "date": "2026-10-01",
+   "raison": "adhésion à un parcours de prévention du suicide en soins primaires : organisationnel local",
+   "statut": "ecarte",
+   "titre": "Beyond Risk Identification: Adherence to a Pediatric Suicide Prevention Pathway in Primary Care."
+  },
+  "42816114": {
+   "date": "2026-10-01",
+   "raison": "acceptabilité d'une intervention numérique par imagerie mentale : stade très amont",
+   "statut": "ecarte",
+   "titre": "Exploring the acceptability and feasibility of a blended imagery-based digital intervention for self-harm in y"
+  },
+  "42817048": {
+   "date": "2026-10-01",
+   "raison": "pilote randomisé d'une TCD individuelle brève ajoutée au traitement médicamenteux : non concluant, signal négatif utile",
+   "statut": "retenu",
+   "titre": "Application of an Exploratory DBT-Based Psychotherapy Program for Suicide-Related Symptoms in Chinese Outpatie"
   }
  },
  "sans_pmid": [

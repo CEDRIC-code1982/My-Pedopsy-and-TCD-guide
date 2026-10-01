@@ -328,3 +328,33 @@ livrable plutôt que de le passer sous silence — le commit local reste acquis.
 Résumé en 5 lignes max : entrées ajoutées, répartition par thème,
 point le plus marquant de la session, et confirmation du commit/push
 (hash court du commit).
+## FERMETURE DE LA SESSION — DERNIÈRE ACTION DU RUN
+
+⚠️ **Après avoir écrit le livrable, archiver la session** par
+`archive_session` avec `session_id: "self"`. C'est la toute dernière action du
+run : la conversation se termine sur ce résultat, donc le livrable doit être
+écrit AVANT.
+
+Pourquoi cette étape existe. Le planificateur refuse de démarrer un run tant
+qu'un run de la même routine est au statut `running`, et une session de tâche
+planifiée reste `running` tant qu'elle n'est pas fermée. Le run du
+4 septembre 2026 avait été mené jusqu'au push, mais sa session est restée
+ouverte : les trois jeudis planifiés des 10, 17 et 24 septembre ont été
+silencieusement sautés, et « Lancer maintenant » restait refusé. L'échec est
+muet — rien ne signale que la veille ne tourne plus, seul l'écart entre
+`lastRunAt` et la liste réelle des runs le révèle.
+
+Deux conséquences pratiques :
+
+- **Ne jamais compter sur la fermeture par l'utilisateur.** Lui seul peut
+  fermer une session depuis l'interface, et il n'a aucune raison d'y penser.
+  L'archivage par la routine elle-même est ce qui garantit le run suivant.
+- **Si l'utilisateur répond dans la session d'un run**, celle-ci devient une
+  conversation interactive et cesse de se refermer toute seule. Le lui dire
+  et archiver quand même à la fin de l'échange : la suite du travail se
+  reprend dans une session neuve.
+
+L'archivage est réversible — la session reste consultable dans la liste
+« Archivées » et peut être rouverte. Si l'appel échoue parce que la session
+est affichée à l'écran, le signaler dans le livrable et demander à
+l'utilisateur de la fermer lui-même.
